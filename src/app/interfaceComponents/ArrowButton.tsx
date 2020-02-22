@@ -3,13 +3,14 @@ import { useDispatch } from 'react-redux';
 import { panelActions } from '../panel/actions';
 
 interface IArrowButtonProps {
-    name: string
+    name: string;
+    page: string;
 }
 
-export const ArrowButton = ({ name }: IArrowButtonProps) => {
+export const ArrowButton = ({ name, page }: IArrowButtonProps) => {
     const dispatch = useDispatch();
     const initComponent = () => {
-        dispatch(panelActions.initComponent({ name, type: 'arrowButton' }))
+        dispatch(panelActions.initComponent({ page, name, type: 'arrowButton' }))
     }
 
     useEffect(() => {

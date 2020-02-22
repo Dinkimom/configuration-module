@@ -1,14 +1,24 @@
 import React, { Component, ReactElement } from 'react';
 import MonacoEditor from 'react-monaco-editor';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { Button } from 'semantic-ui-react';
 import { CodeRender } from '../codeRender';
+import { panelActions } from '../panel/actions';
 import './index.css';
 
-export class CodeEditor extends Component<any, any> {
+class CodeEditor extends Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            code: '<p>Type here some code...</p>',
+            code: `
+            <App>
+                <Page name="Sample_Page">
+                    <ArrowButton name="sample" />
+                    <ArrowButton name="sample1" />
+                    <ArrowButton name="sample2" />
+                </Page>
+            </App>`,
             toRender: '',
         };
 
@@ -49,10 +59,12 @@ export class CodeEditor extends Component<any, any> {
                     <Button
                         fluid={true}
                         color='twitter'
-                        onClick={() =>
+                        onClick={() => {
+                            this.props.actions.clear()
                             this.setState((state: any) => ({
                                 toRender: state.code,
                             }))
+                        }
                         }
                         disabled={!this.state.code}
                     >
@@ -66,3 +78,9 @@ export class CodeEditor extends Component<any, any> {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+    actions: bindActionCreators(panelActions, dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(CodeEditor)
