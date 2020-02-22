@@ -1,10 +1,6 @@
-import * as React from 'react';
-import Tmp from './tmp/';
+import React from 'react';
+import { CodeEditor } from './codeEditor';
 
-export const App = () => {
-  return (
-    <>
-      <Tmp />
-    </>
-  );
-};
+export const App = () => (
+  <CodeEditor />
+)

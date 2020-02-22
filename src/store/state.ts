@@ -1,5 +1,5 @@
-import { ITmpState } from '../app/tmp/state';
+import { IPanelState } from './../app/panel/state';
 
 export interface IRootState {
-  tmp: ITmpState;
+  panel: IPanelState;
 }
