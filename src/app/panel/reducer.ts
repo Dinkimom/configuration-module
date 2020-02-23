@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { IActionPayloaded } from '../../store/IAction'
 import { IReducerPayloaded } from '../../store/IReducer'
-import { PANEL_CLEAR, PANEL_INIT_COMPONENT, PANEL_INIT_PAGE } from './actions'
+import { PANEL_CLEAR, PANEL_INIT_COMPONENT, PANEL_INIT_PAGE, PANEL_SET_CURRENT_PAGE } from './actions'
 import { IPanelState } from './state'
 
 
-const initialState: IPanelState = {}
+const initialState: IPanelState = {
+    currentPage: null,
+    pages: {},
+}
 
 export class PanelReducer implements IReducerPayloaded<IPanelState> {
     constructor() {
@@ -25,18 +28,27 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
 
         switch (action.type) {
             case PANEL_INIT_PAGE:
-                newState[action.payload.name] = {}
+                newState.pages[action.payload.name] = {}
+                // eslint-disable-next-line prefer-destructuring
+                newState.currentPage = Object.keys(newState.pages)[0]
                 break
 
             case PANEL_INIT_COMPONENT:
-                newState[action.payload.page][action.payload.name] = {
+                newState.pages[action.payload.page][action.payload.name] = {
                     value: '1',
                     type: action.payload.type,
                 }
                 break
 
+            case PANEL_SET_CURRENT_PAGE:
+                newState.currentPage = action.payload.name
+                break
+
             case PANEL_CLEAR:
-                newState = {}
+                newState = {
+                    currentPage: null,
+                    pages: {},
+                }
                 break
 
         }

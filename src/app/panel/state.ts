@@ -1,8 +1,11 @@
 export interface IPanelState {
-    [key: string]: {
+    currentPage: null | string
+    pages: {
         [key: string]: {
-            value: string
-            type: string
+            [key: string]: {
+                value: string
+                type: string
+            }
         }
     }
 }

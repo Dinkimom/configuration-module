@@ -1,0 +1,12 @@
+.app {
+    background: url('./phone.png') no-repeat;
+    background-size: 100% 100%;
+    width: 210px;
+    height: 400px;
+    padding: 47px 14px 47px 14px;
+}
+
+.app__page {
+    width: 100%;
+    height: 100%;
+}

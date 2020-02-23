@@ -45,6 +45,9 @@ class CodeEditor extends Component<any, any> {
         }
         return (
             <div className='code-editor-container'>
+                <div>
+                    <CodeRender code={this.state.toRender} />
+                </div>
                 <div className='code-editor-container__code-editor'>
                     <MonacoEditor
                         width='100%'
@@ -71,9 +74,6 @@ class CodeEditor extends Component<any, any> {
                     >
                         Generate
                   </Button>
-                </div>
-                <div>
-                    <CodeRender code={this.state.toRender} />
                 </div>
             </div>
         )

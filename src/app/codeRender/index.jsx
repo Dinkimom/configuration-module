@@ -7,6 +7,7 @@ import * as semantic from 'semantic-ui-react'
 import { App } from '../interfaceComponents/App'
 import { ArrowButton } from '../interfaceComponents/ArrowButton'
 import { Page } from '../interfaceComponents/Page'
+import './index.css'
 
 export const CodeRender = ({ code }) => {
 	try {

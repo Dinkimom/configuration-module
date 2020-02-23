@@ -1,0 +1,8 @@
+.jsx-parser {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 20px;
+    grid-gap: 20px;
+}

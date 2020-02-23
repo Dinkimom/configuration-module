@@ -1,6 +1,6 @@
 .code-editor-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 2fr 1fr;
     height: 100vh;
     grid-gap: 10px;
 }
@@ -11,6 +11,7 @@
 }
 
 .code-editor-container__code-editor .monaco-editor {
+    padding-top: 20px;
     height: 100% !important;
     width: 100%;
 }

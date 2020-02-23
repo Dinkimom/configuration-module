@@ -8,9 +8,12 @@ interface IPageProps {
     children: ReactNode
 }
 
+export const PageContext = React.createContext({ page: '' })
+
 export const Page = ({ name, children }: IPageProps): ReactElement | null => {
     const dispatch = useDispatch()
-    const isInitialized = Boolean(useSelector((state: IRootState) => state.panel[name]))
+    const isInitialized = Boolean(useSelector((state: IRootState) => state.panel.pages[name]))
+    const { currentPage } = useSelector((state: IRootState) => state.panel)
 
     const initPage = useCallback(
         () => {
@@ -25,12 +28,14 @@ export const Page = ({ name, children }: IPageProps): ReactElement | null => {
         }
     }, [initPage, isInitialized])
 
-    const childrenWithProps = React.Children.map(children, child =>
-        React.cloneElement(child as any, { page: name })
-    )
-
     if (isInitialized) {
-        return <div className='app__page'>{childrenWithProps}</div>
+        return (
+            <PageContext.Provider value={{ page: name }}>
+                {currentPage === name && <div className='app__page'>{children}</div>}
+            </PageContext.Provider>
+        )
+
+
     }
 
     return null

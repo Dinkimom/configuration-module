@@ -1,25 +1,16 @@
-import React, { ReactElement, useCallback, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { panelActions } from '../panel/actions'
+import React, { ReactElement } from 'react'
+import { ConnectedElement } from './ConnectedElement'
 
-interface IArrowButtonProps {
-    name: string
-    page: string
+interface IBaseElementProps {
+	name: string
+	type: string
 }
 
-export const ArrowButton = ({ name, page }: IArrowButtonProps): ReactElement => {
-    const dispatch = useDispatch()
-    const initComponent = useCallback(
-        () => {
-            dispatch(panelActions.initComponent({ page, name, type: 'arrowButton' }))
-        },
-        [dispatch, name, page],
-    )
-
-    useEffect(() => {
-        initComponent()
-    }, [initComponent])
-
-
-    return <button>123</button>
-}
+export const ArrowButton = ({
+	name,
+	type,
+}: IBaseElementProps): ReactElement => (
+	<ConnectedElement name={name} type={type}>
+		<button>123</button>
+	</ConnectedElement>
+)
