@@ -1,7 +1,6 @@
-import React, { ReactElement, ReactNode, useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { ReactElement, ReactNode, useCallback, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { usePageContext } from '../../shared/hooks/usePageContext'
-import { IRootState } from '../../store/state'
 import { panelActions } from '../panel/actions'
 
 interface IConnectedElementProps {
@@ -16,9 +15,6 @@ export const ConnectedElement = ({
 	children,
 }: IConnectedElementProps): ReactElement => {
 	const page = usePageContext()
-	const value = useSelector(
-		(state: IRootState) => state.panel.pages[page][name] || null
-	)
 
 	const dispatch = useDispatch()
 	const initComponent = useCallback(() => {
@@ -29,5 +25,5 @@ export const ConnectedElement = ({
 		initComponent()
 	}, [initComponent])
 
-	return React.cloneElement(children as any, { page, name, value })
+	return children as any
 }

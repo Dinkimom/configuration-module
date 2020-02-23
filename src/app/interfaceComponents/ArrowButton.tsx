@@ -1,4 +1,6 @@
 import React, { ReactElement } from 'react'
+import { Button } from 'semantic-ui-react'
+import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { ConnectedElement } from './ConnectedElement'
 
 interface IBaseElementProps {
@@ -6,11 +8,25 @@ interface IBaseElementProps {
 	type: string
 }
 
-export const ArrowButton = ({
-	name,
-	type,
-}: IBaseElementProps): ReactElement => (
-	<ConnectedElement name={name} type={type}>
-		<button>123</button>
-	</ConnectedElement>
-)
+export const ArrowButton = ({ name }: IBaseElementProps): ReactElement => {
+	console.log(useFieldValue(name))
+	let icon = ''
+
+	switch (useFieldValue(name)) {
+		case '0':
+			icon = 'mail'
+			break
+		case '1':
+			icon = 'user'
+			break
+		case '2':
+			icon = 'key'
+			break
+	}
+
+	return (
+		<ConnectedElement name={name} type={'arrowButton'}>
+			<Button icon={icon} />
+		</ConnectedElement>
+	)
+}
