@@ -1,15 +1,10 @@
 import React, { ReactElement } from 'react'
 import { Button } from 'semantic-ui-react'
 import { useFieldValue } from '../../shared/hooks/useFieldValue'
+import { IBaseElementProps } from '../../shared/types/IBaseElementProps'
 import { ConnectedElement } from './ConnectedElement'
 
-interface IBaseElementProps {
-	name: string
-	type: string
-}
-
 export const ArrowButton = ({ name }: IBaseElementProps): ReactElement => {
-	console.log(useFieldValue(name))
 	let icon = ''
 
 	switch (useFieldValue(name)) {

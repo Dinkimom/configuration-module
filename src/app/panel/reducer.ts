@@ -15,6 +15,17 @@ const initialState: IPanelState = {
 	pages: {},
 }
 
+const getDefaultSetting = (type: string): any => {
+	switch (type) {
+		case 'arrowButton':
+			return '0'
+		case 'optional':
+			return false
+	}
+
+	return null
+}
+
 export class PanelReducer implements IReducerPayloaded<IPanelState> {
 	constructor() {
 		this.reduce = this.reduce.bind(this)
@@ -40,7 +51,7 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
 			case PANEL_INIT_COMPONENT:
 				if (!newState.pages[action.payload.page][action.payload.name]) {
 					newState.pages[action.payload.page][action.payload.name] = {
-						value: '0',
+						value: getDefaultSetting(action.payload.type),
 						type: action.payload.type,
 					}
 				}

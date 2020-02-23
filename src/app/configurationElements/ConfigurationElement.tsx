@@ -1,9 +1,10 @@
 import React, { ReactElement } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox, Input } from 'semantic-ui-react'
+import { IRootState } from '../../store/state'
 import { panelActions } from '../panel/actions'
 
-export type ConfigurationElement = 'arrowButton' | 'progressBar'
+export type ConfigurationElement = 'arrowButton' | 'optional'
 
 interface IConfigurationElementProps {
 	name: string
@@ -17,23 +18,21 @@ export const ConfigurationElement = ({
 	type,
 }: IConfigurationElementProps): ReactElement | null => {
 	const dispatch = useDispatch()
+	const { value } = useSelector((state: IRootState) => state.panel.pages[page][name])
+
+	const handleChange = (evt: any, data: any): void => {
+		console.log(data)
+		dispatch(panelActions.setFieldValue({ value: data.value || data.checked, name, page }))
+	}
 
 	switch (type) {
 		case 'arrowButton':
 			return (
-				<Input
-					onChange={(evt: any, data: any) => {
-						dispatch(panelActions.setFieldValue({ value: data.value, name, page }))
-					}}
-					type='range'
-					min={0}
-					max={3}
-					name={name}
-				/>
+				<Input onChange={handleChange} type='range' value={value} min={0} max={3} name={name} />
 			)
 
-		case 'progressBar':
-			return <Checkbox name={name} />
+		case 'optional':
+			return <Checkbox onChange={handleChange} toggle={true} name={name} />
 
 		default:
 			return null

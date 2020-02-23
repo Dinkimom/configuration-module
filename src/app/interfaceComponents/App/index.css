@@ -3,7 +3,8 @@
 	background-size: 100% 100%;
 	width: 210px;
 	height: 400px;
-	padding: 47px 13px 47px 14px;
+	padding: 47px 13px 47px;
+	justify-self: center;
 }
 
 .app__page {

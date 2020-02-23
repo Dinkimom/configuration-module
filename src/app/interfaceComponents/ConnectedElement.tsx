@@ -1,5 +1,6 @@
-import { ReactElement, ReactNode, useCallback, useEffect } from 'react'
+import React, { ReactElement, ReactNode, useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { Popup } from 'semantic-ui-react'
 import { usePageContext } from '../../shared/hooks/usePageContext'
 import { panelActions } from '../panel/actions'
 
@@ -25,5 +26,5 @@ export const ConnectedElement = ({
 		initComponent()
 	}, [initComponent])
 
-	return children as any
+	return (<Popup content={name} trigger={children} />) as any
 }

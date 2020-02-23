@@ -2,9 +2,10 @@
 import React, { ReactElement, ReactNode } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Tab } from 'semantic-ui-react'
-import { IRootState } from '../../store/state'
-import { panelActions } from '../panel/actions'
-import { ConfigurationElement } from './ConfigurationElement'
+import { IRootState } from '../../../store/state'
+import { panelActions } from '../../panel/actions'
+import { ConfigurationElement } from '../ConfigurationElement'
+import './index.css'
 
 export const ConfigurationBlock = (): ReactElement => {
 	const blocks = useSelector((state: IRootState) => state.panel.pages)
@@ -35,7 +36,14 @@ export const ConfigurationBlock = (): ReactElement => {
 
 	return (
 		<Form className='configuration-block'>
-			<Tab onTabChange={handleTabChange} menu={{ secondary: true }} panes={panes} />
+			<h3>Страницы приложения</h3>
+			<Tab
+				onTabChange={handleTabChange}
+				menu={{ fluid: true, vertical: true }}
+				menuPosition='left'
+				panes={panes}
+				grid={{ paneWidth: 10, tabWidth: 6 }}
+			/>
 		</Form>
 	)
 }

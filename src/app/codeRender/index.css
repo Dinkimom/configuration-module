@@ -1,8 +1,14 @@
 .jsx-parser {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 100%;
-    overflow-y: scroll;
-    padding: 20px;
-    grid-gap: 20px;
+	display: grid;
+	grid-template-rows: auto 1fr;
+	grid-template-columns: 2fr 1fr;
+	height: 100%;
+	padding: 20px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.jsx-parser h1 {
+	grid-column-start: 1;
+	grid-column-end: 3;
 }

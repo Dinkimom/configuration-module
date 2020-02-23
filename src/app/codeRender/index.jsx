@@ -7,6 +7,7 @@ import * as semantic from 'semantic-ui-react'
 import { App } from '../interfaceComponents/App'
 import { ArrowButton } from '../interfaceComponents/ArrowButton'
 import { Page } from '../interfaceComponents/Page'
+import { ProgressBar } from '../interfaceComponents/ProgressBar'
 import './index.css'
 
 export const CodeRender = ({ code }) => {
@@ -14,7 +15,7 @@ export const CodeRender = ({ code }) => {
 		return (
 			<JsxParser
 				renderError={error => console.error(error)}
-				components={{ ...semantic, App, Page, ArrowButton }}
+				components={{ ...semantic, App, Page, ArrowButton, ProgressBar }}
 				jsx={code}
 			/>
 		)

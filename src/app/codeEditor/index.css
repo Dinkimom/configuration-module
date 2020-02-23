@@ -1,25 +1,22 @@
 .code-editor-container {
-    display: grid;
-    grid-template-rows: 2fr 1fr;
-    height: 100vh;
-    grid-gap: 10px;
-}
-
-.code-editor-container__code-editor {
-    display: grid;
-    grid-template-rows: 1fr 40px;
+	display: grid;
+	grid-template-rows: 2fr 1fr;
+	height: 100vh;
+	grid-gap: 10px;
 }
 
 .code-editor-container__code-editor .monaco-editor {
-    padding-top: 20px;
-    height: 100% !important;
-    width: 100%;
+	padding-top: 20px;
+	height: 100% !important;
+	width: 100%;
 }
 
 .code-editor-container__code-editor button {
-    border-radius: 0 !important;
+	border-radius: 0 !important;
+	position: fixed;
+	bottom: 0;
 }
 
 .code-editor div {
-    min-width: 100px;
+	min-width: 100px;
 }
