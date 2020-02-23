@@ -1,5 +1,5 @@
-import { IPanelState } from './../app/panel/state';
+import { IPanelState } from './../app/panel/state'
 
 export interface IRootState {
-  panel: IPanelState;
+  panel: IPanelState
 }

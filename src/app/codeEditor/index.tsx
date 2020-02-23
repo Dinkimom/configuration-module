@@ -1,15 +1,16 @@
-import React, { Component, ReactElement } from 'react';
-import MonacoEditor from 'react-monaco-editor';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
-import { Button } from 'semantic-ui-react';
-import { CodeRender } from '../codeRender';
-import { panelActions } from '../panel/actions';
-import './index.css';
+/* eslint-disable @typescript-eslint/unbound-method */
+import React, { Component, ReactElement } from 'react'
+import MonacoEditor from 'react-monaco-editor'
+import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
+import { Button } from 'semantic-ui-react'
+import { CodeRender } from '../codeRender'
+import { panelActions } from '../panel/actions'
+import './index.css'
 
 class CodeEditor extends Component<any, any> {
     constructor(props: any) {
-        super(props);
+        super(props)
         this.state = {
             code: `
             <App>
@@ -20,28 +21,28 @@ class CodeEditor extends Component<any, any> {
                 </Page>
             </App>`,
             toRender: '',
-        };
+        }
 
-        this.editorDidMount = this.editorDidMount.bind(this);
-        this.onChange = this.onChange.bind(this);
+        this.editorDidMount = this.editorDidMount.bind(this)
+        this.onChange = this.onChange.bind(this)
     }
 
-    editorDidMount(editor: any) {
-        editor.focus();
+    public editorDidMount(editor: any): void {
+        editor.focus()
     }
 
-    onChange(newValue: string) {
+    public onChange(newValue: string): void {
         this.setState({
             code: newValue,
-        });
+        })
     }
 
     render(): ReactElement {
-        const code = this.state.code;
+        const { code } = this.state
         const options: any = {
             selectOnLineNumbers: true,
             renderLineHighlight: true,
-        };
+        }
         return (
             <div className='code-editor-container'>
                 <div className='code-editor-container__code-editor'>
@@ -75,12 +76,12 @@ class CodeEditor extends Component<any, any> {
                     <CodeRender code={this.state.toRender} />
                 </div>
             </div>
-        );
+        )
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    actions: bindActionCreators(panelActions, dispatch)
+const mapDispatchToProps = (dispatch: Dispatch): any => ({
+    actions: bindActionCreators(panelActions, dispatch),
 })
 
 export default connect(null, mapDispatchToProps)(CodeEditor)

@@ -1,5 +1,5 @@
-import { IActionPayloaded } from './IAction';
+import { IActionPayloaded } from './IAction'
 
 export interface IReducerPayloaded<T> {
-  reduce(state: T, action: IActionPayloaded<any>): T;
+  reduce(state: T, action: IActionPayloaded<any>): T
 }

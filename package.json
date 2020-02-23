@@ -27,19 +27,25 @@
     "tslint-react": "^4.1.0"
   },
   "devDependencies": {
+    "@types/jest": "^23.3.13",
+    "@types/node": "^10.12.18",
     "@types/react": "^16.8.6",
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.3",
     "@types/redux-actions": "^2.6.1",
-    "typescript": "^3.5.1",
-    "@types/jest": "^23.3.13",
-    "@types/node": "^10.12.18"
+    "eslint-plugin-optimize-regex": "^1.1.7",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-sonarjs": "^0.5.0",
+    "styled-components": "^5.0.0",
+    "typescript": "^3.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint": "eslint --fix --ext .js,.jsx,.ts,.tsx src",
+    "eslint:dump": "eslint --print-config ./.eslintrc.json"
   },
   "browserslist": [
     ">0.2%",

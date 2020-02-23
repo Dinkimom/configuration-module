@@ -1,6 +1,6 @@
-import React from 'react';
-import CodeEditor from './codeEditor';
+import React, { ReactElement } from 'react'
+import CodeEditor from './codeEditor'
 
-export const App = () => (
+export const App = (): ReactElement => (
   <CodeEditor />
 )

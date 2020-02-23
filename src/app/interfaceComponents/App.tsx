@@ -1,19 +1,23 @@
-import React, { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
-import { IRootState } from '../../store/state';
-import { ConfigurationBlock } from '../configurationElements/ConfigurationBlock';
+import React, { ReactElement, ReactNode } from 'react'
+import { useSelector } from 'react-redux'
+import { IRootState } from '../../store/state'
+import { ConfigurationBlock } from '../configurationElements/ConfigurationBlock'
 
 interface IAppProps {
-    children: ReactNode;
+    children: ReactNode
 }
 
-export const App = ({ children }: IAppProps) => {
-    const isInitialized = Boolean(useSelector((state: IRootState) => state.panel));
-    return (
-        isInitialized &&
-        <>
-            <ConfigurationBlock />
-            <div className='app'>{children}</div>
-        </>
-    )
+export const App = ({ children }: IAppProps): ReactElement | null => {
+    const isInitialized = Boolean(useSelector((state: IRootState) => state.panel))
+
+    if (isInitialized) {
+        return (
+            <>
+                <ConfigurationBlock />
+                <div className='app'>{children}</div>
+            </>
+        )
+    }
+
+    return null
 }

@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react'
 import JsxParser from 'react-jsx-parser'
 import * as semantic from 'semantic-ui-react'
