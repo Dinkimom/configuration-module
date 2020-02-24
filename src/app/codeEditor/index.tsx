@@ -45,7 +45,7 @@ class CodeEditor extends Component<any, any> {
 		}
 		return (
 			<div className='code-editor-container'>
-				<div>
+				<div className='code-editor-container__code-render'>
 					<CodeRender code={this.state.toRender} />
 				</div>
 				<div className='code-editor-container__code-editor'>

@@ -8,7 +8,8 @@
 	margin: 0 auto;
 }
 
-.jsx-parser h1 {
+.jsx-parser .header {
+	min-height: 60px !important;
 	grid-column-start: 1;
 	grid-column-end: 3;
 }

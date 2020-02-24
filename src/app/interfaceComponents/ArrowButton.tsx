@@ -4,18 +4,22 @@ import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { IBaseElementProps } from '../../shared/types/IBaseElementProps'
 import { ConnectedElement } from './ConnectedElement'
 
-export const ArrowButton = ({ name }: IBaseElementProps): ReactElement => {
+interface IArrowButtonProps extends IBaseElementProps {
+	direction: 'left' | 'right'
+}
+
+export const ArrowButton = ({ name, direction = 'left' }: IArrowButtonProps): ReactElement => {
 	let icon = ''
 
 	switch (useFieldValue(name)) {
 		case '0':
-			icon = 'mail'
+			icon = `arrow ${direction}`
 			break
 		case '1':
-			icon = 'user'
+			icon = `arrow circle ${direction}`
 			break
 		case '2':
-			icon = 'key'
+			icon = `long arrow alternate ${direction}`
 			break
 	}
 

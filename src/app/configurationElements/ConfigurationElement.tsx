@@ -28,11 +28,11 @@ export const ConfigurationElement = ({
 	switch (type) {
 		case 'arrowButton':
 			return (
-				<Input onChange={handleChange} type='range' value={value} min={0} max={3} name={name} />
+				<Input onChange={handleChange} type='range' value={value} min={0} max={2} name={name} />
 			)
 
 		case 'optional':
-			return <Checkbox onChange={handleChange} toggle={true} name={name} />
+			return <Checkbox onChange={handleChange} checked={value} toggle={true} name={name} />
 
 		default:
 			return null
