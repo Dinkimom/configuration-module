@@ -79,19 +79,6 @@ class CodeEditor extends Component<any, any> {
             `,
 			toRender: '',
 		}
-
-		this.editorDidMount = this.editorDidMount.bind(this)
-		this.onChange = this.onChange.bind(this)
-	}
-
-	public editorDidMount(editor: any): void {
-		editor.focus()
-	}
-
-	public onChange(newValue: string): void {
-		this.setState({
-			code: newValue,
-		})
 	}
 
 	render(): ReactElement {
@@ -119,8 +106,10 @@ class CodeEditor extends Component<any, any> {
 					/>
 
 					<Button
-						fluid={true}
-						color='twitter'
+						icon='play'
+						inverted={true}
+						content='Generate'
+						labelPosition='left'
 						onClick={() => {
 							this.props.actions.clear()
 							this.setState((state: any) => ({
@@ -128,9 +117,7 @@ class CodeEditor extends Component<any, any> {
 							}))
 						}}
 						disabled={!this.state.code}
-					>
-						Generate
-					</Button>
+					/>
 				</div>
 			</div>
 		)

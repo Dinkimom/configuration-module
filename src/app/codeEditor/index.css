@@ -11,7 +11,7 @@
 }
 
 .code-editor-container__code-editor {
-	padding-bottom: 35px;
+	background-color: rgb(41, 41, 41);
 }
 
 .code-editor-container__code-editor button {
