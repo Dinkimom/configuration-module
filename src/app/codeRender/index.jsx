@@ -6,6 +6,9 @@ import JsxParser from 'react-jsx-parser'
 import * as semantic from 'semantic-ui-react'
 import { App } from '../interfaceComponents/App'
 import { ArrowButton } from '../interfaceComponents/ArrowButton'
+import { Content } from '../interfaceComponents/Content'
+import { Footer } from '../interfaceComponents/Footer'
+import { Header } from '../interfaceComponents/Header'
 import { Page } from '../interfaceComponents/Page'
 import { ProgressBar } from '../interfaceComponents/ProgressBar'
 import './index.css'
@@ -15,7 +18,7 @@ export const CodeRender = ({ code }) => {
 		return (
 			<JsxParser
 				renderError={error => console.error(error)}
-				components={{ ...semantic, App, Page, ArrowButton, ProgressBar }}
+				components={{ ...semantic, App, Page, ArrowButton, ProgressBar, Header, Footer, Content }}
 				jsx={code}
 			/>
 		)

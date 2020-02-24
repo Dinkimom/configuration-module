@@ -15,7 +15,7 @@ export const App = ({ children }: IAppProps): ReactElement | null => {
 	if (isInitialized) {
 		return (
 			<>
-				<Header as='h1' block={true}>
+				<Header as='h1' className='panel-header' block={true}>
 					Страница конфигурации
 				</Header>
 

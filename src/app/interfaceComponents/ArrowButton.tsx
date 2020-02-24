@@ -1,14 +1,18 @@
 import React, { ReactElement } from 'react'
-import { Button } from 'semantic-ui-react'
+import { Button, ButtonProps } from 'semantic-ui-react'
 import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { IBaseElementProps } from '../../shared/types/IBaseElementProps'
 import { ConnectedElement } from './ConnectedElement'
 
-interface IArrowButtonProps extends IBaseElementProps {
+interface IArrowButtonProps extends IBaseElementProps, ButtonProps {
 	direction: 'left' | 'right'
 }
 
-export const ArrowButton = ({ name, direction = 'left' }: IArrowButtonProps): ReactElement => {
+export const ArrowButton = ({
+	name,
+	direction = 'left',
+	...other
+}: IArrowButtonProps): ReactElement => {
 	let icon = ''
 
 	switch (useFieldValue(name)) {
@@ -19,13 +23,13 @@ export const ArrowButton = ({ name, direction = 'left' }: IArrowButtonProps): Re
 			icon = `arrow circle ${direction}`
 			break
 		case '2':
-			icon = `long arrow alternate ${direction}`
+			icon = `angle ${direction}`
 			break
 	}
 
 	return (
 		<ConnectedElement name={name} type={'arrowButton'}>
-			<Button icon={icon} />
+			<Button icon={icon} {...other} />
 		</ConnectedElement>
 	)
 }

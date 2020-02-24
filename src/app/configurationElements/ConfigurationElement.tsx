@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Checkbox, Input } from 'semantic-ui-react'
+import { Checkbox, Dropdown } from 'semantic-ui-react'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../panel/actions'
 
@@ -28,7 +28,17 @@ export const ConfigurationElement = ({
 	switch (type) {
 		case 'arrowButton':
 			return (
-				<Input onChange={handleChange} type='range' value={value} min={0} max={2} name={name} />
+				<Dropdown
+					onChange={handleChange}
+					selection={true}
+					options={[
+						{ text: 'Simple arrow', value: '0', icon: 'arrow left' },
+						{ text: 'Circle arrow', value: '1', icon: 'arrow circle left' },
+						{ text: 'Angle arrow', value: '2', icon: 'angle left' },
+					]}
+					name={name}
+					value={value}
+				/>
 			)
 
 		case 'optional':

@@ -10,15 +10,14 @@
 	overflow-y: scroll;
 }
 
-.code-editor-container__code-editor .monaco-editor {
-	padding-top: 20px;
-	height: 100% !important;
-	width: 100%;
+.code-editor-container__code-editor {
+	padding-bottom: 35px;
 }
 
 .code-editor-container__code-editor button {
 	border-radius: 0 !important;
 	position: fixed;
+	z-index: 10000;
 	bottom: 0;
 }
 
