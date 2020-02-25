@@ -1,24 +1,35 @@
 .code-editor-container {
 	display: grid;
-	grid-template-rows: 2fr 1fr;
+	grid-template-rows: 2fr auto;
 	height: 100vh;
-	grid-gap: 10px;
+	overflow: hidden;
 }
 
 .code-editor-container__code-render {
-	max-height: calc(100vh / 3 * 2);
 	overflow-y: scroll;
+}
+
+.code-editor-container__code-editor .react-codemirror2 {
+	height: 100%;
+}
+
+.CodeMirror {
+	height: calc(100% - 50px);
 }
 
 .code-editor-container__code-editor {
 	background-color: rgb(41, 41, 41);
+	padding-right: 20px;
+	padding-top: 20px;
+	padding-left: 10px;
 }
 
 .code-editor-container__code-editor button {
 	border-radius: 0 !important;
-	position: fixed;
+	position: absolute;
 	z-index: 10000;
-	bottom: 0;
+	bottom: 43px;
+	left: 0px;
 }
 
 .code-editor div {

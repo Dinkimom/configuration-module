@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable @typescript-eslint/unbound-method */
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/material-darker.css'
+import { Resizable } from 're-resizable'
 import React, { Component, ReactElement } from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { connect } from 'react-redux'
+import 'react-resizable/css/styles.css'
 import { bindActionCreators, Dispatch } from 'redux'
 import { Button } from 'semantic-ui-react'
 import { CodeRender } from '../codeRender'
@@ -93,7 +96,15 @@ class CodeEditor extends Component<any, any> {
 				<div className='code-editor-container__code-render'>
 					<CodeRender code={this.state.toRender} />
 				</div>
-				<div className='code-editor-container__code-editor'>
+				<Resizable
+					className='code-editor-container__code-editor'
+					defaultSize={{
+						width: '100%',
+						height: '40vh',
+					}}
+					minHeight={50}
+					minWidth='100%'
+				>
 					<CodeMirror
 						value={code}
 						options={options}
@@ -118,7 +129,7 @@ class CodeEditor extends Component<any, any> {
 						}}
 						disabled={!this.state.code}
 					/>
-				</div>
+				</Resizable>
 			</div>
 		)
 	}

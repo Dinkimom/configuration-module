@@ -16,7 +16,7 @@ export const App = ({ children }: IAppProps): ReactElement | null => {
 		return (
 			<>
 				<Header as='h1' className='panel-header' block={true}>
-					Страница конфигурации
+					Configuration panel
 				</Header>
 
 				<ConfigurationBlock />

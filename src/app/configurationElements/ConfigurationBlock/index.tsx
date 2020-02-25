@@ -36,7 +36,7 @@ export const ConfigurationBlock = (): ReactElement => {
 
 	return (
 		<Form className='configuration-block'>
-			<h3>Страницы приложения</h3>
+			<h3>Pages</h3>
 			<Tab
 				onTabChange={handleTabChange}
 				menu={{ fluid: true, vertical: true }}

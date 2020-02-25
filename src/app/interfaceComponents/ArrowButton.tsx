@@ -29,7 +29,7 @@ export const ArrowButton = ({
 
 	return (
 		<ConnectedElement name={name} type={'arrowButton'}>
-			<Button icon={icon} {...other} />
+			<Button icon={icon} size='medium' {...other} />
 		</ConnectedElement>
 	)
 }

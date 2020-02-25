@@ -1,9 +1,9 @@
 .app {
 	background: url('./phone.png') no-repeat;
 	background-size: 100% 100%;
-	width: 210px;
-	height: 400px;
-	padding: 47px 13px 47px;
+	width: 290px;
+	height: 550px;
+	padding: 62px 18px;
 	justify-self: center;
 }
 
