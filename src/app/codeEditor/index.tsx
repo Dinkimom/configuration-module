@@ -27,7 +27,7 @@ class CodeEditor extends Component<any, any> {
 
 	public handleMinimizeWindow = (): void => this.setState({ height: 50 })
 
-	public handleExpandWindow = (): void => this.setState({ height: '100%' })
+	public handleExpandWindow = (): void => this.setState({ height: window.window.innerHeight })
 
 	render(): ReactElement {
 		const { code } = this.state
@@ -56,6 +56,7 @@ class CodeEditor extends Component<any, any> {
 					}}
 					minHeight={50}
 					minWidth='100%'
+					maxHeight={window.window.innerHeight}
 				>
 					<CodeMirror
 						value={code}
@@ -71,7 +72,7 @@ class CodeEditor extends Component<any, any> {
 						<Button
 							icon='expand'
 							onClick={this.handleExpandWindow}
-							disabled={this.state.height === '100%'}
+							disabled={this.state.height === window.window.innerHeight}
 							inverted={true}
 						/>
 						<Button
