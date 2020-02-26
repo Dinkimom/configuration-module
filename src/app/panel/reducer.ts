@@ -70,7 +70,6 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
 				break
 
 			case PANEL_SET_FIELD_VALUE:
-				console.log(action)
 				newState.pages[action.payload.page][action.payload.name].value = action.payload.value
 				break
 		}

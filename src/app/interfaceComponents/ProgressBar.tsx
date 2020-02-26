@@ -6,7 +6,6 @@ import { ConnectedElement } from './ConnectedElement'
 
 export const ProgressBar = ({ name }: IBaseElementProps): ReactElement => {
 	const isVisible = useFieldValue(name)
-	console.log(isVisible)
 
 	return (
 		<ConnectedElement name={name} type='optional'>

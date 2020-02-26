@@ -19,17 +19,34 @@
 
 .code-editor-container__code-editor {
 	background-color: rgb(41, 41, 41);
-	padding-right: 20px;
-	padding-top: 20px;
+	padding-right: 10px;
+	padding-top: 50px;
 	padding-left: 10px;
 }
 
-.code-editor-container__code-editor button {
+#GenerateButton {
 	border-radius: 0 !important;
 	position: absolute;
 	z-index: 10000;
-	bottom: 43px;
-	left: 0px;
+	bottom: 8px;
+	left: 10px;
+}
+
+.code-editor-container__code-editor .buttons {
+	position: absolute;
+	right: 50px;
+	z-index: 10000;
+	top: 7px;
+	right: 10px;
+}
+
+.code-editor-container__code-editor button {
+	border: none !important;
+}
+
+.code-editor-container__code-editor .buttons button {
+	border-radius: 0 !important;
+	margin-left: 5px !important;
 }
 
 .code-editor div {

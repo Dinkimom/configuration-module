@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import 'react-resizable/css/styles.css'
 import { bindActionCreators, Dispatch } from 'redux'
 import { Button } from 'semantic-ui-react'
+import { codeExample } from '../../shared/constants/codeExample'
 import { CodeRender } from '../codeRender'
 import { panelActions } from '../panel/actions'
 import './index.css'
@@ -18,71 +19,15 @@ class CodeEditor extends Component<any, any> {
 	constructor(props: any) {
 		super(props)
 		this.state = {
-			code: `
-			<App>
-				<Page name="Home page">
-					<Header>
-						<ArrowButton name="Prev" direction="left" floated="left" />
-						<ArrowButton name="Next" direction="right" floated="right" />
-					</Header>
-					<Content>
-						<Grid columns={1} divided>
-							<Grid.Row>
-							<Grid.Column>
-								<Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
-							</Grid.Column>
-							</Grid.Row>
-							<Grid.Row>
-							<Grid.Column>
-								<Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
-							</Grid.Column>
-							</Grid.Row>
-							<Grid.Row>
-							<Grid.Column>
-								<Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' />
-							</Grid.Column>
-							</Grid.Row>
-						</Grid>
-					</Content>
-					<Footer>
-						<ProgressBar name="Progress bar" />
-					</Footer> 
-				</Page>
-
-					<Page name="Friends">
-					<Header>
-						<ProgressBar name="Progress bar" />
-					</Header>
-					<Content>
-						<List selection verticalAlign='middle'>
-							<List.Item>
-							<Image avatar src='https://react.semantic-ui.com/images/wireframe/image.png' />
-							<List.Content>
-								<List.Header>Helen</List.Header>
-							</List.Content>
-							</List.Item>
-							<List.Item>
-							<Image avatar src='https://react.semantic-ui.com/images/wireframe/image.png' />
-							<List.Content>
-								<List.Header>Christian</List.Header>
-							</List.Content>
-							</List.Item>
-							<List.Item>
-							<Image avatar src='https://react.semantic-ui.com/images/wireframe/image.png' />
-							<List.Content>
-								<List.Header>Daniel</List.Header>
-							</List.Content>
-							</List.Item>
-						</List>
-					</Content>
-					<Footer secondary>
-					</Footer> 
-				</Page>
-            </App>
-            `,
+			code: codeExample,
 			toRender: '',
+			height: '40vh',
 		}
 	}
+
+	public handleMinimizeWindow = (): void => this.setState({ height: 50 })
+
+	public handleExpandWindow = (): void => this.setState({ height: '100%' })
 
 	render(): ReactElement {
 		const { code } = this.state
@@ -102,6 +47,13 @@ class CodeEditor extends Component<any, any> {
 						width: '100%',
 						height: '40vh',
 					}}
+					size={{ width: '100%', height: this.state.height }}
+					onResizeStop={(e, direction, ref, d) => {
+						this.setState((state: any) => ({
+							width: state.width + d.width,
+							height: state.height + d.height,
+						}))
+					}}
 					minHeight={50}
 					minWidth='100%'
 				>
@@ -115,6 +67,20 @@ class CodeEditor extends Component<any, any> {
 							this.setState({ code: value })
 						}}
 					/>
+					<Button.Group>
+						<Button
+							icon='expand'
+							onClick={this.handleExpandWindow}
+							disabled={this.state.height === '100%'}
+							inverted={true}
+						/>
+						<Button
+							icon='window minimize'
+							onClick={this.handleMinimizeWindow}
+							disabled={this.state.height === 50}
+							inverted={true}
+						/>
+					</Button.Group>
 
 					<Button
 						icon='play'
@@ -127,7 +93,8 @@ class CodeEditor extends Component<any, any> {
 								toRender: state.code,
 							}))
 						}}
-						disabled={!this.state.code}
+						disabled={!this.state.code || this.state.code === this.state.toRender}
+						id='GenerateButton'
 					/>
 				</Resizable>
 			</div>

@@ -21,7 +21,6 @@ export const ConfigurationElement = ({
 	const { value } = useSelector((state: IRootState) => state.panel.pages[page][name])
 
 	const handleChange = (evt: any, data: any): void => {
-		console.log(data)
 		dispatch(panelActions.setFieldValue({ value: data.value || data.checked, name, page }))
 	}
 
