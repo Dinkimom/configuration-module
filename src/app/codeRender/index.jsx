@@ -14,16 +14,25 @@ import { ProgressBar } from '../interfaceComponents/ProgressBar'
 import './index.css'
 
 export const CodeRender = ({ code }) => {
-	try {
-		return (
-			<JsxParser
-				renderError={error => console.error(error)}
-				components={{ ...semantic, App, Page, ArrowButton, ProgressBar, Header, Footer, Content }}
-				jsx={code}
-			/>
-		)
-	} catch (error) {
-		console.error(error)
-		return null
-	}
+  try {
+    return (
+      <JsxParser
+        renderError={error => console.error(error)}
+        components={{
+          ...semantic,
+          App,
+          Page,
+          ArrowButton,
+          ProgressBar,
+          Header,
+          Footer,
+          Content,
+        }}
+        jsx={code}
+      />
+    )
+  } catch (error) {
+    console.error(error)
+    return null
+  }
 }

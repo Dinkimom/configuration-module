@@ -1,6 +1,4 @@
 import React, { ReactElement } from 'react'
-import CodeEditor from './codeEditor'
+import { Panel } from './panel'
 
-export const App = (): ReactElement => (
-  <CodeEditor />
-)
+export const App = (): ReactElement => <Panel />

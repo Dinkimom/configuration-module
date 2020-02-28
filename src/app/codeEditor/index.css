@@ -1,54 +1,47 @@
 .code-editor-container {
-	display: grid;
-	grid-template-rows: 2fr auto;
-	height: 100vh;
-	overflow: hidden;
+  display: grid;
+  grid-template-rows: 2fr auto;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .code-editor-container__code-render {
-	overflow-y: scroll;
+  overflow-y: scroll;
 }
 
 .code-editor-container__code-editor .react-codemirror2 {
-	height: 100%;
+  height: 100%;
 }
 
 .CodeMirror {
-	height: calc(100% - 50px);
+  height: calc(100% - 50px);
 }
 
 .code-editor-container__code-editor {
-	background-color: rgb(41, 41, 41);
-	padding-right: 10px;
-	padding-top: 50px;
-	padding-left: 10px;
+  background-color: rgb(41, 41, 41);
+  padding-left: 10px;
+  padding-top: 40px;
 }
 
-#GenerateButton {
-	border-radius: 0 !important;
-	position: absolute;
-	z-index: 10000;
-	bottom: 8px;
-	left: 10px;
+.code-editor__window-buttons {
+  position: absolute;
+  z-index: 10000;
+  top: 6px;
+  right: 10px;
 }
 
-.code-editor-container__code-editor .buttons {
-	position: absolute;
-	right: 50px;
-	z-index: 10000;
-	top: 7px;
-	right: 10px;
+.buttons button {
+  border-radius: 0 !important;
+  margin-left: 5px !important;
 }
 
-.code-editor-container__code-editor button {
-	border: none !important;
-}
-
-.code-editor-container__code-editor .buttons button {
-	border-radius: 0 !important;
-	margin-left: 5px !important;
+.code-editor__control-buttons {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  z-index: 10000;
 }
 
 .code-editor div {
-	min-width: 100px;
+  min-width: 100px;
 }
