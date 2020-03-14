@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox, Dropdown } from 'semantic-ui-react'
 import { IRootState } from '../../store/state'
-import { panelActions } from '../panel/actions'
+import { panelActions } from '../Panel/actions'
 
 export type ConfigurationElement = 'arrowButton' | 'optional'
 

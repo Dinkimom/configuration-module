@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import { PageContext } from '../../app/interfaceComponents/Page'
+import { PageContext } from '../../app/interfaceElements/Page'
 
 export const usePageContext = (): string => {
-    const { page } = useContext(PageContext)
+  const { page } = useContext(PageContext)
 
-    return page
+  return page
 }

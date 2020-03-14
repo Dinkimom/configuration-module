@@ -3,7 +3,7 @@ import React, { ReactElement, ReactNode } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Tab } from 'semantic-ui-react'
 import { IRootState } from '../../../store/state'
-import { panelActions } from '../../panel/actions'
+import { panelActions } from '../../Panel/actions'
 import { ConfigurationElement } from '../ConfigurationElement'
 import './index.css'
 

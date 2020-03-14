@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Popup } from 'semantic-ui-react'
 import { usePageContext } from '../../shared/hooks/usePageContext'
 import { IRootState } from '../../store/state'
-import { panelActions } from '../panel/actions'
+import { panelActions } from '../Panel/actions'
 
 interface IConnectedElementProps {
   name: string

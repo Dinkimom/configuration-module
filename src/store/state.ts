@@ -1,5 +1,5 @@
-import { IPanelState } from '../app/panel/state'
-import { IModalCreateState } from '../app/modalCreate/state'
+import { IPanelState } from '../app/Panel/state'
+import { IModalCreateState } from '../app/ModalCreate/state'
 
 export interface IRootState {
   panel: IPanelState

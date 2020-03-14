@@ -39,7 +39,7 @@
   position: absolute;
   bottom: 5px;
   left: 5px;
-  z-index: 10000;
+  z-index: 1000;
 }
 
 .code-editor div {

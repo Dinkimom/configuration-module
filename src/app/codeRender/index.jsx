@@ -4,14 +4,13 @@
 import React from 'react'
 import JsxParser from 'react-jsx-parser'
 import * as semantic from 'semantic-ui-react'
-import { App } from '../interfaceComponents/App'
-import { ArrowButton } from '../interfaceComponents/ArrowButton'
-import { Content } from '../interfaceComponents/Content'
-import { Footer } from '../interfaceComponents/Footer'
-import { Header } from '../interfaceComponents/Header'
-import { Page } from '../interfaceComponents/Page'
-import { ProgressBar } from '../interfaceComponents/ProgressBar'
-import './index.css'
+import { App } from '../interfaceElements/App'
+import { ArrowButton } from '../interfaceElements/ArrowButton'
+import { Content } from '../interfaceElements/Content'
+import { Footer } from '../interfaceElements/Footer'
+import { Header } from '../interfaceElements/Header'
+import { Page } from '../interfaceElements/Page'
+import { ProgressBar } from '../interfaceElements/ProgressBar'
 
 export const CodeRender = ({ code }) => {
   try {
