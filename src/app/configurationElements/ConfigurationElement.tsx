@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Checkbox, Dropdown } from 'semantic-ui-react'
+import { Checkbox, Dropdown, Form } from 'semantic-ui-react'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
 
@@ -17,6 +17,8 @@ export const ConfigurationElement = ({
   page,
   type,
 }: IConfigurationElementProps): ReactElement | null => {
+  let component = null
+
   const dispatch = useDispatch()
   const { value } = useSelector(
     (state: IRootState) => state.panel.pages[page][name],
@@ -42,7 +44,7 @@ export const ConfigurationElement = ({
 
   switch (type) {
     case 'arrowButton':
-      return (
+      component = (
         <Dropdown
           onChange={handleChange}
           selection={true}
@@ -57,9 +59,10 @@ export const ConfigurationElement = ({
           onBlur={handleBlur}
         />
       )
+      break
 
     case 'optional':
-      return (
+      component = (
         <Checkbox
           onChange={handleChange}
           checked={value}
@@ -69,8 +72,16 @@ export const ConfigurationElement = ({
           onBlur={handleBlur}
         />
       )
+      break
 
     default:
       return null
   }
+
+  return (
+    <Form.Field>
+      <label>{name}</label>
+      {component}
+    </Form.Field>
+  )
 }

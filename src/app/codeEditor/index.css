@@ -20,7 +20,15 @@
 .code-editor-container__code-editor {
   background-color: rgb(41, 41, 41);
   padding-left: 10px;
-  padding-top: 40px;
+  padding-top: 38px;
+}
+
+.code-editor__tittle {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  color: white;
+  font-size: 18px;
 }
 
 .code-editor__window-buttons {

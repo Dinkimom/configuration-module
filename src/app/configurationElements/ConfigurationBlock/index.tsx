@@ -20,23 +20,21 @@ export const ConfigurationBlock = (): ReactElement => {
     )
   }
 
-  const panes = Object.keys(blocks).map((blockKey, blockIndex) => ({
+  const panes = Object.keys(blocks).map(blockKey => ({
     menuItem: blockKey,
     render: (): ReactNode => (
       <Tab.Pane
         active={blockKey === currentPage}
         attached={false}
-        key={blockIndex}
+        key={blockKey}
       >
         {Object.keys(blocks[blockKey]).map((elementKey, elementIndex) => (
-          <Form.Field key={elementIndex}>
-            <label>{elementKey}</label>
-            <ConfigurationElement
-              name={elementKey}
-              page={blockKey}
-              type={blocks[blockKey][elementKey].type}
-            />
-          </Form.Field>
+          <ConfigurationElement
+            name={elementKey}
+            page={blockKey}
+            type={blocks[blockKey][elementKey].type}
+            key={elementIndex}
+          />
         ))}
       </Tab.Pane>
     ),

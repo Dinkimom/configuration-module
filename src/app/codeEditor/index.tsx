@@ -1,4 +1,8 @@
+import 'codemirror/addon/edit/closebrackets'
+import 'codemirror/addon/lint/lint'
+import 'codemirror/addon/lint/lint.css'
 import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/javascript/javascript'
 import 'codemirror/theme/material-darker.css'
 import { Resizable } from 're-resizable'
 import React, { ReactElement, useState } from 'react'
@@ -13,12 +17,17 @@ import { modalCreateActions } from '../ModalCreate/actions'
 import { panelActions } from '../Panel/actions'
 import './index.css'
 require('codemirror/mode/jsx/jsx')
+require('codemirror/addon/lint/lint')
 
 const minHeight = 45
 const options = {
   mode: 'jsx',
   theme: 'material-darker',
+  gutters: ['CodeMirror-lint-markers'],
+  styleActiveLine: true,
   lineNumbers: true,
+  line: true,
+  lint: true,
 }
 
 export const CodeEditor = (): ReactElement => {
@@ -30,7 +39,7 @@ export const CodeEditor = (): ReactElement => {
 
   const handleOpenModal = (): Action => dispatch(modalCreateActions.openModal())
   const handleMinimizeWindow = (): void => changeHeight(minHeight)
-  const handleExpandWindow = (): void => changeHeight(window.window.innerHeight)
+  const handleExpandWindow = (): void => changeHeight('100vh')
 
   return (
     <div className='code-editor-container'>
@@ -39,10 +48,6 @@ export const CodeEditor = (): ReactElement => {
       </div>
       <Resizable
         className='code-editor-container__code-editor'
-        defaultSize={{
-          width: '100%',
-          height: '40vh',
-        }}
         size={{ width: '100%', height }}
         onResizeStop={(e, direction, ref, d) =>
           changeHeight(Number(height) + d.height)
@@ -51,23 +56,23 @@ export const CodeEditor = (): ReactElement => {
         minWidth='100%'
         maxHeight={window.window.innerHeight}
       >
+        <p className='code-editor__tittle'>CP IDE</p>
         <CodeMirror
           value={code}
           options={options}
-          onChange={(editor, data, value) => changeCode(value)}
+          onChange={(editor, data, value) => {
+            console.log(editor, data)
+            changeCode(value)
+          }}
           onBeforeChange={(editor, data, value) => changeCode(value)}
         />
+
         <Button.Group size='mini' className='code-editor__window-buttons'>
-          <Button
-            icon='expand'
-            onClick={handleExpandWindow}
-            disabled={height === window.window.innerHeight}
-            inverted={true}
-          />
+          <Button icon='question' inverted={true} />
+          <Button icon='expand' onClick={handleExpandWindow} inverted={true} />
           <Button
             icon='window minimize'
             onClick={handleMinimizeWindow}
-            disabled={height === minHeight}
             inverted={true}
           />
         </Button.Group>

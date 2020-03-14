@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable react/jsx-filename-extension */
-import React from 'react'
+import React, { memo } from 'react'
 import JsxParser from 'react-jsx-parser'
 import * as semantic from 'semantic-ui-react'
 import { App } from '../interfaceElements/App'
@@ -12,7 +12,7 @@ import { Header } from '../interfaceElements/Header'
 import { Page } from '../interfaceElements/Page'
 import { ProgressBar } from '../interfaceElements/ProgressBar'
 
-export const CodeRender = ({ code }) => {
+const UnmemorizedCodeRender = ({ code }) => {
   try {
     return (
       <JsxParser
@@ -35,3 +35,5 @@ export const CodeRender = ({ code }) => {
     return null
   }
 }
+
+export const CodeRender = memo(UnmemorizedCodeRender)
