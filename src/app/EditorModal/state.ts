@@ -1,4 +1,4 @@
-export interface IModalCreateState {
+export interface IEditorModalState {
   isOpened: boolean
   data: {
     id: string

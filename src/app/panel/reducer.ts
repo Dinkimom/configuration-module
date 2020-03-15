@@ -12,6 +12,7 @@ import {
 import { IPanelState } from './state'
 
 const initialState: IPanelState = {
+  online: false,
   currentPage: null,
   pages: {},
   focusedField: undefined,
@@ -68,10 +69,7 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
         break
 
       case PANEL_CLEAR:
-        newState = {
-          currentPage: null,
-          pages: {},
-        }
+        newState = { ...initialState }
         break
 
       case PANEL_SET_FIELD_VALUE:

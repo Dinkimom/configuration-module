@@ -1,5 +1,3 @@
-import 'codemirror/addon/edit/closebrackets'
-import 'codemirror/addon/lint/lint'
 import 'codemirror/addon/lint/lint.css'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/javascript/javascript'
@@ -13,7 +11,7 @@ import { Action } from 'redux'
 import { Button } from 'semantic-ui-react'
 import { codeExample } from '../../shared/constants/codeExample'
 import { CodeRender } from '../CodeRender'
-import { modalCreateActions } from '../ModalCreate/actions'
+import { editorModalActions } from '../EditorModal/actions'
 import { panelActions } from '../Panel/actions'
 import './index.css'
 require('codemirror/mode/jsx/jsx')
@@ -37,7 +35,7 @@ export const CodeEditor = (): ReactElement => {
 
   const dispatch = useDispatch()
 
-  const handleOpenModal = (): Action => dispatch(modalCreateActions.openModal())
+  const handleOpenModal = (): Action => dispatch(editorModalActions.openModal())
   const handleMinimizeWindow = (): void => changeHeight(minHeight)
   const handleExpandWindow = (): void => changeHeight('100vh')
 
@@ -60,11 +58,11 @@ export const CodeEditor = (): ReactElement => {
         <CodeMirror
           value={code}
           options={options}
-          onChange={(editor, data, value) => {
+          onChange={(editor, data, value) => changeCode(value)}
+          onBeforeChange={(editor, data, value) => {
             console.log(editor, data)
             changeCode(value)
           }}
-          onBeforeChange={(editor, data, value) => changeCode(value)}
         />
 
         <Button.Group size='mini' className='code-editor__window-buttons'>

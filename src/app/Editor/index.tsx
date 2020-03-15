@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react'
 import { CodeEditor } from '../CodeEditor'
-import { ModalCreate } from '../ModalCreate'
+import { EditorModal } from '../EditorModal'
 
 export const Editor = (): ReactElement => (
   <>
     <CodeEditor />
-    <ModalCreate />
+    <EditorModal />
   </>
 )

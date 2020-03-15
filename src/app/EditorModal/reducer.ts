@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { IActionPayloaded } from '../../store/IAction'
 import { IReducerPayloaded } from '../../store/IReducer'
-import { IModalCreateState } from './state'
-import { MODAL_CREATE_OPEN_MODAL, MODAL_CREATE_CLOSE_MODAL } from './actions'
+import { IEditorModalState } from './state'
+import { EDITOR_MODAL_OPEN_MODAL, EDITOR_MODAL_CLOSE_MODAL } from './actions'
 
-const initialState: IModalCreateState = {
+const initialState: IEditorModalState = {
   isOpened: false,
   data: {
     id: '',
@@ -13,28 +13,28 @@ const initialState: IModalCreateState = {
   },
 }
 
-export class ModalCreateReducer
-  implements IReducerPayloaded<IModalCreateState> {
+export class EditorModalReducer
+  implements IReducerPayloaded<IEditorModalState> {
   constructor() {
     this.reduce = this.reduce.bind(this)
   }
 
   public static Create(): any {
-    const reducer = new ModalCreateReducer()
+    const reducer = new EditorModalReducer()
     return reducer.reduce
   }
 
   public reduce(
-    state: IModalCreateState = initialState,
+    state: IEditorModalState = initialState,
     action: IActionPayloaded<any>,
-  ): IModalCreateState {
+  ): IEditorModalState {
     let newState = { ...state }
 
     switch (action.type) {
-      case MODAL_CREATE_OPEN_MODAL:
+      case EDITOR_MODAL_OPEN_MODAL:
         newState.isOpened = true
         break
-      case MODAL_CREATE_CLOSE_MODAL:
+      case EDITOR_MODAL_CLOSE_MODAL:
         newState = { ...initialState }
         break
     }

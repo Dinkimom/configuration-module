@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Action } from 'redux'
 import { Button, Modal } from 'semantic-ui-react'
 import { IRootState } from '../../store/state'
-import { modalCreateActions } from './actions'
+import { editorModalActions } from './actions'
 
-export const ModalCreate = (): ReactElement => {
-  const { isOpened } = useSelector((state: IRootState) => state.modalCreate)
+export const EditorModal = (): ReactElement => {
+  const { isOpened } = useSelector((state: IRootState) => state.editorModal)
   const dispatch = useDispatch()
-  const handleClose = (): Action => dispatch(modalCreateActions.closeModal())
+  const handleClose = (): Action => dispatch(editorModalActions.closeModal())
 
   return (
     <Modal open={isOpened} onClose={handleClose}>
