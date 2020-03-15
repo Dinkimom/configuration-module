@@ -1,11 +1,51 @@
 {
-  "name": "backend",
+  "name": "expresstypescript",
   "version": "1.0.0",
-  "description": "Server API for a Configuration Module",
-  "main": "index.js",
+  "description": "Develop and ExpressJS webserver using TypeScript",
+  "main": "build/start.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "none",
+    "start-dev": "nodemon --config \"./util/nodemon.json\"/",
+    "build": "rm -rf ./build && tsc",
+    "start": "node build/start.js"
   },
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanpmaxwell/ExpressTypeScript.git"
+  },
+  "keywords": [
+    "Express",
+    "TypeScript",
+    "ts",
+    "ex",
+    "expressjs",
+    "overnight",
+    "overnightjs",
+    "node",
+    "web",
+    "webserver",
+    "server"
+  ],
+  "author": "sean maxwell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/seanpmaxwell/ExpressTypeScript/issues"
+  },
+  "homepage": "https://github.com/seanpmaxwell/ExpressTypeScript#readme",
+  "dependencies": {
+    "@overnightjs/core": "^1.6.4",
+    "@overnightjs/logger": "^1.1.4",
+    "@types/mongodb": "^3.5.2",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongodb": "^3.5.5"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "@types/node": "^11.13.4",
+    "nodemon": "^1.18.11",
+    "ts-node": "^8.1.0",
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.3"
+  }
 }
