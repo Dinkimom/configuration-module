@@ -1,6 +1,5 @@
 import 'codemirror/addon/lint/lint.css'
 import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/javascript/javascript'
 import 'codemirror/theme/material-darker.css'
 import { Resizable } from 're-resizable'
 import React, { ReactElement, useState } from 'react'
@@ -24,6 +23,7 @@ const options = {
   gutters: ['CodeMirror-lint-markers'],
   styleActiveLine: true,
   lineNumbers: true,
+  smartIndent: true,
   line: true,
   lint: true,
 }
@@ -59,10 +59,7 @@ export const CodeEditor = (): ReactElement => {
           value={code}
           options={options}
           onChange={(editor, data, value) => changeCode(value)}
-          onBeforeChange={(editor, data, value) => {
-            console.log(editor, data)
-            changeCode(value)
-          }}
+          onBeforeChange={(editor, data, value) => changeCode(value)}
         />
 
         <Button.Group size='mini' className='code-editor__window-buttons'>

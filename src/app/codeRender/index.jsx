@@ -12,28 +12,30 @@ import { Header } from '../interfaceElements/Header'
 import { Page } from '../interfaceElements/Page'
 import { ProgressBar } from '../interfaceElements/ProgressBar'
 
-const UnmemorizedCodeRender = ({ code }) => {
-  try {
-    return (
-      <JsxParser
-        renderError={error => console.error(error)}
-        components={{
-          ...semantic,
-          App,
-          Page,
-          ArrowButton,
-          ProgressBar,
-          Header,
-          Footer,
-          Content,
-        }}
-        jsx={code}
-      />
-    )
-  } catch (error) {
-    console.error(error)
-    return null
-  }
-}
+const UnmemorizedCodeRender = ({ code }) => (
+  <JsxParser
+    renderError={error => (
+      <semantic.Segment padded={true} basic={true}>
+        <semantic.Message
+          icon='warning circle'
+          size='big'
+          negative={true}
+          content={error.error}
+        />
+      </semantic.Segment>
+    )}
+    components={{
+      ...semantic,
+      App,
+      Page,
+      ArrowButton,
+      ProgressBar,
+      Header,
+      Footer,
+      Content,
+    }}
+    jsx={code}
+  />
+)
 
 export const CodeRender = memo(UnmemorizedCodeRender)
