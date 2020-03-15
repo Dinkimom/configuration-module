@@ -8,6 +8,7 @@ import {
   PANEL_SET_CURRENT_PAGE,
   PANEL_SET_FIELD_VALUE,
   PANEL_SET_FOCUSED_FIELD,
+  PANEL_SET_MODE,
 } from './actions'
 import { IPanelState } from './state'
 
@@ -79,6 +80,10 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
 
       case PANEL_SET_FOCUSED_FIELD:
         newState.focusedField = action.payload.name
+        break
+
+      case PANEL_SET_MODE:
+        newState.online = action.payload.online
         break
     }
 

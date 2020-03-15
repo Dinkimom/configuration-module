@@ -11,6 +11,7 @@ const initialState: IEditorModalState = {
     name: '',
     code: '',
   },
+  error: '',
 }
 
 export class EditorModalReducer

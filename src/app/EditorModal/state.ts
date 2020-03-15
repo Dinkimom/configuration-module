@@ -5,4 +5,5 @@ export interface IEditorModalState {
     name: string
     code: string
   }
+  error: string
 }

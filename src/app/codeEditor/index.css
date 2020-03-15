@@ -27,13 +27,15 @@
   position: absolute;
   top: 6px;
   left: 50%;
-  color: white;
+  transform: translateX(-50%);
+  color: grey;
   font-size: 18px;
+  font-weight: bold;
 }
 
 .code-editor__window-buttons {
   position: absolute;
-  z-index: 10000;
+  z-index: 1000;
   top: 6px;
   right: 10px;
 }

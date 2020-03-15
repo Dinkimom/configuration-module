@@ -68,8 +68,8 @@ export const CodeEditor = (): ReactElement => {
         maxHeight={window.window.innerHeight}
       >
         <p className='code-editor__tittle'>
+          Configuration Panel IDE
           <Icon name='code' />
-          CP IDE
         </p>
         <CodeMirror
           value={code}

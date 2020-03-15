@@ -1,30 +1,30 @@
 import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Action } from 'redux'
-import { Button, Modal } from 'semantic-ui-react'
+import { Button, Form, Modal, Message } from 'semantic-ui-react'
 import { IRootState } from '../../store/state'
 import { editorModalActions } from './actions'
 
 export const EditorModal = (): ReactElement => {
-  const { isOpened } = useSelector((state: IRootState) => state.editorModal)
+  const { isOpened, error } = useSelector(
+    (state: IRootState) => state.editorModal,
+  )
   const dispatch = useDispatch()
   const handleClose = (): Action => dispatch(editorModalActions.closeModal())
 
   return (
-    <Modal open={isOpened} onClose={handleClose}>
-      <Modal.Content></Modal.Content>
-      <Modal.Actions>
-        <Button color='black' onClick={handleClose}>
-          No, I won't
-        </Button>
-        <Button
-          positive
-          icon='checkmark'
-          labelPosition='right'
-          content='Yes, I want'
-          onClick={handleClose}
-        />
-      </Modal.Actions>
+    <Modal size='tiny' open={isOpened} onClose={handleClose}>
+      <Modal.Header>Create a new one CP</Modal.Header>
+      <Modal.Content>
+        <Form error={Boolean(error)}>
+          <Form.Input name='name' label='name' required={true} fluid={true} />
+          <Message error={true} header='Action Forbidden' content={error} />
+          <Button type='submit' primary={true}>
+            Create
+          </Button>
+          <Button onClick={handleClose}>Cancel</Button>
+        </Form>
+      </Modal.Content>
     </Modal>
   )
 }
