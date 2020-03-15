@@ -2,16 +2,17 @@ import 'codemirror/addon/lint/lint.css'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/material-darker.css'
 import { Resizable } from 're-resizable'
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import 'react-resizable/css/styles.css'
 import { Action } from 'redux'
-import { Button } from 'semantic-ui-react'
-import { codeExample } from '../../shared/constants/codeExample'
+import { Button, Icon } from 'semantic-ui-react'
+import { IRootState } from '../../store/state'
 import { CodeRender } from '../CodeRender'
 import { editorModalActions } from '../EditorModal/actions'
 import { panelActions } from '../Panel/actions'
+import { codeEditorActions } from './actions'
 import './index.css'
 require('codemirror/mode/jsx/jsx')
 require('codemirror/addon/lint/lint')
@@ -29,15 +30,23 @@ const options = {
 }
 
 export const CodeEditor = (): ReactElement => {
-  const [code, changeCode] = useState(codeExample)
-  const [toRender, changeToRender] = useState('')
-  const [height, changeHeight] = useState<string | number>('40vh')
+  const { code, toRender, height, error } = useSelector(
+    (state: IRootState) => state.codeEditor,
+  )
 
   const dispatch = useDispatch()
 
   const handleOpenModal = (): Action => dispatch(editorModalActions.openModal())
-  const handleMinimizeWindow = (): void => changeHeight(minHeight)
-  const handleExpandWindow = (): void => changeHeight('100vh')
+  const handleMinimizeWindow = (): Action =>
+    dispatch(codeEditorActions.changeHeight({ height: minHeight }))
+  const handleExpandWindow = (): Action =>
+    dispatch(codeEditorActions.changeHeight({ height: '100vh' }))
+  const handleCodeChange = (editor: any, data: any, value: string): Action =>
+    dispatch(
+      codeEditorActions.changeCode({
+        code: value,
+      }),
+    )
 
   return (
     <div className='code-editor-container'>
@@ -48,18 +57,25 @@ export const CodeEditor = (): ReactElement => {
         className='code-editor-container__code-editor'
         size={{ width: '100%', height }}
         onResizeStop={(e, direction, ref, d) =>
-          changeHeight(Number(height) + d.height)
+          dispatch(
+            codeEditorActions.changeHeight({
+              height: Number(height) + d.height,
+            }),
+          )
         }
         minHeight={minHeight}
         minWidth='100%'
         maxHeight={window.window.innerHeight}
       >
-        <p className='code-editor__tittle'>CP IDE</p>
+        <p className='code-editor__tittle'>
+          <Icon name='code' />
+          CP IDE
+        </p>
         <CodeMirror
           value={code}
           options={options}
-          onChange={(editor, data, value) => changeCode(value)}
-          onBeforeChange={(editor, data, value) => changeCode(value)}
+          onChange={handleCodeChange}
+          onBeforeChange={handleCodeChange}
         />
 
         <Button.Group size='mini' className='code-editor__window-buttons'>
@@ -80,7 +96,7 @@ export const CodeEditor = (): ReactElement => {
             labelPosition='left'
             onClick={() => {
               dispatch(panelActions.clear())
-              changeToRender(code)
+              dispatch(codeEditorActions.changeToRender({ toRender: code }))
             }}
             disabled={!code || code === toRender}
           />
@@ -89,7 +105,7 @@ export const CodeEditor = (): ReactElement => {
             icon='add'
             content='Create'
             labelPosition='left'
-            disabled={!toRender}
+            disabled={!toRender || error}
             onClick={handleOpenModal}
           />
         </Button.Group>
