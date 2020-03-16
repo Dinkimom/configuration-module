@@ -38,6 +38,7 @@
     "@types/mongodb": "^3.5.2",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "express-validator": "^6.4.0",
     "mongodb": "^3.5.5"
   },
   "devDependencies": {
