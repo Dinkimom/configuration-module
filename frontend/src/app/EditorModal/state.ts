@@ -1,9 +1,10 @@
+import { FormErrors } from '../../shared/types/FormErrors'
+
 export interface IEditorModalState {
   isOpened: boolean
-  data: {
-    id: string
-    name: string
-    code: string
+  error: {
+    msg: string
+    errors: FormErrors
   }
-  error: string
+  isPending: boolean
 }

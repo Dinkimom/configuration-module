@@ -1,15 +1,9 @@
 import { ConfigurationElement } from '../configurationElements/ConfigurationElement'
+import { ISettings } from '../../shared/types/ISettings'
 
 export interface IPanelState {
   online: boolean
   currentPage: null | string
-  pages: {
-    [key: string]: {
-      [key: string]: {
-        value: any
-        type: ConfigurationElement
-      }
-    }
-  }
+  pages: ISettings
   focusedField?: string
 }

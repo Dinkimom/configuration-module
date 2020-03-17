@@ -2,16 +2,20 @@
 import { IActionPayloaded } from '../../store/IAction'
 import { IReducerPayloaded } from '../../store/IReducer'
 import { IEditorModalState } from './state'
-import { EDITOR_MODAL_OPEN_MODAL, EDITOR_MODAL_CLOSE_MODAL } from './actions'
+import {
+  EDITOR_MODAL_OPEN_MODAL,
+  EDITOR_MODAL_CLOSE_MODAL,
+  EDITOR_MODAL_FAILURE,
+  EDITOR_MODAL_SET_PENDING,
+} from './actions'
 
 const initialState: IEditorModalState = {
   isOpened: false,
-  data: {
-    id: '',
-    name: '',
-    code: '',
+  isPending: false,
+  error: {
+    msg: '',
+    errors: [],
   },
-  error: '',
 }
 
 export class EditorModalReducer
@@ -37,6 +41,12 @@ export class EditorModalReducer
         break
       case EDITOR_MODAL_CLOSE_MODAL:
         newState = { ...initialState }
+        break
+      case EDITOR_MODAL_SET_PENDING:
+        newState.isPending = action.payload.flag
+        break
+      case EDITOR_MODAL_FAILURE:
+        newState.error = { ...action.payload }
         break
     }
 

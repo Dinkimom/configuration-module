@@ -35,8 +35,10 @@
   "dependencies": {
     "@overnightjs/core": "^1.6.4",
     "@overnightjs/logger": "^1.1.4",
+    "@types/cors": "^2.8.6",
     "@types/mongodb": "^3.5.2",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-validator": "^6.4.0",
     "mongodb": "^3.5.5"

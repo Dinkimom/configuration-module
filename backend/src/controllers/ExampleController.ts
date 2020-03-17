@@ -2,17 +2,19 @@ import {
   Controller,
   Delete,
   Get,
-  Post,
-  Put,
   Middleware,
+  Post,
+  ClassMiddleware,
 } from '@overnightjs/core'
-import { Logger } from '@overnightjs/logger'
 import { Request, Response } from 'express'
+import { check, validationResult } from 'express-validator'
 import { MongoClient } from 'mongodb'
 import { connectionString } from '../../config/db'
-import { check, validationResult } from 'express-validator'
+import { stringify } from 'querystring'
+import * as cors from 'cors'
 
 @Controller('api/applications')
+@ClassMiddleware([cors()])
 export class ExampleController {
   @Get('items')
   private getItems(req: Request, res: Response) {
@@ -66,14 +68,16 @@ export class ExampleController {
     check('descriptionCode')
       .not()
       .isEmpty(),
-    check('defaultSettings')
-      .not()
-      .isEmpty(),
   ])
   private addItem(req: Request, res: Response) {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() })
+      return res.status(422).json({
+        error: {
+          msg: 'Invalid form data',
+          errors: errors.array(),
+        },
+      })
     }
 
     try {
@@ -92,19 +96,31 @@ export class ExampleController {
         })
       })
     } catch (err) {
-      return res.status(400).json({ err })
+      return res.status(400).json({
+        error: {
+          msg: stringify(err),
+        },
+      })
     }
   }
 
-  @Delete(':msg')
-  private delMessage(req: Request, res: Response) {
+  @Delete('item/:_id')
+  private deleteApplication(req: Request, res: Response) {
     try {
-      throw new Error(req.params.msg)
-    } catch (err) {
-      Logger.Err(err, true)
-      return res.status(400).json({
-        error: req.params.msg,
+      MongoClient.connect(connectionString, (err, client) => {
+        if (err) throw err
+
+        const db = client.db('ConfigurationModule')
+        const collection = db.collection('Applications')
+
+        collection.deleteOne({ _id: req.params._id }, err => {
+          if (err) throw err
+
+          return res.status(200)
+        })
       })
+    } catch (err) {
+      return res.status(400).json({ err })
     }
   }
 }
