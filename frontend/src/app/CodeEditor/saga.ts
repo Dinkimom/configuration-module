@@ -5,6 +5,7 @@ import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 import { IActionPayloaded } from '../../store/IAction'
 import { CODE_EDITOR_LOAD_DATA, codeEditorActions } from './actions'
 import { editorModalActions } from '../EditorModal/actions'
+import { stringify } from 'querystring'
 
 const client = new ApplicationsClient()
 
@@ -28,6 +29,14 @@ export class CodeEditorApiSaga {
     const response = yield client.getItem(action.payload._id)
 
     if ((response as any).status === 200) {
+      if (stringify(response.data) === '') {
+        yield put(
+          codeEditorActions.setFailure({
+            msg: "This CP doesn't exist",
+          }),
+        )
+      }
+
       yield put(
         codeEditorActions.dataLoaded({
           name: response.data.name,

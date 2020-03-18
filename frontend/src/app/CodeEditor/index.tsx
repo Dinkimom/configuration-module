@@ -7,7 +7,15 @@ import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
 import 'react-resizable/css/styles.css'
 import { Action } from 'redux'
-import { Button, Icon, Loader, Dimmer } from 'semantic-ui-react'
+import {
+  Button,
+  Icon,
+  Loader,
+  Dimmer,
+  Header,
+  Segment,
+  Message,
+} from 'semantic-ui-react'
 import { IRootState } from '../../store/state'
 import { CodeRender } from '../CodeRender'
 import { editorModalActions } from '../EditorModal/actions'
@@ -34,9 +42,15 @@ const options = {
 export const CodeEditor = (): ReactElement => {
   const { _id, mode } = useEditorModes()
 
-  const { code, toRender, height, error, isPending, name } = useSelector(
-    (state: IRootState) => state.codeEditor,
-  )
+  const {
+    code,
+    toRender,
+    height,
+    error,
+    isPending,
+    name,
+    failure,
+  } = useSelector((state: IRootState) => state.codeEditor)
 
   const dispatch = useDispatch()
 
@@ -67,6 +81,17 @@ export const CodeEditor = (): ReactElement => {
       <Dimmer active={true} inverted={true}>
         <Loader size='medium' content='Loading CP...' />
       </Dimmer>
+    )
+  }
+
+  if (failure.msg !== '') {
+    return (
+      <Segment padded={true} basic={true}>
+        <Message size='big' negative={true}>
+          <Message.Header>{failure.msg}</Message.Header>
+        </Message>
+        {failure.actionButton && <Button>Retry</Button>}
+      </Segment>
     )
   }
 

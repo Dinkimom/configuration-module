@@ -5,4 +5,8 @@ export interface ICodeEditorState {
   error: boolean
   height: number | string
   isPending: boolean
+  failure: {
+    msg: string
+    actionButton?: boolean
+  }
 }

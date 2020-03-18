@@ -1,12 +1,13 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 import { serverEntryPoint } from '../shared/constants/serverEntryPoint'
 import { RequestsEnum } from '../shared/enums/RequestsEnum'
 import { Entity } from '../shared/types/Entity'
+import { notificationSystem } from '../app/app'
 
 export abstract class AbstractClient {
   public entity: Entity
   public URL: string
-  public axios = axios
+  public axios = axios.create({ timeout: 20000 })
 
   public constructor(entity: Entity) {
     this.entity = entity
@@ -51,6 +52,36 @@ export abstract class AbstractClient {
       default:
         return {} as AxiosRequestConfig
     }
+  }
+
+  public errorHandler = (error: AxiosError): AxiosError => {
+    // Error 😨
+    if (error.response) {
+      /*
+       * The request was made and the server responded with a
+       * status code that falls out of the range of 2xx
+       */
+      console.log(error.response.data)
+      console.log(error.response.status)
+      console.log(error.response.headers)
+    } else if (error.request) {
+      /*
+       * The request was made but no response was received, `error.request`
+       * is an instance of XMLHttpRequest in the browser and an instance
+       * of http.ClientRequest in Node.js
+       */
+      console.log(error.request)
+      notificationSystem.current.addNotification({
+        position: 'tc',
+        message: error.message,
+        level: 'error',
+      })
+    } else {
+      // Something happened in setting up the request and triggered an Error
+      console.log('Error', error.message)
+    }
+
+    return error
   }
 
   public abstract add: (...args: any) => any

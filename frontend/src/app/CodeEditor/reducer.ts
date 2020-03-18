@@ -9,6 +9,7 @@ import {
   CODE_EDITOR_SET_ERROR,
   CODE_EDITOR_SET_PENDING,
   CODE_EDITOR_DATA_LOADED,
+  CODE_EDITOR_SET_FAILURE,
 } from './actions'
 
 const initialState: ICodeEditorState = {
@@ -18,6 +19,9 @@ const initialState: ICodeEditorState = {
   height: '40vh',
   error: false,
   isPending: false,
+  failure: {
+    msg: '',
+  },
 }
 
 export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
@@ -57,6 +61,9 @@ export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
         newState.name = action.payload.name
         newState.code = action.payload.descriptionCode
         newState.toRender = action.payload.descriptionCode
+        break
+      case CODE_EDITOR_SET_FAILURE:
+        newState.failure = { ...action.payload }
         break
     }
 

@@ -6,7 +6,7 @@ export const CODE_EDITOR_SET_ERROR = 'CODE_EDITOR_SET_ERROR'
 
 export const CODE_EDITOR_LOAD_DATA = 'CODE_EDITOR_LOAD_DATA'
 export const CODE_EDITOR_DATA_LOADED = 'CODE_EDITOR_DATA_LOADED'
-export const CODE_EDITOR_FAILURE = 'CODE_EDITOR_FAILURE'
+export const CODE_EDITOR_SET_FAILURE = 'CODE_EDITOR_SET_FAILURE'
 
 export const CODE_EDITOR_SET_PENDING = 'CODE_EDITOR_SET_PENDING'
 
@@ -43,6 +43,11 @@ export const codeEditorActions = {
 
   setPending: (payload: { flag: boolean }) => ({
     type: CODE_EDITOR_SET_PENDING,
+    payload,
+  }),
+
+  setFailure: (payload: { msg: string; actionButton?: boolean }) => ({
+    type: CODE_EDITOR_SET_FAILURE,
     payload,
   }),
 }

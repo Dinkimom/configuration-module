@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, { AxiosResponse, AxiosError } from 'axios'
 import { RequestsEnum } from '../shared/enums/RequestsEnum'
 import { IApplicationDTO } from '../shared/types/IApplicationDTO'
 import { AbstractClient } from './AbstractClient'
@@ -8,18 +8,21 @@ export class ApplicationsClient extends AbstractClient {
     super('applications')
   }
 
-  public add = async (body: IApplicationDTO): Promise<AxiosResponse> => {
+  public add = async (
+    body: IApplicationDTO,
+  ): Promise<AxiosResponse | AxiosError> => {
     try {
       const response = await axios(this.helper(RequestsEnum.add, { body }))
 
       return response
     } catch (error) {
-      console.error(error)
-      return error
+      return this.errorHandler(error)
     }
   }
 
-  public update = async (data: IApplicationDTO) => {
+  public update = async (
+    data: IApplicationDTO,
+  ): Promise<AxiosResponse | AxiosError> => {
     const { _id, ...body } = data
 
     try {
@@ -29,14 +32,13 @@ export class ApplicationsClient extends AbstractClient {
 
       return response
     } catch (error) {
-      console.error(error)
-      return error
+      return this.errorHandler(error)
     }
   }
 
   public delete = async () => {}
 
-  public getItem = async (_id: string): Promise<AxiosResponse> => {
+  public getItem = async (_id: string): Promise<AxiosResponse | AxiosError> => {
     try {
       const response = await this.axios(
         this.helper(RequestsEnum.getItem, { _id }),
@@ -44,8 +46,7 @@ export class ApplicationsClient extends AbstractClient {
 
       return response
     } catch (error) {
-      console.error(error)
-      return error
+      return this.errorHandler(error)
     }
   }
 
