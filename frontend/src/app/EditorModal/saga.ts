@@ -1,14 +1,14 @@
-import { takeEvery, put, delay } from 'redux-saga/effects'
+import { put, takeEvery } from 'redux-saga/effects'
 import { safeSagaExecute } from '../../middleware/saga'
+import { ApplicationsClient } from '../../services/ApplicationsClient'
 import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 import { IActionPayloaded } from '../../store/IAction'
-import { ApplicationsClient } from '../../services/ApplicationsClient'
 import {
+  editorModalActions,
   EDITOR_MODAL_ADD,
   EDITOR_MODAL_UPDATE,
-  editorModalActions,
 } from './actions'
-import { AxiosResponse } from 'axios'
+import { codeEditorActions } from '../CodeEditor/actions'
 
 const client = new ApplicationsClient()
 
@@ -39,5 +39,23 @@ export class EditorModalApiSaga {
     yield put(editorModalActions.setPending({ flag: false }))
   }
 
-  private *update(action: IActionPayloaded<IApplicationDTO>) {}
+  private *update(action: IActionPayloaded<IApplicationDTO>) {
+    yield put(editorModalActions.setPending({ flag: true }))
+
+    const response = yield client.update(action.payload as IApplicationDTO)
+
+    if ((response as any).status === 200) {
+      yield put(
+        codeEditorActions.dataLoaded({
+          descriptionCode: response.data.descriptionCode,
+        }),
+      )
+      yield put(editorModalActions.changeName({ name: response.data.name }))
+      yield put(editorModalActions.closeModal())
+
+      alert('Added successfully!')
+    }
+
+    yield put(editorModalActions.setPending({ flag: false }))
+  }
 }

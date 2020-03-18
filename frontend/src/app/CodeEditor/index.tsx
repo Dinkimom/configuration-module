@@ -2,18 +2,20 @@ import 'codemirror/addon/lint/lint.css'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/material-darker.css'
 import { Resizable } from 're-resizable'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
 import 'react-resizable/css/styles.css'
 import { Action } from 'redux'
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon, Loader, Dimmer } from 'semantic-ui-react'
 import { IRootState } from '../../store/state'
 import { CodeRender } from '../CodeRender'
 import { editorModalActions } from '../EditorModal/actions'
 import { panelActions } from '../Panel/actions'
 import { codeEditorActions } from './actions'
 import './index.css'
+import { useEditorModes } from '../../shared/hooks/useEditorModes'
+import { EditorModes } from '../../shared/enums/EditorModes'
 require('codemirror/mode/jsx/jsx')
 require('codemirror/addon/lint/lint')
 
@@ -30,23 +32,42 @@ const options = {
 }
 
 export const CodeEditor = (): ReactElement => {
-  const { code, toRender, height, error } = useSelector(
+  const { _id, mode } = useEditorModes()
+
+  const { code, toRender, height, error, isPending } = useSelector(
     (state: IRootState) => state.codeEditor,
   )
 
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    if (mode === EditorModes.edit) {
+      dispatch(codeEditorActions.loadData({ _id: _id as string }))
+    }
+  }, [_id, mode, dispatch])
+
   const handleOpenModal = (): Action => dispatch(editorModalActions.openModal())
+
   const handleMinimizeWindow = (): Action =>
     dispatch(codeEditorActions.changeHeight({ height: minHeight }))
+
   const handleExpandWindow = (): Action =>
     dispatch(codeEditorActions.changeHeight({ height: '100vh' }))
+
   const handleCodeChange = (editor: any, data: any, value: string): Action =>
     dispatch(
       codeEditorActions.changeCode({
         code: value,
       }),
     )
+
+  if (isPending) {
+    return (
+      <Dimmer active={true} inverted={true}>
+        <Loader size='medium' content='Loading CP...' />
+      </Dimmer>
+    )
+  }
 
   return (
     <div className='code-editor-container'>
@@ -103,9 +124,9 @@ export const CodeEditor = (): ReactElement => {
           <Button
             inverted={true}
             icon='add'
-            content='Create'
+            content={mode === EditorModes.create ? 'Create' : 'Update'}
             labelPosition='left'
-            disabled={!toRender || error}
+            disabled={!toRender || error || code !== toRender}
             onClick={handleOpenModal}
           />
         </Button.Group>

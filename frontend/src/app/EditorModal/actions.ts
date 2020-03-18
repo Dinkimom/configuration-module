@@ -4,6 +4,8 @@ import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 export const EDITOR_MODAL_OPEN_MODAL = 'EDITOR_MODAL_OPEN_MODAL'
 export const EDITOR_MODAL_CLOSE_MODAL = 'EDITOR_MODAL_CLOSE_MODAL'
 
+export const EDITOR_MODAL_CHANGE_NAME = 'EDITOR_MODAL_CHANGE_NAME'
+
 export const EDITOR_MODAL_SET_PENDING = 'EDITOR_MODAL_SET_PENDING'
 
 export const EDITOR_MODAL_ADD = 'EDITOR_MODAL_ADD'
@@ -19,6 +21,11 @@ export const editorModalActions = {
 
   closeModal: () => ({
     type: EDITOR_MODAL_CLOSE_MODAL,
+  }),
+
+  changeName: (payload: { name: string }) => ({
+    type: EDITOR_MODAL_CHANGE_NAME,
+    payload,
   }),
 
   add: (payload: IApplicationDTO) => ({

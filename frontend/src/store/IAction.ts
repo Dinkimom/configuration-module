@@ -4,7 +4,7 @@ export type IAction = Action
 
 export interface IActionPayloaded<T> extends IAction {
   type: string
-  payload?: T
+  payload: T
 }
 
 export interface IActionCreator {

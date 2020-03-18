@@ -3,4 +3,5 @@ export interface ICodeEditorState {
   toRender: string
   error: boolean
   height: number | string
+  isPending: boolean
 }

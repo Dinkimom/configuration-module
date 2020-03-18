@@ -5,10 +5,11 @@ import {
   Middleware,
   Post,
   ClassMiddleware,
+  Put,
 } from '@overnightjs/core'
 import { Request, Response } from 'express'
 import { check, validationResult } from 'express-validator'
-import { MongoClient } from 'mongodb'
+import { MongoClient, ObjectId } from 'mongodb'
 import { connectionString } from '../../config/db'
 import { stringify } from 'querystring'
 import * as cors from 'cors'
@@ -47,13 +48,64 @@ export class ExampleController {
         const db = client.db('ConfigurationModule')
         const collection = db.collection('Applications')
 
-        collection.findOne({ _id: req.params._id }, (err, result) => {
-          if (err) throw err
+        collection.findOne(
+          { _id: new ObjectId(req.params._id) },
+          (err, result) => {
+            if (err) throw err
 
-          return res.status(200).json({
-            item: result,
-          })
-        })
+            return res.status(200).json({
+              ...result,
+            })
+          },
+        )
+      })
+    } catch (err) {
+      return res.status(400).json({ err })
+    }
+  }
+
+  @Put('item/:_id')
+  @Middleware([
+    check('name', 'Name is a required field')
+      .not()
+      .isEmpty(),
+    check('descriptionCode')
+      .not()
+      .isEmpty(),
+  ])
+  private updateItem(req: Request, res: Response) {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({
+        error: {
+          msg: 'Invalid form data',
+          errors: errors.array(),
+        },
+      })
+    }
+
+    try {
+      MongoClient.connect(connectionString, (err, client) => {
+        if (err) throw err
+
+        const db = client.db('ConfigurationModule')
+        const collection = db.collection('Applications')
+
+        console.log(req.body)
+
+        collection.findOneAndUpdate(
+          { _id: new ObjectId(req.params._id) },
+          { ...req.body },
+          (err, result) => {
+            if (err) throw err
+
+            console.log(result)
+
+            return res.status(200).json({
+              ...result,
+            })
+          },
+        )
       })
     } catch (err) {
       return res.status(400).json({ err })
@@ -113,7 +165,7 @@ export class ExampleController {
         const db = client.db('ConfigurationModule')
         const collection = db.collection('Applications')
 
-        collection.deleteOne({ _id: req.params._id }, err => {
+        collection.deleteOne({ _id: new ObjectId(req.params._id) }, err => {
           if (err) throw err
 
           return res.status(200)

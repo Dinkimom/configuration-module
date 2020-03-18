@@ -19,7 +19,20 @@ export class ApplicationsClient extends AbstractClient {
     }
   }
 
-  public update = async () => {}
+  public update = async (data: IApplicationDTO) => {
+    const { _id, ...body } = data
+
+    try {
+      const response = await this.axios(
+        this.helper(RequestsEnum.update, { _id, body }),
+      )
+
+      return response
+    } catch (error) {
+      console.error(error)
+      return error
+    }
+  }
 
   public delete = async () => {}
 

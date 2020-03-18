@@ -1,9 +1,11 @@
 import React, { ReactElement } from 'react'
 import { Editor } from './Editor'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 
 export const App = (): ReactElement => (
   <BrowserRouter>
-    <Editor />
+    <Route path='/editor/:_id'>
+      <Editor />
+    </Route>
   </BrowserRouter>
 )

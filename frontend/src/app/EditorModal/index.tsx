@@ -1,41 +1,30 @@
 import React, { ReactElement, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Action } from 'redux'
-import { Button, Form, Modal, Message } from 'semantic-ui-react'
+import { Button, Form, Message, Modal } from 'semantic-ui-react'
+import { EditorModes } from '../../shared/enums/EditorModes'
+import { useEditorModes } from '../../shared/hooks/useEditorModes'
 import { IRootState } from '../../store/state'
 import { editorModalActions } from './actions'
-import { useParams } from 'react-router-dom'
-
-enum EditorModalModes {
-  edit,
-  create,
-}
 
 export const EditorModal = (): ReactElement => {
-  const { _id } = useParams()
-  let mode: EditorModalModes
+  const { _id, mode } = useEditorModes()
 
-  if (_id === undefined) {
-    mode = EditorModalModes.create
-  } else {
-    mode = EditorModalModes.edit
-  }
-
-  const { isOpened, isPending, error } = useSelector(
+  const { isOpened, isPending, error, name } = useSelector(
     (state: IRootState) => state.editorModal,
   )
   const { toRender: descriptionCode } = useSelector(
     (state: IRootState) => state.codeEditor,
   )
-  const [name, changeName] = useState('')
 
   const dispatch = useDispatch()
 
   const handleClose = (): Action => dispatch(editorModalActions.closeModal())
 
-  const handleChange = (evt: any, data: any) => changeName(data.value)
+  const handleChange = (evt: any, data: any) =>
+    dispatch(editorModalActions.changeName({ name: data.value }))
   const handleSubmit = () => {
-    if (mode === EditorModalModes.create) {
+    if (mode === EditorModes.create) {
       dispatch(
         editorModalActions.add({
           name,
@@ -56,7 +45,7 @@ export const EditorModal = (): ReactElement => {
   return (
     <Modal size='tiny' open={isOpened} onClose={handleClose}>
       <Modal.Header>
-        {mode === EditorModalModes.create
+        {mode === EditorModes.create
           ? 'Create a new one CP'
           : 'Update created CP'}
       </Modal.Header>
@@ -68,14 +57,15 @@ export const EditorModal = (): ReactElement => {
         >
           <Form.Input
             name='name'
-            label='name'
+            label='Name'
+            value={name}
             required={true}
             fluid={true}
             onChange={handleChange}
           />
           <Message error={true} header='Action Forbidden' content={error.msg} />
           <Button type='submit' primary={true}>
-            {mode === EditorModalModes.create ? 'Create' : 'Update'}
+            {mode === EditorModes.create ? 'Create' : 'Update'}
           </Button>
           <Button onClick={handleClose}>Cancel</Button>
         </Form>

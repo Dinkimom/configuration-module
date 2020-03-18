@@ -7,6 +7,8 @@ import {
   CODE_EDITOR_CHANGE_TO_RENDER,
   CODE_EDITOR_CHANGE_HEIGHT,
   CODE_EDITOR_SET_ERROR,
+  CODE_EDITOR_SET_PENDING,
+  CODE_EDITOR_DATA_LOADED,
 } from './actions'
 
 const initialState: ICodeEditorState = {
@@ -14,6 +16,7 @@ const initialState: ICodeEditorState = {
   toRender: '',
   height: '40vh',
   error: false,
+  isPending: false,
 }
 
 export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
@@ -45,6 +48,13 @@ export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
         break
       case CODE_EDITOR_SET_ERROR:
         newState.error = action.payload.isError
+        break
+      case CODE_EDITOR_SET_PENDING:
+        newState.isPending = action.payload.flag
+        break
+      case CODE_EDITOR_DATA_LOADED:
+        newState.code = action.payload.descriptionCode
+        newState.toRender = action.payload.descriptionCode
         break
     }
 

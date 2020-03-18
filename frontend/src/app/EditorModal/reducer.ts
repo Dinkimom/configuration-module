@@ -7,9 +7,11 @@ import {
   EDITOR_MODAL_CLOSE_MODAL,
   EDITOR_MODAL_FAILURE,
   EDITOR_MODAL_SET_PENDING,
+  EDITOR_MODAL_CHANGE_NAME,
 } from './actions'
 
 const initialState: IEditorModalState = {
+  name: '',
   isOpened: false,
   isPending: false,
   error: {
@@ -41,6 +43,9 @@ export class EditorModalReducer
         break
       case EDITOR_MODAL_CLOSE_MODAL:
         newState = { ...initialState }
+        break
+      case EDITOR_MODAL_CHANGE_NAME:
+        newState.name = action.payload.name
         break
       case EDITOR_MODAL_SET_PENDING:
         newState.isPending = action.payload.flag

@@ -1,26 +1,26 @@
-import React, { ReactNode, ReactElement, useEffect } from 'react'
-import { Container, Segment, Button } from 'semantic-ui-react'
+import React, { ReactElement, ReactNode } from 'react'
+import { useSelector } from 'react-redux'
+import { Button, Container, Segment } from 'semantic-ui-react'
+import { useEditorModes } from '../../shared/hooks/useEditorModes'
+import { IRootState } from '../../store/state'
 import { ConfigurationBlock } from '../configurationElements/ConfigurationBlock'
 import './index.css'
-import { useSelector, useDispatch } from 'react-redux'
-import { IRootState } from '../../store/state'
-import { panelActions } from './actions'
 
 interface IPanelProps {
   children: ReactNode
-  online?: boolean
 }
 
-export const Panel = ({
-  children,
-  online,
-}: IPanelProps): ReactElement | null => {
+export const Panel = ({ children }: IPanelProps): ReactElement | null => {
   const isInitialized = Boolean(useSelector((state: IRootState) => state.panel))
+  const { _id } = useEditorModes()
 
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(panelActions.setMode({ online: Boolean(online) }))
-  }, [dispatch, isInitialized, online])
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   if (_id !== undefined) {
+  //     dispatch(panelActions.setMode({ online: Boolean(_id) }))
+  //   }
+
+  // }, [dispatch, isInitialized, _id])
 
   if (isInitialized) {
     return (
