@@ -15,8 +15,9 @@ export const EDITOR_MODAL_SUCCESS = 'EDITOR_MODAL_SUCCESS'
 export const EDITOR_MODAL_FAILURE = 'EDITOR_MODAL_FAILURE'
 
 export const editorModalActions = {
-  openModal: () => ({
+  openModal: (payload?: string) => ({
     type: EDITOR_MODAL_OPEN_MODAL,
+    payload,
   }),
 
   closeModal: () => ({

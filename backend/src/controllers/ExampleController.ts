@@ -91,18 +91,18 @@ export class ExampleController {
         const db = client.db('ConfigurationModule')
         const collection = db.collection('Applications')
 
-        console.log(req.body)
-
         collection.findOneAndUpdate(
           { _id: new ObjectId(req.params._id) },
-          { ...req.body },
+          { $set: { ...req.body } },
+          {
+            returnOriginal: false,
+          },
           (err, result) => {
             if (err) throw err
 
             console.log(result)
-
             return res.status(200).json({
-              ...result,
+              ...result.value,
             })
           },
         )

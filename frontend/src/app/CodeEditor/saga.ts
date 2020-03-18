@@ -28,14 +28,12 @@ export class CodeEditorApiSaga {
     const response = yield client.getItem(action.payload._id)
 
     if ((response as any).status === 200) {
-      console.log(response)
-
       yield put(
         codeEditorActions.dataLoaded({
+          name: response.data.name,
           descriptionCode: response.data.descriptionCode,
         }),
       )
-      yield put(editorModalActions.changeName({ name: response.data.name }))
     }
 
     yield put(codeEditorActions.setPending({ flag: false }))

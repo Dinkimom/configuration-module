@@ -47,10 +47,10 @@ export class EditorModalApiSaga {
     if ((response as any).status === 200) {
       yield put(
         codeEditorActions.dataLoaded({
+          name: response.data.name,
           descriptionCode: response.data.descriptionCode,
         }),
       )
-      yield put(editorModalActions.changeName({ name: response.data.name }))
       yield put(editorModalActions.closeModal())
 
       alert('Added successfully!')

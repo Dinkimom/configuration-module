@@ -36,7 +36,7 @@ export const codeEditorActions = {
     payload,
   }),
 
-  dataLoaded: (payload: { descriptionCode: string }) => ({
+  dataLoaded: (payload: { descriptionCode: string; name: string }) => ({
     type: CODE_EDITOR_DATA_LOADED,
     payload,
   }),

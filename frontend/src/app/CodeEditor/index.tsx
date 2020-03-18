@@ -34,7 +34,7 @@ const options = {
 export const CodeEditor = (): ReactElement => {
   const { _id, mode } = useEditorModes()
 
-  const { code, toRender, height, error, isPending } = useSelector(
+  const { code, toRender, height, error, isPending, name } = useSelector(
     (state: IRootState) => state.codeEditor,
   )
 
@@ -46,7 +46,8 @@ export const CodeEditor = (): ReactElement => {
     }
   }, [_id, mode, dispatch])
 
-  const handleOpenModal = (): Action => dispatch(editorModalActions.openModal())
+  const handleOpenModal = (): Action =>
+    dispatch(editorModalActions.openModal(name))
 
   const handleMinimizeWindow = (): Action =>
     dispatch(codeEditorActions.changeHeight({ height: minHeight }))
@@ -89,8 +90,8 @@ export const CodeEditor = (): ReactElement => {
         maxHeight={window.window.innerHeight}
       >
         <p className='code-editor__tittle'>
-          Configuration Panel IDE
           <Icon name='code' />
+          Configuration Panel IDE: <b>{name}</b>
         </p>
         <CodeMirror
           value={code}

@@ -13,6 +13,7 @@ import {
 import { IPanelState } from './state'
 
 const initialState: IPanelState = {
+  name: '',
   online: false,
   currentPage: null,
   pages: {},

@@ -40,6 +40,7 @@ export class EditorModalReducer
     switch (action.type) {
       case EDITOR_MODAL_OPEN_MODAL:
         newState.isOpened = true
+        newState.name = String(action.payload)
         break
       case EDITOR_MODAL_CLOSE_MODAL:
         newState = { ...initialState }

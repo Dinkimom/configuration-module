@@ -12,6 +12,7 @@ import {
 } from './actions'
 
 const initialState: ICodeEditorState = {
+  name: '',
   code: codeExample,
   toRender: '',
   height: '40vh',
@@ -53,6 +54,7 @@ export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
         newState.isPending = action.payload.flag
         break
       case CODE_EDITOR_DATA_LOADED:
+        newState.name = action.payload.name
         newState.code = action.payload.descriptionCode
         newState.toRender = action.payload.descriptionCode
         break

@@ -2,6 +2,7 @@ import { ConfigurationElement } from '../configurationElements/ConfigurationElem
 import { ISettings } from '../../shared/types/ISettings'
 
 export interface IPanelState {
+  name: string
   online: boolean
   currentPage: null | string
   pages: ISettings
