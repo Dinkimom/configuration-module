@@ -143,7 +143,7 @@ export class ExampleController {
           if (err) throw err
 
           return res.status(200).json({
-            item: result,
+            _id: result.insertedId,
           })
         })
       })

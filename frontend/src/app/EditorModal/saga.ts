@@ -9,6 +9,7 @@ import {
   EDITOR_MODAL_UPDATE,
 } from './actions'
 import { codeEditorActions } from '../CodeEditor/actions'
+import { notificationSystem } from '../app'
 
 const client = new ApplicationsClient()
 
@@ -33,7 +34,8 @@ export class EditorModalApiSaga {
     const response = yield client.add(action.payload as IApplicationDTO)
 
     if ((response as any).status === 200) {
-      alert('Added successfully!')
+      yield put(editorModalActions.closeModal())
+      window.location.href = `/editor/${response.data._id}`
     }
 
     yield put(editorModalActions.setPending({ flag: false }))

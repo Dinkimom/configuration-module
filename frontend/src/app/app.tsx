@@ -9,7 +9,7 @@ export const App = (): ReactElement => {
   return (
     <BrowserRouter>
       <NotificationSystem ref={notificationSystem} />
-      <Route path='/editor/:_id'>
+      <Route path='/editor/:_id?'>
         <Editor />
       </Route>
     </BrowserRouter>

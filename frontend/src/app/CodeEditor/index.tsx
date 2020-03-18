@@ -116,7 +116,7 @@ export const CodeEditor = (): ReactElement => {
       >
         <p className='code-editor__tittle'>
           <Icon name='code' />
-          Configuration Panel IDE: <b>{name}</b>
+          Configuration Panel IDE{name && ':'} <b>{name}</b>
         </p>
         <CodeMirror
           value={code}
