@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosError } from 'axios'
+import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 import { serverEntryPoint } from '../shared/constants/serverEntryPoint'
 import { RequestsEnum } from '../shared/enums/RequestsEnum'
 import { Entity } from '../shared/types/Entity'
@@ -54,7 +54,7 @@ export abstract class AbstractClient {
     }
   }
 
-  public errorHandler = (error: AxiosError): AxiosError => {
+  public errorHandler = (error: AxiosError): AxiosResponse | AxiosError => {
     // Error 😨
     if (error.response) {
       /*
@@ -64,6 +64,7 @@ export abstract class AbstractClient {
       console.log(error.response.data)
       console.log(error.response.status)
       console.log(error.response.headers)
+      return error.response
     } else if (error.request) {
       /*
        * The request was made but no response was received, `error.request`

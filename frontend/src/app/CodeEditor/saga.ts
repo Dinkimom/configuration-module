@@ -1,11 +1,8 @@
 import { put, takeEvery } from 'redux-saga/effects'
 import { safeSagaExecute } from '../../middleware/saga'
 import { ApplicationsClient } from '../../services/ApplicationsClient'
-import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 import { IActionPayloaded } from '../../store/IAction'
-import { CODE_EDITOR_LOAD_DATA, codeEditorActions } from './actions'
-import { editorModalActions } from '../EditorModal/actions'
-import { stringify } from 'querystring'
+import { codeEditorActions, CODE_EDITOR_LOAD_DATA } from './actions'
 
 const client = new ApplicationsClient()
 
@@ -29,24 +26,22 @@ export class CodeEditorApiSaga {
     const response = yield client.getItem(action.payload._id)
 
     if ((response as any).status === 200) {
-      if (stringify(response.data) === '') {
+      if (response.data === null) {
         yield put(
           codeEditorActions.setFailure({
             msg: "This CP doesn't exist",
           }),
         )
+      } else {
+        yield put(
+          codeEditorActions.dataLoaded({
+            name: response.data.name,
+            descriptionCode: response.data.descriptionCode,
+          }),
+        )
       }
-
-      yield put(
-        codeEditorActions.dataLoaded({
-          name: response.data.name,
-          descriptionCode: response.data.descriptionCode,
-        }),
-      )
     }
 
     yield put(codeEditorActions.setPending({ flag: false }))
   }
-
-  private *update(action: IActionPayloaded<IApplicationDTO>) {}
 }

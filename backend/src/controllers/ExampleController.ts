@@ -1,67 +1,63 @@
 import {
+  ClassMiddleware,
   Controller,
   Delete,
   Get,
   Middleware,
   Post,
-  ClassMiddleware,
   Put,
 } from '@overnightjs/core'
+import * as cors from 'cors'
 import { Request, Response } from 'express'
 import { check, validationResult } from 'express-validator'
 import { MongoClient, ObjectId } from 'mongodb'
 import { connectionString } from '../../config/db'
-import { stringify } from 'querystring'
-import * as cors from 'cors'
 
 @Controller('api/applications')
 @ClassMiddleware([cors()])
 export class ExampleController {
   @Get('items')
   private getItems(req: Request, res: Response) {
-    try {
-      MongoClient.connect(connectionString, (err, client) => {
-        if (err) throw err
+    MongoClient.connect(connectionString, (err, client) => {
+      if (err) return res.status(400).json({ err })
 
-        const db = client.db('ConfigurationModule')
-        const collection = db.collection('Applications')
+      const db = client.db('ConfigurationModule')
+      const collection = db.collection('Applications')
 
-        collection.find().toArray((err, result) => {
-          if (err) throw err
+      collection.find().toArray((err, result) => {
+        if (err) return res.status(400).json({ err })
 
-          return res.status(200).json({
-            items: result,
-          })
+        return res.status(200).json({
+          items: result,
         })
       })
-    } catch (err) {
-      return res.status(400).json({ err })
-    }
+    })
   }
 
   @Get('item/:_id')
   private getItem(req: Request, res: Response) {
-    try {
-      MongoClient.connect(connectionString, (err, client) => {
-        if (err) throw err
+    MongoClient.connect(connectionString, (err, client) => {
+      if (err) return res.status(400).json({ err })
 
-        const db = client.db('ConfigurationModule')
-        const collection = db.collection('Applications')
+      const db = client.db('ConfigurationModule')
+      const collection = db.collection('Applications')
 
+      console.log(/^[0-9a-fA-F]{24}$/.test(req.params._id))
+      if (/^[0-9a-fA-F]{24}$/.test(req.params._id)) {
         collection.findOne(
           { _id: new ObjectId(req.params._id) },
           (err, result) => {
-            if (err) throw err
+            if (err) return res.status(400).json({ err })
 
             return res.status(200).json({
               ...result,
             })
           },
         )
-      })
-    } catch (err) {
-      return res.status(400).json({ err })
-    }
+      } else {
+        return res.status(200).json(null)
+      }
+    })
   }
 
   @Put('item/:_id')
@@ -84,32 +80,49 @@ export class ExampleController {
       })
     }
 
-    try {
-      MongoClient.connect(connectionString, (err, client) => {
-        if (err) throw err
+    MongoClient.connect(connectionString, (err, client) => {
+      if (err) return res.status(400).json({ err })
 
-        const db = client.db('ConfigurationModule')
-        const collection = db.collection('Applications')
+      const db = client.db('ConfigurationModule')
+      const collection = db.collection('Applications')
 
-        collection.findOneAndUpdate(
-          { _id: new ObjectId(req.params._id) },
-          { $set: { ...req.body } },
-          {
-            returnOriginal: false,
-          },
-          (err, result) => {
-            if (err) throw err
+      collection
+        .find({
+          _id: { $nin: [new ObjectId(req.params._id)] },
+          name: req.body.name,
+        })
+        .toArray((err, result) => {
+          if (err) return res.status(400).json({ err })
 
-            console.log(result)
-            return res.status(200).json({
-              ...result.value,
+          if (result.length > 0) {
+            return res.status(400).json({
+              error: {
+                msg: 'Name must be unique',
+                errors: [
+                  {
+                    param: 'name',
+                  },
+                ],
+              },
             })
-          },
-        )
-      })
-    } catch (err) {
-      return res.status(400).json({ err })
-    }
+          }
+
+          collection.findOneAndUpdate(
+            { _id: new ObjectId(req.params._id) },
+            { $set: { ...req.body } },
+            {
+              returnOriginal: false,
+            },
+            (err, result) => {
+              if (err) return res.status(400).json({ err })
+
+              return res.status(200).json({
+                ...result.value,
+              })
+            },
+          )
+        })
+    })
   }
 
   @Post('item')
@@ -132,47 +145,52 @@ export class ExampleController {
       })
     }
 
-    try {
-      MongoClient.connect(connectionString, (err, client) => {
-        if (err) throw err
+    MongoClient.connect(connectionString, (err, client) => {
+      if (err) return res.status(400).json({ err })
 
-        const db = client.db('ConfigurationModule')
-        const collection = db.collection('Applications')
+      const db = client.db('ConfigurationModule')
+      const collection = db.collection('Applications')
+
+      collection.find({ name: req.body.name }).toArray((err, result) => {
+        if (err) return res.status(400).json({ err })
+
+        if (result.length > 0) {
+          return res.status(400).json({
+            error: {
+              msg: 'Name must be unique',
+              errors: [
+                {
+                  param: 'name',
+                },
+              ],
+            },
+          })
+        }
 
         collection.insertOne({ ...req.body }, (err, result) => {
-          if (err) throw err
+          if (err) return res.status(400).json({ err })
 
           return res.status(200).json({
             _id: result.insertedId,
           })
         })
       })
-    } catch (err) {
-      return res.status(400).json({
-        error: {
-          msg: stringify(err),
-        },
-      })
-    }
+    })
   }
 
   @Delete('item/:_id')
   private deleteApplication(req: Request, res: Response) {
-    try {
-      MongoClient.connect(connectionString, (err, client) => {
-        if (err) throw err
+    MongoClient.connect(connectionString, (err, client) => {
+      if (err) return res.status(400).json({ err })
 
-        const db = client.db('ConfigurationModule')
-        const collection = db.collection('Applications')
+      const db = client.db('ConfigurationModule')
+      const collection = db.collection('Applications')
 
-        collection.deleteOne({ _id: new ObjectId(req.params._id) }, err => {
-          if (err) throw err
+      collection.deleteOne({ _id: new ObjectId(req.params._id) }, err => {
+        if (err) return res.status(400).json({ err })
 
-          return res.status(200)
-        })
+        return res.status(200)
       })
-    } catch (err) {
-      return res.status(400).json({ err })
-    }
+    })
   }
 }

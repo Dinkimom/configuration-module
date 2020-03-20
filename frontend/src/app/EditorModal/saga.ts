@@ -33,18 +33,22 @@ export class EditorModalApiSaga {
 
     const response = yield client.add(action.payload as IApplicationDTO)
 
+    yield put(editorModalActions.setPending({ flag: false }))
+
     if ((response as any).status === 200) {
       yield put(editorModalActions.closeModal())
       window.location.href = `/editor/${response.data._id}`
+    } else {
+      yield put(editorModalActions.failure(response.data.error))
     }
-
-    yield put(editorModalActions.setPending({ flag: false }))
   }
 
   private *update(action: IActionPayloaded<IApplicationDTO>) {
     yield put(editorModalActions.setPending({ flag: true }))
 
     const response = yield client.update(action.payload as IApplicationDTO)
+
+    yield put(editorModalActions.setPending({ flag: false }))
 
     if ((response as any).status === 200) {
       yield put(
@@ -55,9 +59,13 @@ export class EditorModalApiSaga {
       )
       yield put(editorModalActions.closeModal())
 
-      alert('Added successfully!')
+      notificationSystem.current.addNotification({
+        message: 'Updated successfully!',
+        level: 'success',
+        position: 'tc',
+      })
+    } else {
+      yield put(editorModalActions.failure(response.data.error))
     }
-
-    yield put(editorModalActions.setPending({ flag: false }))
   }
 }

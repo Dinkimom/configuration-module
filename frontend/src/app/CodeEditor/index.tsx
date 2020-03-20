@@ -9,21 +9,20 @@ import 'react-resizable/css/styles.css'
 import { Action } from 'redux'
 import {
   Button,
+  Dimmer,
   Icon,
   Loader,
-  Dimmer,
-  Header,
-  Segment,
   Message,
+  Segment,
 } from 'semantic-ui-react'
+import { EditorModes } from '../../shared/enums/EditorModes'
+import { useEditorModes } from '../../shared/hooks/useEditorModes'
 import { IRootState } from '../../store/state'
 import { CodeRender } from '../CodeRender'
 import { editorModalActions } from '../EditorModal/actions'
 import { panelActions } from '../Panel/actions'
 import { codeEditorActions } from './actions'
 import './index.css'
-import { useEditorModes } from '../../shared/hooks/useEditorModes'
-import { EditorModes } from '../../shared/enums/EditorModes'
 require('codemirror/mode/jsx/jsx')
 require('codemirror/addon/lint/lint')
 
