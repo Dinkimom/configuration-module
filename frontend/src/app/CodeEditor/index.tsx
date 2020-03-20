@@ -78,7 +78,7 @@ export const CodeEditor = (): ReactElement => {
   if (isPending) {
     return (
       <Dimmer active={true} inverted={true}>
-        <Loader size='medium' content='Loading CP...' />
+        <Loader size='medium' content={<h3>Loading CP...</h3>} />
       </Dimmer>
     )
   }

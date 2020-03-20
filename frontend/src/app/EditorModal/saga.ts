@@ -16,6 +16,7 @@ const client = new ApplicationsClient()
 export class EditorModalApiSaga {
   public constructor() {
     this.add = this.add.bind(this)
+    this.update = this.update.bind(this)
   }
 
   public static Initialize() {
