@@ -1,0 +1,10 @@
+.list-container__header {
+  padding: 10px 0 !important;
+}
+.list-container__header h1 {
+  margin: 0;
+}
+
+.list-container__header a {
+  color: inherit;
+}

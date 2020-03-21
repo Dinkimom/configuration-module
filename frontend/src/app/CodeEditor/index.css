@@ -13,6 +13,10 @@
   height: 100%;
 }
 
+.code-editor-container a {
+  color: inherit;
+}
+
 .CodeMirror {
   height: calc(100% - 50px);
 }

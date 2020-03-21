@@ -2,11 +2,15 @@
 import { IActionPayloaded } from '../../store/IAction'
 import { IReducerPayloaded } from '../../store/IReducer'
 import { IEditorsState } from './state'
-import { EDITORS_DATA_LOADED } from './actions'
+import {
+  EDITORS_DATA_LOADED,
+  EDITORS_SET_PENDING,
+  EDITORS_FAILURE,
+} from './actions'
 
 const initialState: IEditorsState = {
   list: [],
-  isPending: false,
+  isPending: true,
   error: '',
 }
 
@@ -29,6 +33,13 @@ export class EditorsReducer implements IReducerPayloaded<IEditorsState> {
     switch (action.type) {
       case EDITORS_DATA_LOADED:
         newState.list = [...action.payload.list]
+        newState.error = ''
+        break
+      case EDITORS_SET_PENDING:
+        newState.isPending = action.payload.flag
+        break
+      case EDITORS_FAILURE:
+        newState.error = action.payload.error
         break
     }
 

@@ -25,7 +25,7 @@ export class ExampleController {
       const collection = db.collection('Applications')
 
       collection.find().toArray((err, result) => {
-        if (err) return res.status(400).json({ err })
+        if (err) return res.status(400).json({ error: err.message })
 
         return res.status(200).json({
           items: result,
@@ -42,7 +42,6 @@ export class ExampleController {
       const db = client.db('ConfigurationModule')
       const collection = db.collection('Applications')
 
-      console.log(/^[0-9a-fA-F]{24}$/.test(req.params._id))
       if (/^[0-9a-fA-F]{24}$/.test(req.params._id)) {
         collection.findOne(
           { _id: new ObjectId(req.params._id) },
@@ -186,11 +185,19 @@ export class ExampleController {
       const db = client.db('ConfigurationModule')
       const collection = db.collection('Applications')
 
-      collection.deleteOne({ _id: new ObjectId(req.params._id) }, err => {
-        if (err) return res.status(400).json({ err })
+      if (/^[0-9a-fA-F]{24}$/.test(req.params._id)) {
+        collection.deleteOne({ _id: new ObjectId(req.params._id) }, err => {
+          if (err) return res.status(400).json({ err })
 
-        return res.status(200)
-      })
+          return res.status(200)
+        })
+      } else {
+        return res.status(400).json({
+          error: {
+            msg: 'There is no application with requested id',
+          },
+        })
+      }
     })
   }
 }

@@ -50,5 +50,13 @@ export class ApplicationsClient extends AbstractClient {
     }
   }
 
-  public getItems = async () => {}
+  public getItems = async () => {
+    try {
+      const response = await this.axios(this.helper(RequestsEnum.getItems))
+
+      return response
+    } catch (error) {
+      return this.errorHandler(error)
+    }
+  }
 }

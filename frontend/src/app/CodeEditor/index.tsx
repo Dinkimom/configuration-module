@@ -23,6 +23,7 @@ import { editorModalActions } from '../EditorModal/actions'
 import { panelActions } from '../Panel/actions'
 import { codeEditorActions } from './actions'
 import './index.css'
+import { Link } from 'react-router-dom'
 require('codemirror/mode/jsx/jsx')
 require('codemirror/addon/lint/lint')
 
@@ -137,9 +138,12 @@ export const CodeEditor = (): ReactElement => {
         <Button.Group className='code-editor__control-buttons'>
           <Button
             inverted={true}
+            icon='chevron left'
+            content={<Link to='/editors'>Back to editors</Link>}
+          />
+          <Button
+            inverted={true}
             icon='play'
-            content='Generate'
-            labelPosition='left'
             onClick={() => {
               dispatch(panelActions.clear())
               dispatch(codeEditorActions.changeToRender({ toRender: code }))
@@ -148,9 +152,7 @@ export const CodeEditor = (): ReactElement => {
           />
           <Button
             inverted={true}
-            icon='add'
-            content={mode === EditorModes.create ? 'Create' : 'Update'}
-            labelPosition='left'
+            icon={mode === EditorModes.create ? 'add' : 'edit'}
             disabled={!toRender || error || code !== toRender}
             onClick={handleOpenModal}
           />

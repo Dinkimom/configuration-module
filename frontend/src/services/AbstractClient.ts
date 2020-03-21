@@ -19,7 +19,7 @@ export abstract class AbstractClient {
     data: {
       _id?: string
       body?: any
-    },
+    } = {},
   ): AxiosRequestConfig => {
     switch (request) {
       case RequestsEnum.add:
