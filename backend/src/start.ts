@@ -1,5 +1,5 @@
 import Server from './Server'
 
-const server = new Server()
+export const server = new Server()
 
 server.start(4000)

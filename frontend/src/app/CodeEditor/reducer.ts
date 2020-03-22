@@ -16,7 +16,7 @@ const initialState: ICodeEditorState = {
   name: '',
   code: codeExample,
   toRender: '',
-  height: '40vh',
+  height: 45,
   error: false,
   isPending: false,
   failure: {
