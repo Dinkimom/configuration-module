@@ -7,8 +7,9 @@ export const EDITORS_DELETE = 'EDITORS_DELETE'
 export const EDITORS_SET_PENDING = 'EDITORS_SET_PENDING'
 
 export const editorsActions = {
-  loadData: () => ({
+  loadData: (payload?: { currentPage: number }) => ({
     type: EDITORS_LOAD_DATA,
+    payload,
   }),
 
   dataLoaded: (payload: { list: IApplicationDTO[] }) => ({

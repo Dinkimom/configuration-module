@@ -16,18 +16,30 @@ import { server } from '../start'
 @Controller('api/applications')
 @ClassMiddleware([cors()])
 export class ExampleController {
-  @Get('items')
+  @Get('items/:currentPage?/:itemsPerPage?')
   private async getItems(req: Request, res: Response) {
+    const currentPage = Number(req.query.currentPage) | 1
+    const itemsPerPage = Number(req.query.itemsPerPage) | 10
+
+    const skips = Number(itemsPerPage) * (Number(currentPage) - 1)
+
     const db = server.mongoClient.db('ConfigurationModule')
     const collection = db.collection('Applications')
+    let totalPages = await Math.ceil((await collection.count()) / itemsPerPage)
 
-    collection.find().toArray((err, result) => {
-      if (err) return res.status(400).json({ error: err.message })
+    collection
+      .find()
+      .skip(skips)
+      .limit(itemsPerPage)
+      .toArray((err, result) => {
+        if (err) return res.status(400).json({ error: err.message })
 
-      return res.status(200).json({
-        items: result,
+        return res.status(200).json({
+          items: result,
+          currentPage,
+          totalPages,
+        })
       })
-    })
   }
 
   @Get('item/:_id')

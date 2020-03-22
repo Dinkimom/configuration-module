@@ -7,11 +7,11 @@ import {
   Dimmer,
   List,
   Loader,
-  Pagination,
-  Segment,
   Message,
+  Segment,
 } from 'semantic-ui-react'
 import { IRootState } from '../../store/state'
+import { Pagination } from '../Pagination'
 import { editorsActions } from './actions'
 import './index.css'
 
@@ -20,12 +20,13 @@ export const Editors = () => {
     (state: IRootState) => state.editors,
   )
 
-  console.log(list)
-
   const dispatch = useDispatch()
 
+  const handleLoad = (params?: { currentPage: number }) =>
+    dispatch(editorsActions.loadData(params))
+
   useEffect(() => {
-    dispatch(editorsActions.loadData())
+    handleLoad()
   }, [dispatch])
 
   const renderList = (): ReactNode => {
@@ -83,17 +84,14 @@ export const Editors = () => {
   return (
     <Container className='list-container'>
       <Segment className='list-container__header' clearing={true} basic={true}>
-        <Button
-          floated='right'
-          icon='add'
-          content={<Link to='/editor'>Add CP</Link>}
-          primary={true}
-        />
+        <Link to='/editor'>
+          <Button floated='right' icon='add' content='Add CP' primary={true} />
+        </Link>
         <h1>Editors</h1>
       </Segment>
 
       {renderList()}
-      <Pagination defaultActivePage={1} totalPages={3} />
+      <Pagination onLoad={handleLoad} />
     </Container>
   )
 }

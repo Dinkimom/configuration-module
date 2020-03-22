@@ -20,6 +20,9 @@ export abstract class AbstractClient {
       _id?: string
       body?: any
     } = {},
+    params: {
+      [key: string]: any
+    } = {},
   ): AxiosRequestConfig => {
     switch (request) {
       case RequestsEnum.add:
@@ -48,6 +51,7 @@ export abstract class AbstractClient {
         return {
           url: `${this.URL}/items/`,
           method: 'GET',
+          params: { ...params },
         }
       default:
         return {} as AxiosRequestConfig

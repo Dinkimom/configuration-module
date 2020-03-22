@@ -4,6 +4,7 @@ import { ApplicationsClient } from '../../services/ApplicationsClient'
 import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 import { IActionPayloaded } from '../../store/IAction'
 import { EDITORS_DELETE, EDITORS_LOAD_DATA, editorsActions } from './actions'
+import { paginationActions } from '../Pagination/actions'
 
 const client = new ApplicationsClient()
 
@@ -23,13 +24,16 @@ export class EditorsApiSaga {
     yield takeEvery(EDITORS_DELETE, a => safeSagaExecute(a, this.delete))
   }
 
-  private *load(action: IActionPayloaded<IApplicationDTO>) {
+  private *load(action: IActionPayloaded<{ currentPage: number }>) {
     yield put(editorsActions.setPending({ flag: true }))
 
-    const response = yield client.getItems()
+    const response = yield client.getItems(action.payload)
 
     if (response.status === 200) {
       yield put(editorsActions.dataLoaded({ list: response.data.items }))
+      yield put(
+        paginationActions.init({ totalPages: response.data.totalPages }),
+      )
     } else {
       yield put(editorsActions.failure({ error: response.data.error }))
     }

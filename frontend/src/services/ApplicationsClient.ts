@@ -50,9 +50,12 @@ export class ApplicationsClient extends AbstractClient {
     }
   }
 
-  public getItems = async () => {
+  public getItems = async (params?: { currentPage: number }) => {
+    console.log(params)
     try {
-      const response = await this.axios(this.helper(RequestsEnum.getItems))
+      const response = await this.axios(
+        this.helper(RequestsEnum.getItems, {}, params),
+      )
 
       return response
     } catch (error) {
