@@ -10,6 +10,8 @@ export const CODE_EDITOR_SET_FAILURE = 'CODE_EDITOR_SET_FAILURE'
 
 export const CODE_EDITOR_SET_PENDING = 'CODE_EDITOR_SET_PENDING'
 
+export const CODE_EDITOR_CLEAR = 'CODE_EDITOR_CLEAR'
+
 export const codeEditorActions = {
   changeCode: (payload: { code: string }) => ({
     type: CODE_EDITOR_CHANGE_CODE,
@@ -49,5 +51,9 @@ export const codeEditorActions = {
   setFailure: (payload: { msg: string; actionButton?: boolean }) => ({
     type: CODE_EDITOR_SET_FAILURE,
     payload,
+  }),
+
+  clear: () => ({
+    type: CODE_EDITOR_CLEAR,
   }),
 }

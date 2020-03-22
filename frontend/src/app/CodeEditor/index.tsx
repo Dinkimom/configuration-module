@@ -6,6 +6,7 @@ import React, { ReactElement, useEffect } from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
 import 'react-resizable/css/styles.css'
+import { Link } from 'react-router-dom'
 import { Action } from 'redux'
 import {
   Button,
@@ -23,7 +24,6 @@ import { editorModalActions } from '../EditorModal/actions'
 import { panelActions } from '../Panel/actions'
 import { codeEditorActions } from './actions'
 import './index.css'
-import { Link } from 'react-router-dom'
 require('codemirror/mode/jsx/jsx')
 require('codemirror/addon/lint/lint')
 
@@ -136,11 +136,17 @@ export const CodeEditor = (): ReactElement => {
         </Button.Group>
 
         <Button.Group className='code-editor__control-buttons'>
-          <Button
-            inverted={true}
-            icon='chevron left'
-            content={<Link to='/editors'>Back to editors</Link>}
-          />
+          <Link to='/editors'>
+            <Button
+              inverted={true}
+              icon='chevron left'
+              content='Back to editors'
+              onClick={() => {
+                dispatch(panelActions.clear())
+                dispatch(codeEditorActions.clear())
+              }}
+            />
+          </Link>
           <Button
             inverted={true}
             icon='play'

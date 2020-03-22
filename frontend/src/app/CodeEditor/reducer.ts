@@ -10,6 +10,7 @@ import {
   CODE_EDITOR_SET_PENDING,
   CODE_EDITOR_DATA_LOADED,
   CODE_EDITOR_SET_FAILURE,
+  CODE_EDITOR_CLEAR,
 } from './actions'
 
 const initialState: ICodeEditorState = {
@@ -64,6 +65,9 @@ export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
         break
       case CODE_EDITOR_SET_FAILURE:
         newState.failure = { ...action.payload }
+        break
+      case CODE_EDITOR_CLEAR:
+        newState = { ...initialState }
         break
     }
 
