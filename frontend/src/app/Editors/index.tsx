@@ -14,6 +14,8 @@ import { IRootState } from '../../store/state'
 import { Pagination } from '../Pagination'
 import { editorsActions } from './actions'
 import './index.css'
+import { panelActions } from '../Panel/actions'
+import { codeEditorActions } from '../CodeEditor/actions'
 
 export const Editors = () => {
   const { list, isPending, error } = useSelector(
@@ -84,7 +86,13 @@ export const Editors = () => {
   return (
     <Container className='list-container'>
       <Segment className='list-container__header' clearing={true} basic={true}>
-        <Link to='/editor'>
+        <Link
+          to='/editor'
+          onClick={() => {
+            dispatch(panelActions.clear())
+            dispatch(codeEditorActions.clear())
+          }}
+        >
           <Button floated='right' icon='add' content='Add CP' primary={true} />
         </Link>
         <h1>Editors</h1>
