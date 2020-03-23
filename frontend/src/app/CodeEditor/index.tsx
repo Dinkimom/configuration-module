@@ -125,20 +125,18 @@ export const CodeEditor = (): ReactElement => {
           onBeforeChange={handleCodeChange}
         />
 
-        <Button.Group size='mini' className='code-editor__window-buttons'>
-          <Button icon='question' inverted={true} />
-          <Button icon='expand' onClick={handleExpandWindow} inverted={true} />
+        <Button.Group className='code-editor__window-buttons'>
+          <Button icon='question' />
+          <Button icon='window maximize outline' onClick={handleExpandWindow} />
           <Button
-            icon='window minimize'
+            icon='window minimize outline'
             onClick={handleMinimizeWindow}
-            inverted={true}
           />
         </Button.Group>
 
-        <Button.Group className='code-editor__control-buttons'>
+        <Button.Group className='code-editor__control-buttons' size='big'>
           <Link to='/editors'>
             <Button
-              inverted={true}
               icon='chevron left'
               content='Back to editors'
               onClick={() => {
@@ -148,7 +146,6 @@ export const CodeEditor = (): ReactElement => {
             />
           </Link>
           <Button
-            inverted={true}
             icon='play'
             onClick={() => {
               dispatch(panelActions.clear())
@@ -157,8 +154,7 @@ export const CodeEditor = (): ReactElement => {
             disabled={!code || code === toRender}
           />
           <Button
-            inverted={true}
-            icon={mode === EditorModes.create ? 'add' : 'edit'}
+            icon='save'
             disabled={!toRender || error || code !== toRender}
             onClick={handleOpenModal}
           />

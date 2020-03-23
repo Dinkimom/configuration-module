@@ -27,6 +27,14 @@ export const Editors = () => {
   const handleLoad = (params?: { currentPage: number }) =>
     dispatch(editorsActions.loadData(params))
 
+  const handleDelete = (_id: string) => {
+    const confirmed = window.confirm('Please, confirm deletion')
+
+    if (confirmed) {
+      dispatch(editorsActions.delete({ _id }))
+    }
+  }
+
   useEffect(() => {
     handleLoad()
   }, [dispatch])
@@ -48,7 +56,10 @@ export const Editors = () => {
                   <Link to={`/editor/${item._id}`}>
                     <Button icon='edit outline' />
                   </Link>
-                  <Button icon='delete' />
+                  <Button
+                    icon='delete'
+                    onClick={() => handleDelete(item._id as string)}
+                  />
                 </List.Content>
                 <List.Content>
                   <List.Header>

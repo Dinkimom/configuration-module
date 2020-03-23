@@ -36,7 +36,17 @@ export class ApplicationsClient extends AbstractClient {
     }
   }
 
-  public delete = async () => {}
+  public delete = async (_id: string) => {
+    try {
+      const response = await this.axios(
+        this.helper(RequestsEnum.delete, { _id }),
+      )
+
+      return response
+    } catch (error) {
+      return this.errorHandler(error)
+    }
+  }
 
   public getItem = async (_id: string): Promise<AxiosResponse | AxiosError> => {
     try {
@@ -51,7 +61,6 @@ export class ApplicationsClient extends AbstractClient {
   }
 
   public getItems = async (params?: { currentPage: number }) => {
-    console.log(params)
     try {
       const response = await this.axios(
         this.helper(RequestsEnum.getItems, {}, params),

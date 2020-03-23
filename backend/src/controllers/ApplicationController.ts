@@ -15,17 +15,19 @@ import { server } from '../start'
 
 @Controller('api/applications')
 @ClassMiddleware([cors()])
-export class ExampleController {
+export class ApplicationsController {
   @Get('items/:currentPage?/:itemsPerPage?')
   private async getItems(req: Request, res: Response) {
-    const currentPage = Number(req.query.currentPage) | 1
-    const itemsPerPage = Number(req.query.itemsPerPage) | 10
+    const currentPage = req.query.currentPage || 1
+    const itemsPerPage = req.query.itemsPerPage || 10
 
-    const skips = Number(itemsPerPage) * (Number(currentPage) - 1)
+    const skips = itemsPerPage * (currentPage - 1)
 
     const db = server.mongoClient.db('ConfigurationModule')
     const collection = db.collection('Applications')
-    let totalPages = await Math.ceil((await collection.count()) / itemsPerPage)
+    const count = await collection.count()
+
+    let totalPages = Math.ceil(count / itemsPerPage)
 
     collection
       .find()
@@ -182,7 +184,7 @@ export class ExampleController {
       collection.deleteOne({ _id: new ObjectId(req.params._id) }, err => {
         if (err) return res.status(400).json({ err })
 
-        return res.status(200)
+        this.getItems(req, res)
       })
     } else {
       return res.status(400).json({

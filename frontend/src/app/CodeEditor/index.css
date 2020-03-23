@@ -45,20 +45,31 @@
 .code-editor__window-buttons {
   position: absolute;
   z-index: 1000;
-  top: 6px;
+  top: 3px;
   right: 10px;
 }
 
 .buttons button {
-  border-radius: 0 !important;
+  border-radius: 5px !important;
   margin-left: 5px !important;
+  background: none !important;
+  color: white !important;
+  opacity: 0.9;
+}
+
+.buttons button:hover {
+  opacity: 1;
 }
 
 .code-editor__control-buttons {
   position: absolute;
-  bottom: 5px;
+  bottom: 7px;
   left: 5px;
   z-index: 1000;
+}
+
+.code-editor__control-buttons button {
+  padding: 5px 10px !important;
 }
 
 .code-editor div {

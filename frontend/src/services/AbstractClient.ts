@@ -81,6 +81,11 @@ export abstract class AbstractClient {
         message: error.message,
         level: 'error',
       })
+      return {
+        data: {
+          error: error.message,
+        },
+      } as AxiosResponse
     } else {
       // Something happened in setting up the request and triggered an Error
       console.log('Error', error.message)
