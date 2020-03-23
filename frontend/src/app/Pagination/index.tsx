@@ -15,18 +15,22 @@ export const Pagination = ({ onLoad }: IPaginationProps) => {
 
   const dispatch = useDispatch()
 
-  return (
-    <BasicPagination
-      onPageChange={(evt, data) => {
-        onLoad({ currentPage: data.activePage })
-        dispatch(
-          paginationActions.setCurrentPage({
-            currentPage: data.activePage as number,
-          }),
-        )
-      }}
-      activePage={currentPage}
-      totalPages={totalPages}
-    />
-  )
+  if (totalPages > 1) {
+    return (
+      <BasicPagination
+        onPageChange={(evt, data) => {
+          onLoad({ currentPage: data.activePage })
+          dispatch(
+            paginationActions.setCurrentPage({
+              currentPage: data.activePage as number,
+            }),
+          )
+        }}
+        activePage={currentPage}
+        totalPages={totalPages}
+      />
+    )
+  }
+
+  return null
 }
