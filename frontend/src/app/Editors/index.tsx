@@ -104,7 +104,13 @@ export const Editors = () => {
             dispatch(codeEditorActions.clear())
           }}
         >
-          <Button floated='right' icon='add' content='Add CP' primary={true} />
+          <Button
+            floated='right'
+            icon='add'
+            content='Add CP'
+            primary={true}
+            basic={true}
+          />
         </Link>
         <h1>Editors</h1>
       </Segment>

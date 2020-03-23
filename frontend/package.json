@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "codemirror": "^5.52.0",
     "html-validate": "^2.18.0",
+    "js-beautify": "^1.10.3",
     "jshint": "^2.11.0",
     "monaco-editor": "^0.19.3",
     "re-resizable": "^6.2.0",

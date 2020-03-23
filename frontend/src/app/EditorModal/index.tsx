@@ -6,6 +6,7 @@ import { EditorModes } from '../../shared/enums/EditorModes'
 import { useEditorModes } from '../../shared/hooks/useEditorModes'
 import { IRootState } from '../../store/state'
 import { editorModalActions } from './actions'
+import { formatCode } from '../../shared/functions/formatCode'
 
 export const EditorModal = (): ReactElement => {
   const { _id, mode } = useEditorModes()
@@ -28,7 +29,7 @@ export const EditorModal = (): ReactElement => {
       dispatch(
         editorModalActions.add({
           name,
-          descriptionCode,
+          descriptionCode: formatCode(descriptionCode),
         }),
       )
     } else {

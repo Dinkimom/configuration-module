@@ -3,6 +3,7 @@ import { safeSagaExecute } from '../../middleware/saga'
 import { ApplicationsClient } from '../../services/ApplicationsClient'
 import { IActionPayloaded } from '../../store/IAction'
 import { codeEditorActions, CODE_EDITOR_LOAD_DATA } from './actions'
+import { formatCode } from '../../shared/functions/formatCode'
 
 const client = new ApplicationsClient()
 
@@ -36,7 +37,7 @@ export class CodeEditorApiSaga {
         yield put(
           codeEditorActions.dataLoaded({
             name: response.data.name,
-            descriptionCode: response.data.descriptionCode,
+            descriptionCode: formatCode(response.data.descriptionCode),
           }),
         )
       }

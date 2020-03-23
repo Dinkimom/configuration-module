@@ -8,3 +8,7 @@
 .list-container__header a {
   color: inherit;
 }
+
+.list-container .list button {
+  background: none !important;
+}
