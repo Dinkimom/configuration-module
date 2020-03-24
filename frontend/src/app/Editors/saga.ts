@@ -32,7 +32,10 @@ export class EditorsApiSaga {
     if (response.status === 200) {
       yield put(editorsActions.dataLoaded({ list: response.data.items }))
       yield put(
-        paginationActions.init({ totalPages: response.data.totalPages }),
+        paginationActions.init({
+          totalPages: response.data.totalPages,
+          currentPage: response.data.currentPage,
+        }),
       )
     } else {
       yield put(editorsActions.failure({ error: response.data.error }))
