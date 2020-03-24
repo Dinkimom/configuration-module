@@ -24,6 +24,7 @@ import { editorModalActions } from '../EditorModal/actions'
 import { panelActions } from '../Panel/actions'
 import { codeEditorActions } from './actions'
 import './index.css'
+import { Panel } from '../Panel'
 require('codemirror/mode/jsx/jsx')
 require('codemirror/addon/lint/lint')
 
@@ -42,15 +43,12 @@ const options = {
 export const CodeEditor = (): ReactElement => {
   const { _id, mode } = useEditorModes()
 
-  const {
-    code,
-    toRender,
-    height,
-    error,
-    isPending,
-    name,
-    failure,
-  } = useSelector((state: IRootState) => state.codeEditor)
+  const { code, toRender, height, isPending, name, failure } = useSelector(
+    (state: IRootState) => state.codeEditor,
+  )
+  const error = Boolean(
+    useSelector((state: IRootState) => state.panel).renderError,
+  )
 
   const dispatch = useDispatch()
 
@@ -98,7 +96,7 @@ export const CodeEditor = (): ReactElement => {
   return (
     <div className='code-editor-container'>
       <div className='code-editor-container__code-render'>
-        <CodeRender code={toRender} />
+        <Panel code={toRender} />
       </div>
       <Resizable
         className='code-editor-container__code-editor'

@@ -1,16 +1,27 @@
+import { IPanelState } from './state'
+
+export const PANEL_INIT = 'PANEL_INIT'
+
 export const PANEL_INIT_COMPONENT = 'PANEL_INIT_COMPONENT'
 export const PANEL_INIT_PAGE = 'PANEL_INIT_PAGE'
 export const PANEL_CLEAR = 'PANEL_CLEAR'
+export const PANEL_SET_RENDER_ERROR = 'PANEL_SET_RENDER_ERROR'
 export const PANEL_SET_CURRENT_PAGE = 'PANEL_SET_CURRENT_PAGE'
 export const PANEL_SET_FOCUSED_FIELD = 'PANEL_SET_FOCUSED_FIELD'
 export const PANEL_SET_MODE = 'PANEL_SET_MODE'
 // only online mode
 export const PANEL_LOAD_DATA = 'PANEL_LOAD_DATA'
 export const PANEL_DATA_LOADED = 'PANEL_DATA_LOADED'
-export const PANEL_SET_FIELD_VALUE = 'PANEL_SET_FIELD_VALUE' // online only with flag
+export const PANEL_FAILURE = 'PANEL_FAILURE'
+export const PANEL_SET_FIELD_VALUE = 'PANEL_SET_FIELD_VALUE' // online only with a flag
 export const PANEL_DATA_UPDATED = 'PANEL_DATA_UPDATED'
 
 export const panelActions = {
+  init: (payload?: Partial<IPanelState>) => ({
+    type: PANEL_INIT,
+    payload,
+  }),
+
   initComponent: (payload: { page: string; name: string; type: string }) => ({
     type: PANEL_INIT_COMPONENT,
     payload,
@@ -47,6 +58,11 @@ export const panelActions = {
 
   setMode: (payload: { online: boolean }) => ({
     type: PANEL_SET_MODE,
+    payload,
+  }),
+
+  setRenderError: (payload: { error: string }) => ({
+    type: PANEL_SET_RENDER_ERROR,
     payload,
   }),
 }

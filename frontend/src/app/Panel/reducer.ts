@@ -9,13 +9,17 @@ import {
   PANEL_SET_FIELD_VALUE,
   PANEL_SET_FOCUSED_FIELD,
   PANEL_SET_MODE,
+  PANEL_SET_RENDER_ERROR,
+  PANEL_INIT,
 } from './actions'
 import { IPanelState } from './state'
 
 const initialState: IPanelState = {
+  isInitialized: false,
   name: '',
   online: false,
   currentPage: null,
+  renderError: '',
   pages: {},
   focusedField: undefined,
 }
@@ -48,6 +52,12 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
     let newState = { ...state }
 
     switch (action.type) {
+      case PANEL_INIT:
+        newState = { ...initialState, ...action.payload }
+        newState.isInitialized = true
+        newState.pages = {}
+        break
+
       case PANEL_INIT_PAGE:
         if (!newState.pages[action.payload.name]) {
           newState.pages[action.payload.name] = {}
@@ -63,7 +73,6 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
             type: action.payload.type,
           }
         }
-
         break
 
       case PANEL_SET_CURRENT_PAGE:
@@ -72,6 +81,7 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
 
       case PANEL_CLEAR:
         newState = { ...initialState }
+        newState.pages = {}
         break
 
       case PANEL_SET_FIELD_VALUE:
@@ -85,6 +95,10 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
 
       case PANEL_SET_MODE:
         newState.online = action.payload.online
+        break
+
+      case PANEL_SET_RENDER_ERROR:
+        newState.renderError = action.payload.error
         break
     }
 

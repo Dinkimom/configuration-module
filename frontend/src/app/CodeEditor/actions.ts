@@ -2,8 +2,6 @@ export const CODE_EDITOR_CHANGE_CODE = 'CODE_EDITOR_CHANGE_CODE'
 export const CODE_EDITOR_CHANGE_TO_RENDER = 'CODE_EDITOR_CHANGE_TO_RENDER'
 export const CODE_EDITOR_CHANGE_HEIGHT = 'CODE_EDITOR_CHANGE_HEIGHT'
 
-export const CODE_EDITOR_SET_ERROR = 'CODE_EDITOR_SET_ERROR'
-
 export const CODE_EDITOR_LOAD_DATA = 'CODE_EDITOR_LOAD_DATA'
 export const CODE_EDITOR_DATA_LOADED = 'CODE_EDITOR_DATA_LOADED'
 export const CODE_EDITOR_SET_FAILURE = 'CODE_EDITOR_SET_FAILURE'
@@ -25,11 +23,6 @@ export const codeEditorActions = {
 
   changeHeight: (payload: { height: string | number }) => ({
     type: CODE_EDITOR_CHANGE_HEIGHT,
-    payload,
-  }),
-
-  setError: (payload: { isError: boolean }) => ({
-    type: CODE_EDITOR_SET_ERROR,
     payload,
   }),
 

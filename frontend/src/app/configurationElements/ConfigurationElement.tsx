@@ -21,7 +21,7 @@ export const ConfigurationElement = ({
 
   const dispatch = useDispatch()
   const { value } = useSelector(
-    (state: IRootState) => state.panel.pages[page][name],
+    (state: IRootState) => state.panel.pages![page][name],
   )
 
   const handleChange = (evt: any, data: any): void => {

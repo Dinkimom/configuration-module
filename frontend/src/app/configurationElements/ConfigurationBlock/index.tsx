@@ -6,9 +6,12 @@ import { IRootState } from '../../../store/state'
 import { panelActions } from '../../Panel/actions'
 import { ConfigurationElement } from '../ConfigurationElement'
 import './index.css'
+import { isEmpty } from '../../../shared/functions/isEmpty'
 
-export const ConfigurationBlock = (): ReactElement => {
-  const blocks = useSelector((state: IRootState) => state.panel.pages)
+export const ConfigurationBlock = (): ReactElement | null => {
+  const { pages, isInitialized } = useSelector(
+    (state: IRootState) => state.panel,
+  )
   const { currentPage } = useSelector((state: IRootState) => state.panel)
 
   const dispatch = useDispatch()
@@ -20,36 +23,40 @@ export const ConfigurationBlock = (): ReactElement => {
     )
   }
 
-  const panes = Object.keys(blocks).map(blockKey => ({
-    menuItem: blockKey,
-    render: (): ReactNode => (
-      <Tab.Pane
-        active={blockKey === currentPage}
-        attached={false}
-        key={blockKey}
-      >
-        {Object.keys(blocks[blockKey]).map((elementKey, elementIndex) => (
-          <ConfigurationElement
-            name={elementKey}
-            page={blockKey}
-            type={blocks[blockKey][elementKey].type}
-            key={elementIndex}
-          />
-        ))}
-      </Tab.Pane>
-    ),
-  }))
+  if (isInitialized) {
+    const panes = Object.keys(pages).map(pageKey => ({
+      menuItem: pageKey,
+      render: (): ReactNode => (
+        <Tab.Pane
+          active={pageKey === currentPage}
+          attached={false}
+          key={pageKey}
+        >
+          {Object.keys(pages[pageKey]).map((elementKey, elementIndex) => (
+            <ConfigurationElement
+              name={elementKey}
+              page={pageKey}
+              type={pages[pageKey][elementKey].type}
+              key={elementIndex}
+            />
+          ))}
+        </Tab.Pane>
+      ),
+    }))
 
-  return (
-    <Form className='configuration-block'>
-      <h3>Pages</h3>
-      <Tab
-        onTabChange={handleTabChange}
-        menu={{ fluid: true, vertical: true }}
-        menuPosition='left'
-        panes={panes}
-        grid={{ paneWidth: 10, tabWidth: 6 }}
-      />
-    </Form>
-  )
+    return (
+      <Form className='configuration-block'>
+        <h3>Pages</h3>
+        <Tab
+          onTabChange={handleTabChange}
+          menu={{ fluid: true, vertical: true }}
+          menuPosition='left'
+          panes={panes}
+          grid={{ paneWidth: 10, tabWidth: 6 }}
+        />
+      </Form>
+    )
+  }
+
+  return null
 }

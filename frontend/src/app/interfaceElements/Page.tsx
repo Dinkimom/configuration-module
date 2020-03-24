@@ -12,22 +12,24 @@ export const PageContext = React.createContext({ page: '' })
 
 export const Page = ({ name, children }: IPageProps): ReactElement | null => {
   const dispatch = useDispatch()
-  const isInitialized = Boolean(
+  const isPageInitialized = Boolean(
     useSelector((state: IRootState) => state.panel.pages[name]),
   )
-  const { currentPage } = useSelector((state: IRootState) => state.panel)
+  const { currentPage, isInitialized } = useSelector(
+    (state: IRootState) => state.panel,
+  )
 
   const initPage = useCallback(() => {
     dispatch(panelActions.initPage({ name }))
   }, [dispatch, name])
 
   useEffect(() => {
-    if (!isInitialized) {
+    if (!isPageInitialized || !isInitialized) {
       initPage()
     }
-  }, [initPage, isInitialized])
+  }, [initPage, isPageInitialized])
 
-  if (isInitialized) {
+  if (isPageInitialized) {
     return (
       <PageContext.Provider value={{ page: name }}>
         {currentPage === name && <div className='app__page'>{children}</div>}

@@ -17,11 +17,11 @@ export const ConnectedElement = ({
   children,
 }: IConnectedElementProps): ReactElement => {
   const page = usePageContext()
-  const focusedField = useSelector(
-    (state: IRootState) => state.panel.focusedField,
+  const { focusedField, isInitialized } = useSelector(
+    (state: IRootState) => state.panel,
   )
-  const isInitialized = Boolean(
-    useSelector((state: IRootState) => state.panel.pages[page][name]),
+  const isElementInitialized = Boolean(
+    useSelector((state: IRootState) => state.panel.pages![page][name]),
   )
   const dispatch = useDispatch()
   const initComponent = useCallback(() => {
@@ -29,13 +29,13 @@ export const ConnectedElement = ({
   }, [dispatch, name, page, type])
 
   useEffect(() => {
-    if (!isInitialized) {
+    if (!isElementInitialized || !isInitialized) {
       initComponent()
     }
-  }, [initComponent, isInitialized])
+  }, [initComponent, isInitialized, isElementInitialized])
 
   if (focusedField && focusedField === name) {
-    // prikrutit' popap
+    // Todo: add Popup (maybe)
     return <span style={{ outline: '3px solid #96c8da' }}>{children}</span>
   }
 

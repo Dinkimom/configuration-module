@@ -1,24 +1,22 @@
-import { ICodeEditorState } from './state'
+import { codeExample } from '../../shared/constants/codeExample'
 import { IActionPayloaded } from '../../store/IAction'
 import { IReducerPayloaded } from '../../store/IReducer'
-import { codeExample } from '../../shared/constants/codeExample'
 import {
   CODE_EDITOR_CHANGE_CODE,
-  CODE_EDITOR_CHANGE_TO_RENDER,
   CODE_EDITOR_CHANGE_HEIGHT,
-  CODE_EDITOR_SET_ERROR,
-  CODE_EDITOR_SET_PENDING,
+  CODE_EDITOR_CHANGE_TO_RENDER,
+  CODE_EDITOR_CLEAR,
   CODE_EDITOR_DATA_LOADED,
   CODE_EDITOR_SET_FAILURE,
-  CODE_EDITOR_CLEAR,
+  CODE_EDITOR_SET_PENDING,
 } from './actions'
+import { ICodeEditorState } from './state'
 
 const initialState: ICodeEditorState = {
   name: '',
   code: codeExample,
   toRender: '',
   height: '60vh',
-  error: false,
   isPending: false,
   failure: {
     msg: '',
@@ -47,13 +45,9 @@ export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
         break
       case CODE_EDITOR_CHANGE_TO_RENDER:
         newState.toRender = action.payload.toRender
-        newState.error = false
         break
       case CODE_EDITOR_CHANGE_HEIGHT:
         newState.height = action.payload.height
-        break
-      case CODE_EDITOR_SET_ERROR:
-        newState.error = action.payload.isError
         break
       case CODE_EDITOR_SET_PENDING:
         newState.isPending = action.payload.flag
