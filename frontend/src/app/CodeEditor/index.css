@@ -13,7 +13,7 @@
   height: 100%;
 }
 
-.code-editor-container a {
+.code-editor-container__code-editor a {
   color: inherit;
 }
 
@@ -49,7 +49,7 @@
   right: 10px;
 }
 
-.buttons button {
+.code-editor-container__code-editor .buttons button {
   border-radius: 5px !important;
   margin-left: 5px !important;
   background: none !important;
@@ -57,7 +57,7 @@
   opacity: 0.9;
 }
 
-.buttons button:hover {
+.code-editor-container__code-editor .buttons button:hover {
   opacity: 1;
 }
 
@@ -70,8 +70,4 @@
 
 .code-editor__control-buttons button {
   padding: 5px 10px !important;
-}
-
-.code-editor div {
-  min-width: 100px;
 }

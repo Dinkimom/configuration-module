@@ -4,6 +4,7 @@ import { ApplicationsClient } from '../../services/ApplicationsClient'
 import { IActionPayloaded } from '../../store/IAction'
 import { codeEditorActions, CODE_EDITOR_LOAD_DATA } from './actions'
 import { formatCode } from '../../shared/functions/formatCode'
+import { panelActions } from '../Panel/actions'
 
 const client = new ApplicationsClient()
 
@@ -39,6 +40,9 @@ export class CodeEditorApiSaga {
             name: response.data.name,
             descriptionCode: formatCode(response.data.descriptionCode),
           }),
+        )
+        yield put(
+          panelActions.init({ descriptionCode: response.data.descriptionCode }),
         )
       }
     }

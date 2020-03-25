@@ -14,9 +14,7 @@ export const EditorModal = (): ReactElement => {
   const { isOpened, isPending, error, name } = useSelector(
     (state: IRootState) => state.editorModal,
   )
-  const { toRender: descriptionCode } = useSelector(
-    (state: IRootState) => state.codeEditor,
-  )
+  const { descriptionCode } = useSelector((state: IRootState) => state.panel)
 
   const dispatch = useDispatch()
 

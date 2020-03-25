@@ -15,7 +15,6 @@ import { ICodeEditorState } from './state'
 const initialState: ICodeEditorState = {
   name: '',
   code: codeExample,
-  toRender: '',
   height: '60vh',
   isPending: false,
   failure: {
@@ -43,9 +42,6 @@ export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
       case CODE_EDITOR_CHANGE_CODE:
         newState.code = action.payload.code
         break
-      case CODE_EDITOR_CHANGE_TO_RENDER:
-        newState.toRender = action.payload.toRender
-        break
       case CODE_EDITOR_CHANGE_HEIGHT:
         newState.height = action.payload.height
         break
@@ -55,7 +51,6 @@ export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
       case CODE_EDITOR_DATA_LOADED:
         newState.name = action.payload.name
         newState.code = action.payload.descriptionCode
-        newState.toRender = action.payload.descriptionCode
         break
       case CODE_EDITOR_SET_FAILURE:
         newState.failure = { ...action.payload }

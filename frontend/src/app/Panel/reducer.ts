@@ -22,6 +22,7 @@ const initialState: IPanelState = {
   renderError: '',
   pages: {},
   focusedField: undefined,
+  descriptionCode: '',
 }
 
 const getDefaultSetting = (type: string): any => {

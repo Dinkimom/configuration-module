@@ -16,11 +16,6 @@ export const codeEditorActions = {
     payload,
   }),
 
-  changeToRender: (payload: { toRender: string }) => ({
-    type: CODE_EDITOR_CHANGE_TO_RENDER,
-    payload,
-  }),
-
   changeHeight: (payload: { height: string | number }) => ({
     type: CODE_EDITOR_CHANGE_HEIGHT,
     payload,

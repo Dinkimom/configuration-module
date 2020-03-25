@@ -1,4 +1,3 @@
-import { ConfigurationElement } from '../configurationElements/ConfigurationElement'
 import { ISettings } from '../../shared/types/ISettings'
 
 export interface IPanelState {
@@ -9,4 +8,5 @@ export interface IPanelState {
   pages: ISettings
   renderError: string
   focusedField?: string
+  descriptionCode: string
 }

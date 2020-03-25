@@ -8,12 +8,10 @@ import './index.css'
 import { CodeRender } from '../CodeRender'
 import { isEmpty } from '../../shared/functions/isEmpty'
 
-interface IPanelProps {
-  code: string
-}
-
-export const Panel = ({ code }: IPanelProps): ReactElement => {
-  const { pages, renderError } = useSelector((state: IRootState) => state.panel)
+export const Panel = (): ReactElement => {
+  const { descriptionCode, pages, renderError } = useSelector(
+    (state: IRootState) => state.panel,
+  )
   const { _id } = useEditorModes()
 
   if (renderError) {
@@ -46,7 +44,7 @@ export const Panel = ({ code }: IPanelProps): ReactElement => {
         </>
       )}
 
-      <CodeRender code={code} />
+      <CodeRender code={descriptionCode} />
     </Container>
   )
 }
