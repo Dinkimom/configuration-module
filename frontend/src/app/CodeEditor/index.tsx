@@ -24,6 +24,7 @@ import { Panel } from '../Panel'
 import { panelActions } from '../Panel/actions'
 import { codeEditorActions } from './actions'
 import './index.css'
+import { formatCode } from '../../shared/functions/formatCode'
 require('codemirror/mode/jsx/jsx')
 require('codemirror/addon/lint/lint')
 
@@ -73,6 +74,13 @@ export const CodeEditor = (): ReactElement => {
         code: value,
       }),
     )
+  const handleCodeFormat = () => {
+    dispatch(
+      codeEditorActions.changeCode({
+        code: formatCode(code),
+      }),
+    )
+  }
 
   if (isPending) {
     return (
@@ -112,10 +120,15 @@ export const CodeEditor = (): ReactElement => {
         minWidth='100%'
         maxHeight={'100vh'}
       >
-        <p className='code-editor__tittle'>
-          <Icon name='code' />
-          Configuration Panel IDE{name && ':'} <b>{name}</b>
-        </p>
+        <span className='code-editor__tittle'>
+          <p className='logo'>
+            <Icon name='setting' />
+            Panel
+          </p>
+          <p>IDE</p>
+          <b>{name}</b>
+        </span>
+
         <CodeMirror
           value={code}
           options={options}
@@ -132,7 +145,7 @@ export const CodeEditor = (): ReactElement => {
           />
         </Button.Group>
 
-        <Button.Group className='code-editor__control-buttons' size='big'>
+        <Button.Group className='code-editor__control-buttons'>
           <Link to='/editors'>
             <Button
               icon='chevron left'
@@ -151,9 +164,14 @@ export const CodeEditor = (): ReactElement => {
             disabled={!code || code === descriptionCode}
           />
           <Button
-            icon='save'
+            icon={mode === EditorModes.create ? 'add' : 'save'}
             disabled={!descriptionCode || error || code !== descriptionCode}
             onClick={handleOpenModal}
+          />
+          <Button
+            icon='code'
+            content='Format code'
+            onClick={handleCodeFormat}
           />
         </Button.Group>
       </Resizable>
