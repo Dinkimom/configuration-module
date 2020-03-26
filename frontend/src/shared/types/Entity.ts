@@ -1,1 +1,1 @@
-export type Entity = 'applications' | 'usersSettings'
+export type Entity = 'applications' | 'settings'

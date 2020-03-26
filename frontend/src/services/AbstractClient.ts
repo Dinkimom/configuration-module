@@ -97,6 +97,6 @@ export abstract class AbstractClient {
   public abstract add: (...args: any) => any
   public abstract update: (...args: any) => any
   public abstract delete: (...args: any) => any
-  public abstract getItem: (_id: string) => any
-  public abstract getItems: () => any
+  public abstract getItem: (...args: any) => any
+  public abstract getItems: (...args: any) => any
 }

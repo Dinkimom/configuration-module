@@ -1,10 +1,9 @@
-import { takeEvery, put } from 'redux-saga/effects'
+import { put, takeEvery } from 'redux-saga/effects'
 import { safeSagaExecute } from '../../middleware/saga'
 import { ApplicationsClient } from '../../services/ApplicationsClient'
-import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 import { IActionPayloaded } from '../../store/IAction'
-import { EDITORS_DELETE, EDITORS_LOAD_DATA, editorsActions } from './actions'
 import { paginationActions } from '../Pagination/actions'
+import { editorsActions, EDITORS_DELETE, EDITORS_LOAD_DATA } from './actions'
 
 const client = new ApplicationsClient()
 

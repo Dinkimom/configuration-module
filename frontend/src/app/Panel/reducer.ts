@@ -11,6 +11,9 @@ import {
   PANEL_SET_MODE,
   PANEL_SET_RENDER_ERROR,
   PANEL_INIT,
+  PANEL_SET_PENDING,
+  PANEL_FAILURE,
+  PANEL_DATA_LOADED,
 } from './actions'
 import { IPanelState } from './state'
 
@@ -23,6 +26,8 @@ const initialState: IPanelState = {
   pages: {},
   focusedField: undefined,
   descriptionCode: '',
+  error: '',
+  isPending: false,
 }
 
 const getDefaultSetting = (type: string): any => {
@@ -101,6 +106,15 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
       case PANEL_SET_RENDER_ERROR:
         newState.renderError = action.payload.error
         break
+      case PANEL_SET_PENDING:
+        newState.isPending = action.payload.flag
+        break
+      case PANEL_FAILURE:
+        newState.error = action.payload.error
+        break
+      // case PANEL_DATA_LOADED:
+      //   newState.descriptionCode = action.payload.descriptionCode
+      //   break
     }
 
     return newState

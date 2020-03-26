@@ -6,7 +6,6 @@ import { IRootState } from '../../../store/state'
 import { panelActions } from '../../Panel/actions'
 import { ConfigurationElement } from '../ConfigurationElement'
 import './index.css'
-import { isEmpty } from '../../../shared/functions/isEmpty'
 
 export const ConfigurationBlock = (): ReactElement | null => {
   const { pages, isInitialized } = useSelector(

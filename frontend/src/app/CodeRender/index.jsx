@@ -19,7 +19,6 @@ import { codeEditorActions } from '../CodeEditor/actions'
 const UnmemorizedCodeRender = ({ code }) => {
   const dispatch = useDispatch()
   const setError = error => {
-    dispatch(codeEditorActions.changeToRender({ toRender: '' }))
     dispatch(panelActions.clear())
     dispatch(panelActions.setRenderError({ error }))
   }

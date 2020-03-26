@@ -1,56 +1,44 @@
-// export class EditorsApiSaga {
-//   public constructor() {
-//     this.load = this.load.bind(this)
-//     this.delete = this.delete.bind(this)
-//   }
+import { put, takeEvery } from 'redux-saga/effects'
+import { safeSagaExecute } from '../../middleware/saga'
+import { IActionPayloaded } from '../../store/IAction'
+import { panelActions, PANEL_LOAD_DATA } from './actions'
+import { SettingsClient } from '../../services/SettingsClient'
 
-//   public static Initialize() {
-//     const saga = new EditorsApiSaga()
-//     return saga.watch()
-//   }
+const client = new SettingsClient()
 
-//   public *watch() {
-//     yield takeEvery(EDITORS_LOAD_DATA, a => safeSagaExecute(a, this.load))
-//     yield takeEvery(EDITORS_DELETE, a => safeSagaExecute(a, this.delete))
-//   }
+export class PanelApiSaga {
+  public constructor() {
+    this.load = this.load.bind(this)
+  }
 
-//   private *load(action?: IActionPayloaded<{ currentPage: number }>) {
-//     yield put(editorsActions.setPending({ flag: true }))
+  public static Initialize() {
+    const saga = new PanelApiSaga()
+    return saga.watch()
+  }
 
-//     const response = yield client.getItems((action || {}).payload)
+  public *watch() {
+    yield takeEvery(PANEL_LOAD_DATA, a => safeSagaExecute(a, this.load))
+  }
 
-//     if (response.status === 200) {
-//       yield put(editorsActions.dataLoaded({ list: response.data.items }))
-//       yield put(
-//         paginationActions.init({
-//           totalPages: response.data.totalPages,
-//           currentPage: response.data.currentPage,
-//         }),
-//       )
-//     } else {
-//       yield put(editorsActions.failure({ error: response.data.error }))
-//     }
+  private *load(
+    action: IActionPayloaded<{ application_id: string; user_id: string }>,
+  ) {
+    yield put(panelActions.setPending({ flag: true }))
 
-//     yield put(editorsActions.setPending({ flag: false }))
-//   }
+    const response = yield client.getItem(action.payload)
 
-//   private *delete(action: IActionPayloaded<{ _id: string }>) {
-//     yield put(editorsActions.setPending({ flag: true }))
+    if (response.status === 200) {
+      yield put(
+        panelActions.init({
+          descriptionCode: response.data.descriptionCode,
+          _id: response.data._id,
+          name: response.data.name,
+        }),
+      )
+    } else {
+      yield put(panelActions.failure({ error: response.data.error }))
+    }
 
-//     const response = yield client.delete(action.payload._id)
-
-//     if (response.status === 200) {
-//       yield put(editorsActions.dataLoaded({ list: response.data.items }))
-//       yield put(
-//         paginationActions.init({
-//           totalPages: response.data.totalPages,
-//           currentPage: 1,
-//         }),
-//       )
-//     } else {
-//       yield put(editorsActions.failure({ error: response.data.error }))
-//     }
-
-//     yield put(editorsActions.setPending({ flag: false }))
-//   }
-// }
+    yield put(panelActions.setPending({ flag: false }))
+  }
+}

@@ -1,4 +1,5 @@
 import { IPanelState } from './state'
+import { IPanelSettingsDTO } from '../../shared/types/IPanelSettingsDTO'
 
 export const PANEL_INIT = 'PANEL_INIT'
 
@@ -9,6 +10,7 @@ export const PANEL_SET_RENDER_ERROR = 'PANEL_SET_RENDER_ERROR'
 export const PANEL_SET_CURRENT_PAGE = 'PANEL_SET_CURRENT_PAGE'
 export const PANEL_SET_FOCUSED_FIELD = 'PANEL_SET_FOCUSED_FIELD'
 export const PANEL_SET_MODE = 'PANEL_SET_MODE'
+export const PANEL_SET_PENDING = 'PANEL_SET_PENDING'
 // only online mode
 export const PANEL_LOAD_DATA = 'PANEL_LOAD_DATA'
 export const PANEL_DATA_LOADED = 'PANEL_DATA_LOADED'
@@ -63,6 +65,26 @@ export const panelActions = {
 
   setRenderError: (payload: { error: string }) => ({
     type: PANEL_SET_RENDER_ERROR,
+    payload,
+  }),
+
+  loadData: (payload: { application_id: string; user_id: string }) => ({
+    type: PANEL_LOAD_DATA,
+    payload,
+  }),
+
+  dataLoaded: (payload: IPanelSettingsDTO) => ({
+    type: PANEL_DATA_LOADED,
+    payload,
+  }),
+
+  setPending: (payload: { flag: boolean }) => ({
+    type: PANEL_SET_PENDING,
+    payload,
+  }),
+
+  failure: (payload: { error: string }) => ({
+    type: PANEL_FAILURE,
     payload,
   }),
 }
