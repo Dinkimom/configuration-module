@@ -14,7 +14,6 @@ import { Header } from '../interfaceElements/Header'
 import { Page } from '../interfaceElements/Page'
 import { ProgressBar } from '../interfaceElements/ProgressBar'
 import { panelActions } from '../Panel/actions'
-import { codeEditorActions } from '../CodeEditor/actions'
 
 const UnmemorizedCodeRender = ({ code }) => {
   const dispatch = useDispatch()

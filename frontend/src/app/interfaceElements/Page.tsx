@@ -27,7 +27,7 @@ export const Page = ({ name, children }: IPageProps): ReactElement | null => {
     if (!isPageInitialized || !isInitialized) {
       initPage()
     }
-  }, [initPage, isPageInitialized])
+  }, [initPage, isInitialized, isPageInitialized])
 
   if (isPageInitialized) {
     return (

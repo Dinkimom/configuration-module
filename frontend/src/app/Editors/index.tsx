@@ -37,7 +37,7 @@ export const Editors = () => {
 
   useEffect(() => {
     handleLoad()
-  }, [dispatch])
+  }, [dispatch, handleLoad])
 
   const renderList = (): ReactNode => {
     if (list.length) {

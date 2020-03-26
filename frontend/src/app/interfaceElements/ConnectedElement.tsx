@@ -21,7 +21,7 @@ export const ConnectedElement = ({
     (state: IRootState) => state.panel,
   )
   const isElementInitialized = Boolean(
-    useSelector((state: IRootState) => state.panel.pages![page][name]),
+    useSelector((state: IRootState) => state.panel.pages[page][name]),
   )
   const dispatch = useDispatch()
   const initComponent = useCallback(() => {

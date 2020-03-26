@@ -12,6 +12,7 @@ import { Request, Response } from 'express'
 import { check, validationResult } from 'express-validator'
 import { ObjectId } from 'mongodb'
 import { server } from '../start'
+const objectAssignDeep = require(`object-assign-deep`)
 
 @Controller('api/settings')
 @ClassMiddleware([cors()])
@@ -67,11 +68,12 @@ export class SettingsController {
 
               if (settings === null) {
                 settings = {
-                  id: '',
                   application_id: req.params.application_id,
                   user_id: req.params.user_id,
                   settings: {},
                 }
+
+                db.collection('Settings').insertOne(settings)
               }
 
               return res.status(200).json({
@@ -88,65 +90,40 @@ export class SettingsController {
     }
   }
 
-  @Put('item/:_id')
-  @Middleware([
-    check('name', 'Name is a required field')
-      .not()
-      .isEmpty(),
-    check('descriptionCode')
-      .not()
-      .isEmpty(),
-  ])
+  @Put('item/:application_id/:user_id')
   private updateItem(req: Request, res: Response) {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(422).json({
-        error: {
-          msg: 'Invalid form data',
-          errors: errors.array(),
-        },
-      })
-    }
-
     const db = server.mongoClient.db('ConfigurationModule')
-    const collection = db.collection('Applications')
+    const collection = db.collection('Settings')
 
-    collection
-      .find({
-        _id: { $nin: [new ObjectId(req.params._id)] },
-        name: req.body.name,
-      })
-      .toArray((err, result) => {
+    collection.findOne(
+      {
+        user_id: req.params.user_id,
+        application_id: req.params.application_id,
+      },
+      (err, result) => {
         if (err) return res.status(400).json({ err })
 
-        if (result.length > 0) {
-          return res.status(400).json({
-            error: {
-              msg: 'Name must be unique',
-              errors: [
-                {
-                  param: 'name',
-                },
-              ],
-            },
-          })
-        }
+        if (result === null)
+          return res
+            .status(400)
+            .json({ err: 'There is no element with requested parameters' })
 
-        collection.findOneAndUpdate(
-          { _id: new ObjectId(req.params._id) },
-          { $set: { ...req.body } },
+        const newSettings = objectAssignDeep(result.settings, req.body)
+
+        collection.updateOne(
           {
-            returnOriginal: false,
+            user_id: req.params.user_id,
+            application_id: req.params.application_id,
           },
-          (err, result) => {
+          { $set: { settings: newSettings } },
+          err => {
             if (err) return res.status(400).json({ err })
 
-            return res.status(200).json({
-              ...result.value,
-            })
+            return res.status(200).send()
           },
         )
-      })
+      },
+    )
   }
 
   @Post('item')

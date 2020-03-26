@@ -118,6 +118,15 @@ export class ApplicationsController {
           (err, result) => {
             if (err) return res.status(400).json({ err })
 
+            db.collection('Settings').deleteMany(
+              {
+                application_id: req.params._id,
+              },
+              err => {
+                if (err) return res.status(400).json({ err })
+              },
+            )
+
             return res.status(200).json({
               ...result.value,
             })

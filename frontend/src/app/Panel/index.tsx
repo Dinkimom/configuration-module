@@ -28,6 +28,7 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
     name,
     isPending,
     error,
+    isInitialized,
   } = useSelector((state: IRootState) => state.panel)
 
   const { application_id, user_id } = useParams<{
@@ -39,7 +40,6 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
 
   useEffect(() => {
     if (online) {
-      dispatch(panelActions.setMode({ online }))
       dispatch(panelActions.loadData({ application_id, user_id }))
     }
   }, [online, dispatch, application_id, user_id])
@@ -81,11 +81,6 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
         <>
           <Segment className='panel-header'>
             <h1>Configuration panel{`${name && '. '}${name}`}</h1>
-
-            <Button.Group>
-              <Button icon='save outline' />
-              <Button icon='repeat' />
-            </Button.Group>
           </Segment>
 
           <ConfigurationBlock />

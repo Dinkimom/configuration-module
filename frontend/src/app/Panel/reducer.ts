@@ -3,17 +3,16 @@ import { IActionPayloaded } from '../../store/IAction'
 import { IReducerPayloaded } from '../../store/IReducer'
 import {
   PANEL_CLEAR,
+  PANEL_FAILURE,
+  PANEL_INIT,
   PANEL_INIT_COMPONENT,
   PANEL_INIT_PAGE,
   PANEL_SET_CURRENT_PAGE,
   PANEL_SET_FIELD_VALUE,
   PANEL_SET_FOCUSED_FIELD,
   PANEL_SET_MODE,
-  PANEL_SET_RENDER_ERROR,
-  PANEL_INIT,
   PANEL_SET_PENDING,
-  PANEL_FAILURE,
-  PANEL_DATA_LOADED,
+  PANEL_SET_RENDER_ERROR,
 } from './actions'
 import { IPanelState } from './state'
 
@@ -62,6 +61,9 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
         newState = { ...initialState, ...action.payload }
         newState.isInitialized = true
         newState.pages = {}
+        if (action.payload.pages !== undefined) {
+          newState.pages = { ...action.payload.pages }
+        }
         break
 
       case PANEL_INIT_PAGE:
@@ -112,9 +114,6 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
       case PANEL_FAILURE:
         newState.error = action.payload.error
         break
-      // case PANEL_DATA_LOADED:
-      //   newState.descriptionCode = action.payload.descriptionCode
-      //   break
     }
 
     return newState

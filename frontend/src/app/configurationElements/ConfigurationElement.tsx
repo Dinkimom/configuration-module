@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox, Dropdown, Form } from 'semantic-ui-react'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
+import { useParams } from 'react-router-dom'
 
 export type ConfigurationElement = 'arrowButton' | 'optional'
 
@@ -19,19 +20,30 @@ export const ConfigurationElement = ({
 }: IConfigurationElementProps): ReactElement | null => {
   let component = null
 
+  const { application_id, user_id } = useParams<{
+    application_id: string
+    user_id: string
+  }>()
+
   const dispatch = useDispatch()
   const { value } = useSelector(
     (state: IRootState) => state.panel.pages![page][name],
   )
+  const { online } = useSelector((state: IRootState) => state.panel)
 
   const handleChange = (evt: any, data: any): void => {
-    dispatch(
-      panelActions.setFieldValue({
-        value: data.value || data.checked,
-        name,
-        page,
-      }),
-    )
+    const action = {
+      value: data.value || data.checked,
+      name,
+      page,
+    }
+    dispatch(panelActions.setFieldValue(action))
+    if (online) {
+      dispatch(
+        panelActions.updateData({ ...action, application_id, user_id, type }),
+      )
+    }
+    console.log(online)
   }
 
   const handleFocus = (): void => {
