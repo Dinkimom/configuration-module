@@ -14,7 +14,9 @@ export const EditorModal = (): ReactElement => {
   const { isOpened, isPending, error, name } = useSelector(
     (state: IRootState) => state.editorModal,
   )
-  const { descriptionCode } = useSelector((state: IRootState) => state.panel)
+  const { descriptionCode, pages } = useSelector(
+    (state: IRootState) => state.panel,
+  )
 
   const dispatch = useDispatch()
 
@@ -28,6 +30,7 @@ export const EditorModal = (): ReactElement => {
         editorModalActions.add({
           name,
           descriptionCode: formatCode(descriptionCode),
+          defaultSettings: pages,
         }),
       )
     } else {
@@ -36,6 +39,7 @@ export const EditorModal = (): ReactElement => {
           _id,
           name,
           descriptionCode,
+          defaultSettings: pages,
         }),
       )
     }

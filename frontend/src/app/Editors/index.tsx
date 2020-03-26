@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react'
+import React, { ReactNode, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
@@ -24,8 +24,11 @@ export const Editors = () => {
 
   const dispatch = useDispatch()
 
-  const handleLoad = (params?: { currentPage: number }) =>
-    dispatch(editorsActions.loadData(params))
+  const handleLoad = useCallback(
+    (params?: { currentPage: number }) =>
+      dispatch(editorsActions.loadData(params)),
+    [dispatch],
+  )
 
   const handleDelete = (_id: string) => {
     const confirmed = window.confirm('Please, confirm deletion')

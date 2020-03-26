@@ -1,14 +1,7 @@
 import React, { ReactElement, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import {
-  Button,
-  Container,
-  Dimmer,
-  Loader,
-  Message,
-  Segment,
-} from 'semantic-ui-react'
+import { Container, Dimmer, Loader, Message, Segment } from 'semantic-ui-react'
 import { isEmpty } from '../../shared/functions/isEmpty'
 import { IRootState } from '../../store/state'
 import { CodeRender } from '../CodeRender'

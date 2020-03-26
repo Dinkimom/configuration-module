@@ -73,6 +73,9 @@ export class ApplicationsController {
     check('descriptionCode')
       .not()
       .isEmpty(),
+    check('defaultSettings')
+      .not()
+      .isEmpty(),
   ])
   private updateItem(req: Request, res: Response) {
     const errors = validationResult(req)
@@ -141,6 +144,9 @@ export class ApplicationsController {
       .not()
       .isEmpty(),
     check('descriptionCode')
+      .not()
+      .isEmpty(),
+    check('defaultSettings')
       .not()
       .isEmpty(),
   ])

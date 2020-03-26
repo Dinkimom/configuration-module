@@ -1,6 +1,5 @@
-import { IPanelState } from './state'
-import { IPanelSettingsDTO } from '../../shared/types/IPanelSettingsDTO'
 import { ISettingDTO } from '../../shared/types/ISettingDTO'
+import { IPanelState } from './state'
 
 export const PANEL_INIT = 'PANEL_INIT'
 

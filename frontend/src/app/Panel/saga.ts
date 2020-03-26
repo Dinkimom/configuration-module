@@ -1,17 +1,12 @@
-import { put, takeEvery, select, delay } from 'redux-saga/effects'
-import { safeSagaExecute } from '../../middleware/saga'
-import { IActionPayloaded } from '../../store/IAction'
-import {
-  panelActions,
-  PANEL_LOAD_DATA,
-  PANEL_SET_FIELD_VALUE,
-  PANEL_UPDATE_DATA,
-} from './actions'
-import { SettingsClient } from '../../services/SettingsClient'
-import { IRootState } from '../../store/state'
-import { ISettingDTO } from '../../shared/types/ISettingDTO'
-import { notificationSystem } from '../app'
 import objectAssignDeep from 'object-assign-deep'
+import { put, select, takeEvery, delay } from 'redux-saga/effects'
+import { safeSagaExecute } from '../../middleware/saga'
+import { SettingsClient } from '../../services/SettingsClient'
+import { ISettingDTO } from '../../shared/types/ISettingDTO'
+import { IActionPayloaded } from '../../store/IAction'
+import { IRootState } from '../../store/state'
+import { notificationSystem } from '../app'
+import { panelActions, PANEL_LOAD_DATA, PANEL_UPDATE_DATA } from './actions'
 import { IPanelState } from './state'
 
 const client = new SettingsClient()
@@ -41,16 +36,22 @@ export class PanelApiSaga {
     const response = yield client.getItem(action.payload)
 
     if (response.status === 200) {
-      yield put(
-        panelActions.init({
-          online: true,
-          descriptionCode: response.data.descriptionCode,
-          _id: response.data._id,
-          name: response.data.name,
-          pages: objectAssignDeep(settings, response.data.settings),
-          currentPage: Object.keys(response.data.settings)[0],
-        } as Partial<IPanelState>),
-      )
+      if (response.data === null) {
+        yield put(
+          panelActions.failure({ error: "Requested panel doesn't exist" }),
+        )
+      } else {
+        yield put(
+          panelActions.init({
+            online: true,
+            descriptionCode: response.data.descriptionCode,
+            _id: response.data._id,
+            name: response.data.name,
+            pages: objectAssignDeep(settings, response.data.settings),
+            currentPage: Object.keys(response.data.settings)[0],
+          } as Partial<IPanelState>),
+        )
+      }
     } else {
       yield put(panelActions.failure({ error: response.data.error }))
     }
@@ -62,6 +63,7 @@ export class PanelApiSaga {
     const response = yield client.update(action.payload)
 
     if ((response as any).status === 200) {
+      notificationSystem.current.clearNotifications()
       notificationSystem.current.addNotification({
         message: 'All changes saved',
         level: 'info',

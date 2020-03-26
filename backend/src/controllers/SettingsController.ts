@@ -70,7 +70,7 @@ export class SettingsController {
                 settings = {
                   application_id: req.params.application_id,
                   user_id: req.params.user_id,
-                  settings: {},
+                  settings: application.defaultSettings,
                 }
 
                 db.collection('Settings').insertOne(settings)
