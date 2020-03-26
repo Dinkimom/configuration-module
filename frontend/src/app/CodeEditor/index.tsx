@@ -8,15 +8,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import 'react-resizable/css/styles.css'
 import { Link } from 'react-router-dom'
 import { Action } from 'redux'
-import {
-  Button,
-  Dimmer,
-  Icon,
-  Loader,
-  Message,
-  Segment,
-} from 'semantic-ui-react'
+import { Button, Icon, Message, Segment } from 'semantic-ui-react'
+import { Loader } from '../../shared/components/Loader'
 import { EditorModes } from '../../shared/enums/EditorModes'
+import { formatCode } from '../../shared/functions/formatCode'
 import { useEditorModes } from '../../shared/hooks/useEditorModes'
 import { IRootState } from '../../store/state'
 import { editorModalActions } from '../EditorModal/actions'
@@ -24,7 +19,7 @@ import { Panel } from '../Panel'
 import { panelActions } from '../Panel/actions'
 import { codeEditorActions } from './actions'
 import './index.css'
-import { formatCode } from '../../shared/functions/formatCode'
+import { PageWrapper } from '../PageWrapper'
 require('codemirror/mode/jsx/jsx')
 require('codemirror/addon/lint/lint')
 
@@ -43,10 +38,10 @@ const options = {
 export const CodeEditor = (): ReactElement => {
   const { _id, mode } = useEditorModes()
 
-  const { code, height, isPending, name, failure } = useSelector(
+  const { code, height, isPending, name, error } = useSelector(
     (state: IRootState) => state.codeEditor,
   )
-  const error = Boolean(
+  const renderError = Boolean(
     useSelector((state: IRootState) => state.panel.renderError),
   )
   const { descriptionCode } = useSelector((state: IRootState) => state.panel)
@@ -83,20 +78,15 @@ export const CodeEditor = (): ReactElement => {
   }
 
   if (isPending) {
-    return (
-      <Dimmer active={true} inverted={true}>
-        <Loader size='medium' content={<h3>Loading CP...</h3>} />
-      </Dimmer>
-    )
+    return <Loader text='Loading CP...' />
   }
 
-  if (failure.msg !== '') {
+  if (error !== '') {
     return (
       <Segment padded={true} basic={true}>
         <Message size='big' negative={true}>
-          <Message.Header>{failure.msg}</Message.Header>
+          <Message.Header>{error}</Message.Header>
         </Message>
-        {failure.actionButton && <Button>Retry</Button>}
       </Segment>
     )
   }
@@ -104,7 +94,9 @@ export const CodeEditor = (): ReactElement => {
   return (
     <div className='code-editor-container'>
       <div className='code-editor-container__code-render'>
-        <Panel />
+        <PageWrapper>
+          <Panel />
+        </PageWrapper>
       </div>
       <Resizable
         className='code-editor-container__code-editor'
@@ -165,7 +157,9 @@ export const CodeEditor = (): ReactElement => {
           />
           <Button
             icon={mode === EditorModes.create ? 'add' : 'save'}
-            disabled={!descriptionCode || error || code !== descriptionCode}
+            disabled={
+              !descriptionCode || renderError || code !== descriptionCode
+            }
             onClick={handleOpenModal}
           />
           <Button

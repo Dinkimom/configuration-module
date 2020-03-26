@@ -1,7 +1,15 @@
 import React, { ReactElement, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { Container, Dimmer, Loader, Message, Segment } from 'semantic-ui-react'
+import { useParams, Link } from 'react-router-dom'
+import {
+  Container,
+  Message,
+  Segment,
+  Button,
+  Breadcrumb,
+} from 'semantic-ui-react'
+import { ErrorMessage } from '../../shared/components/ErrorMessage'
+import { Loader } from '../../shared/components/Loader'
 import { isEmpty } from '../../shared/functions/isEmpty'
 import { IRootState } from '../../store/state'
 import { CodeRender } from '../CodeRender'
@@ -21,7 +29,6 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
     name,
     isPending,
     error,
-    isInitialized,
   } = useSelector((state: IRootState) => state.panel)
 
   const { application_id, user_id } = useParams<{
@@ -51,30 +58,32 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
   }
 
   if (isPending) {
-    return (
-      <Dimmer active={true} inverted={true}>
-        <Loader size='medium' content={<h3>Loading Panel...</h3>} />
-      </Dimmer>
-    )
+    return <Loader text='Loading CP...' />
   }
 
   if (error !== '') {
-    return (
-      <Segment padded={true} basic={true}>
-        <Message size='big' negative={true}>
-          <Message.Header>{error}</Message.Header>
-        </Message>
-      </Segment>
-    )
+    return <ErrorMessage error={error} />
   }
 
   return (
     <Container id='Panel'>
       {!isEmpty(pages) && (
         <>
-          <Segment className='panel-header'>
-            <h1>Configuration panel{`${name && '. '}${name}`}</h1>
-          </Segment>
+          <div className='panel-header'>
+            <Breadcrumb size='massive'>
+              {user_id && (
+                <>
+                  <Breadcrumb.Section link>
+                    <Link to={`/panels/${user_id}`}>Panels</Link>
+                  </Breadcrumb.Section>
+                  <Breadcrumb.Divider icon='right chevron' />
+                </>
+              )}
+              <Breadcrumb.Section active>
+                Configuration panel
+              </Breadcrumb.Section>
+            </Breadcrumb>
+          </div>
 
           <ConfigurationBlock />
         </>

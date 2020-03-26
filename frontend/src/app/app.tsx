@@ -4,6 +4,8 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import { Editor } from './Editor'
 import { Editors } from './Editors'
 import { Panel } from './Panel'
+import { Panels } from './Panels'
+import { PageWrapper } from './PageWrapper'
 
 export const notificationSystem = React.createRef<any>()
 
@@ -15,10 +17,19 @@ export const App = (): ReactElement => {
         <Editor />
       </Route>
       <Route path='/editors'>
-        <Editors />
+        <PageWrapper>
+          <Editors />
+        </PageWrapper>
       </Route>
       <Route path='/panel/:application_id/:user_id'>
-        <Panel online={true} />
+        <PageWrapper>
+          <Panel online={true} />
+        </PageWrapper>
+      </Route>
+      <Route path='/panels/:user_id'>
+        <PageWrapper>
+          <Panels />
+        </PageWrapper>
       </Route>
     </BrowserRouter>
   )

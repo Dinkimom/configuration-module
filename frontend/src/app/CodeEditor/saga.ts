@@ -30,8 +30,8 @@ export class CodeEditorApiSaga {
     if ((response as any).status === 200) {
       if (response.data === null) {
         yield put(
-          codeEditorActions.setFailure({
-            msg: "This CP doesn't exist",
+          codeEditorActions.failure({
+            error: "This CP doesn't exist",
           }),
         )
       } else {

@@ -1,5 +1,5 @@
 import objectAssignDeep from 'object-assign-deep'
-import { put, select, takeEvery, delay } from 'redux-saga/effects'
+import { put, select, takeEvery } from 'redux-saga/effects'
 import { safeSagaExecute } from '../../middleware/saga'
 import { SettingsClient } from '../../services/SettingsClient'
 import { ISettingDTO } from '../../shared/types/ISettingDTO'
@@ -67,7 +67,7 @@ export class PanelApiSaga {
       notificationSystem.current.addNotification({
         message: 'All changes saved',
         level: 'info',
-        position: 'bl',
+        position: 'bc',
       })
     }
   }

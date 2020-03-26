@@ -22,6 +22,7 @@
 }
 
 .code-editor-container__code-editor {
+  z-index: 1000;
   background: rgb(41, 41, 41);
   padding-left: 10px;
   padding-top: 50px;

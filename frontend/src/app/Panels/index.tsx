@@ -1,20 +1,19 @@
 import React, { ReactNode, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Button, Container, List, Segment } from 'semantic-ui-react'
 import { ErrorMessage } from '../../shared/components/ErrorMessage'
 import { Loader } from '../../shared/components/Loader'
 import { IRootState } from '../../store/state'
-import { codeEditorActions } from '../CodeEditor/actions'
+import { editorsActions } from '../Editors/actions'
 import { Pagination } from '../Pagination'
-import { panelActions } from '../Panel/actions'
-import { editorsActions } from './actions'
-import './index.css'
 
-export const Editors = () => {
+export const Panels = () => {
   const { list, isPending, error } = useSelector(
     (state: IRootState) => state.editors,
   )
+
+  const { user_id } = useParams()
 
   const dispatch = useDispatch()
 
@@ -24,15 +23,8 @@ export const Editors = () => {
     [dispatch],
   )
 
-  const handleDelete = (_id: string) => {
-    const confirmed = window.confirm('Please, confirm deletion')
-
-    if (confirmed) {
-      dispatch(editorsActions.delete({ _id }))
-    }
-  }
-
   useEffect(() => {
+    // Todo: add user check
     handleLoad()
   }, [dispatch, handleLoad])
 
@@ -50,17 +42,15 @@ export const Editors = () => {
             {list.map(item => (
               <List.Item key={item._id}>
                 <List.Content floated='right'>
-                  <Link to={`/editor/${item._id}`}>
-                    <Button icon='edit outline' />
+                  <Link to={`/panel/${item._id}/${user_id}`}>
+                    <Button icon='settings' />
                   </Link>
-                  <Button
-                    icon='delete'
-                    onClick={() => handleDelete(item._id as string)}
-                  />
                 </List.Content>
                 <List.Content>
                   <List.Header>
-                    <Link to={`/editor/${item._id}`}>{item.name}</Link>
+                    <Link to={`/panel/${item._id}/${user_id}`}>
+                      {item.name}
+                    </Link>
                   </List.Header>
                 </List.Content>
               </List.Item>
@@ -74,7 +64,7 @@ export const Editors = () => {
   }
 
   if (isPending) {
-    return <Loader text='Loading editors...' />
+    return <Loader text='Loading panels...' />
   }
 
   if (error !== '') {
@@ -84,22 +74,7 @@ export const Editors = () => {
   return (
     <Container className='list-container'>
       <Segment className='list-container__header' clearing={true} basic={true}>
-        <Link
-          to='/editor'
-          onClick={() => {
-            dispatch(panelActions.clear())
-            dispatch(codeEditorActions.clear())
-          }}
-        >
-          <Button
-            floated='right'
-            icon='add'
-            content='Add CP'
-            primary={true}
-            basic={true}
-          />
-        </Link>
-        <h1>Editors</h1>
+        <h1>Panels</h1>
       </Segment>
 
       {renderList()}

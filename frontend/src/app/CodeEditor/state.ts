@@ -3,8 +3,5 @@ export interface ICodeEditorState {
   code: string
   height: number | string
   isPending: boolean
-  failure: {
-    msg: string
-    actionButton?: boolean
-  }
+  error: string
 }

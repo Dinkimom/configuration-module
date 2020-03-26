@@ -3,7 +3,7 @@ export const CODE_EDITOR_CHANGE_HEIGHT = 'CODE_EDITOR_CHANGE_HEIGHT'
 
 export const CODE_EDITOR_LOAD_DATA = 'CODE_EDITOR_LOAD_DATA'
 export const CODE_EDITOR_DATA_LOADED = 'CODE_EDITOR_DATA_LOADED'
-export const CODE_EDITOR_SET_FAILURE = 'CODE_EDITOR_SET_FAILURE'
+export const CODE_EDITOR_FAILURE = 'CODE_EDITOR_FAILURE'
 
 export const CODE_EDITOR_SET_PENDING = 'CODE_EDITOR_SET_PENDING'
 
@@ -35,8 +35,8 @@ export const codeEditorActions = {
     payload,
   }),
 
-  setFailure: (payload: { msg: string; actionButton?: boolean }) => ({
-    type: CODE_EDITOR_SET_FAILURE,
+  failure: (payload: { error: string }) => ({
+    type: CODE_EDITOR_FAILURE,
     payload,
   }),
 

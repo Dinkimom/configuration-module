@@ -6,8 +6,8 @@ import {
   CODE_EDITOR_CHANGE_HEIGHT,
   CODE_EDITOR_CLEAR,
   CODE_EDITOR_DATA_LOADED,
-  CODE_EDITOR_SET_FAILURE,
   CODE_EDITOR_SET_PENDING,
+  CODE_EDITOR_FAILURE,
 } from './actions'
 import { ICodeEditorState } from './state'
 
@@ -16,9 +16,7 @@ const initialState: ICodeEditorState = {
   code: codeExample,
   height: '60vh',
   isPending: false,
-  failure: {
-    msg: '',
-  },
+  error: '',
 }
 
 export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
@@ -51,8 +49,8 @@ export class CodeEditorReducer implements IReducerPayloaded<ICodeEditorState> {
         newState.name = action.payload.name
         newState.code = action.payload.descriptionCode
         break
-      case CODE_EDITOR_SET_FAILURE:
-        newState.failure = { ...action.payload }
+      case CODE_EDITOR_FAILURE:
+        newState.error = action.payload.error
         break
       case CODE_EDITOR_CLEAR:
         newState = { ...initialState }
