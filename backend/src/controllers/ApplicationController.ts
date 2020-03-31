@@ -19,7 +19,7 @@ export class ApplicationsController {
   @Get('items/:currentPage?/:itemsPerPage?')
   private async getItems(req: Request, res: Response) {
     const currentPage = req.query.currentPage || 1
-    const itemsPerPage = req.query.itemsPerPage || 10
+    const itemsPerPage = req.query.itemsPerPage || 9
 
     const skips = itemsPerPage * (currentPage - 1)
 

@@ -94,9 +94,7 @@ export const CodeEditor = (): ReactElement => {
   return (
     <div className='code-editor-container'>
       <div className='code-editor-container__code-render'>
-        <PageWrapper>
-          <Panel />
-        </PageWrapper>
+        <Panel />
       </div>
       <Resizable
         className='code-editor-container__code-editor'
