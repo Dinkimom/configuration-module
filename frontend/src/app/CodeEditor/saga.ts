@@ -37,12 +37,14 @@ export class CodeEditorApiSaga {
       } else {
         yield put(
           codeEditorActions.dataLoaded({
-            name: response.data.name,
-            descriptionCode: formatCode(response.data.descriptionCode),
+            name: response.data.item.name,
+            descriptionCode: formatCode(response.data.item.descriptionCode),
           }),
         )
         yield put(
-          panelActions.init({ descriptionCode: response.data.descriptionCode }),
+          panelActions.init({
+            descriptionCode: response.data.item.descriptionCode,
+          }),
         )
       }
     }

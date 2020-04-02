@@ -1,10 +1,18 @@
 import { ConfigurationElement } from '../../app/configurationElements/ConfigurationElement'
 
 export interface ISettings {
-  [key: string]: {
+  common: {
     [key: string]: {
       value: any
-      type: ConfigurationElement
+    }
+  }
+  pages: {
+    [key: string]: {
+      [key: string]: {
+        value?: any
+        type: ConfigurationElement
+        common?: boolean
+      }
     }
   }
 }

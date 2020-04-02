@@ -8,7 +8,7 @@ import { ConfigurationElement } from '../ConfigurationElement'
 import './index.css'
 
 export const ConfigurationBlock = (): ReactElement | null => {
-  const { pages, isInitialized } = useSelector(
+  const { settings, isInitialized } = useSelector(
     (state: IRootState) => state.panel,
   )
   const { currentPage } = useSelector((state: IRootState) => state.panel)
@@ -23,7 +23,7 @@ export const ConfigurationBlock = (): ReactElement | null => {
   }
 
   if (isInitialized) {
-    const panes = Object.keys(pages).map(pageKey => ({
+    const panes = Object.keys(settings.pages).map(pageKey => ({
       menuItem: pageKey,
       render: (): ReactNode => (
         <Tab.Pane
@@ -31,14 +31,17 @@ export const ConfigurationBlock = (): ReactElement | null => {
           attached={false}
           key={pageKey}
         >
-          {Object.keys(pages[pageKey]).map((elementKey, elementIndex) => (
-            <ConfigurationElement
-              name={elementKey}
-              page={pageKey}
-              type={pages[pageKey][elementKey].type}
-              key={elementIndex}
-            />
-          ))}
+          {Object.keys(settings.pages[pageKey]).map(
+            (elementKey, elementIndex) => (
+              <ConfigurationElement
+                name={elementKey}
+                page={pageKey}
+                type={settings.pages[pageKey][elementKey].type}
+                key={elementIndex}
+                common={settings.pages[pageKey][elementKey].common}
+              />
+            ),
+          )}
         </Tab.Pane>
       ),
     }))

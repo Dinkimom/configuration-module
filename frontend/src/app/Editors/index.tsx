@@ -1,7 +1,7 @@
 import React, { ReactNode, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Button, Container, List, Segment } from 'semantic-ui-react'
+import { Button, Container, List, Segment, Message } from 'semantic-ui-react'
 import { ErrorMessage } from '../../shared/components/ErrorMessage'
 import { Loader } from '../../shared/components/Loader'
 import { IRootState } from '../../store/state'
@@ -70,7 +70,12 @@ export const Editors = () => {
       )
     }
 
-    return null
+    return (
+      <Message>
+        <Message.Header>There is no editors yet</Message.Header>
+        <p>Click add button and create some new</p>
+      </Message>
+    )
   }
 
   if (isPending) {

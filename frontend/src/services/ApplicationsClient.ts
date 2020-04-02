@@ -50,7 +50,7 @@ export class ApplicationsClient extends AbstractClient {
 
   public getItem = async (_id: string): Promise<AxiosResponse | AxiosError> => {
     try {
-      const response = await this.axios(
+      const response: any = await this.axios(
         this.helper(RequestsEnum.getItem, { _id }),
       )
 

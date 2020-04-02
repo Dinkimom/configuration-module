@@ -6,7 +6,7 @@ export interface IPanelState {
   name: string
   online: boolean
   currentPage: null | string
-  pages: ISettings
+  settings: ISettings
   renderError: string
   focusedField?: string
   descriptionCode: string

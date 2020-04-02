@@ -9,24 +9,26 @@ interface IConnectedElementProps {
   name: string
   children: ReactNode
   type: string
+  common?: boolean
 }
 
 export const ConnectedElement = ({
   name,
   type,
   children,
+  common,
 }: IConnectedElementProps): ReactElement => {
   const page = usePageContext()
   const { focusedField, isInitialized } = useSelector(
     (state: IRootState) => state.panel,
   )
   const isElementInitialized = Boolean(
-    useSelector((state: IRootState) => state.panel.pages[page][name]),
+    useSelector((state: IRootState) => state.panel.settings.pages[page][name]),
   )
   const dispatch = useDispatch()
   const initComponent = useCallback(() => {
-    dispatch(panelActions.initComponent({ page, name, type }))
-  }, [dispatch, name, page, type])
+    dispatch(panelActions.initComponent({ page, name, type, common }))
+  }, [dispatch, name, page, type, common])
 
   useEffect(() => {
     if (!isElementInitialized || !isInitialized) {

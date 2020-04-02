@@ -1,13 +1,7 @@
 import React, { ReactElement, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, Link } from 'react-router-dom'
-import {
-  Container,
-  Message,
-  Segment,
-  Button,
-  Breadcrumb,
-} from 'semantic-ui-react'
+import { Link, useParams } from 'react-router-dom'
+import { Breadcrumb, Container, Message, Segment } from 'semantic-ui-react'
 import { ErrorMessage } from '../../shared/components/ErrorMessage'
 import { Loader } from '../../shared/components/Loader'
 import { isEmpty } from '../../shared/functions/isEmpty'
@@ -24,9 +18,8 @@ interface IPanelProps {
 export const Panel = ({ online }: IPanelProps): ReactElement => {
   const {
     descriptionCode,
-    pages,
+    settings,
     renderError,
-    name,
     isPending,
     error,
   } = useSelector((state: IRootState) => state.panel)
@@ -67,7 +60,7 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
 
   return (
     <Container id='Panel'>
-      {!isEmpty(pages) && (
+      {!isEmpty(settings.pages) && (
         <>
           <div className='panel-header'>
             <Breadcrumb size='massive'>

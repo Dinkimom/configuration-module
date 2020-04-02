@@ -15,6 +15,7 @@ import {
   PANEL_SET_RENDER_ERROR,
 } from './actions'
 import { IPanelState } from './state'
+import objectAssignDeep from 'object-assign-deep'
 
 const initialState: IPanelState = {
   isInitialized: false,
@@ -22,7 +23,10 @@ const initialState: IPanelState = {
   online: false,
   currentPage: null,
   renderError: '',
-  pages: {},
+  settings: {
+    pages: {},
+    common: {},
+  },
   focusedField: undefined,
   descriptionCode: '',
   error: '',
@@ -60,25 +64,47 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
       case PANEL_INIT:
         newState = { ...initialState, ...action.payload }
         newState.isInitialized = true
-        newState.pages = {}
+        newState.settings.pages = {}
         if (action.payload.pages !== undefined) {
-          newState.pages = { ...action.payload.pages }
+          newState.settings.pages = { ...action.payload.pages }
         }
         break
 
       case PANEL_INIT_PAGE:
-        if (!newState.pages[action.payload.name]) {
-          newState.pages[action.payload.name] = {}
-          // eslint-disable-next-line prefer-destructuring
-          newState.currentPage = Object.keys(newState.pages)[0]
+        if (!newState.settings.pages[action.payload.name]) {
+          newState.settings.pages[action.payload.name] = {}
+          newState.currentPage = Object.keys(newState.settings.pages)[0]
         }
         break
 
       case PANEL_INIT_COMPONENT:
-        if (!newState.pages[action.payload.page][action.payload.name]) {
-          newState.pages[action.payload.page][action.payload.name] = {
-            value: getDefaultSetting(action.payload.type),
-            type: action.payload.type,
+        if (!action.payload.common) {
+          if (
+            !newState.settings.pages[action.payload.page][action.payload.name]
+          ) {
+            newState.settings.pages[action.payload.page][
+              action.payload.name
+            ] = {
+              value: getDefaultSetting(action.payload.type),
+              type: action.payload.type,
+            }
+          }
+        } else {
+          if (!newState.settings.common[action.payload.name]) {
+            newState.settings.common[action.payload.name] = {
+              value: getDefaultSetting(action.payload.type),
+            }
+          }
+
+          if (
+            !newState.settings.pages[action.payload.page][action.payload.name]
+          ) {
+            newState.settings.pages[action.payload.page][
+              action.payload.name
+            ] = {
+              type: action.payload.type,
+              common: true,
+            }
           }
         }
         break
@@ -89,12 +115,19 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
 
       case PANEL_CLEAR:
         newState = { ...initialState }
-        newState.pages = {}
+        newState.settings.pages = {}
+        newState.settings.common = {}
         break
 
       case PANEL_SET_FIELD_VALUE:
-        newState.pages[action.payload.page][action.payload.name].value =
-          action.payload.value
+        if (action.payload.common) {
+          newState.settings.common[action.payload.name].value =
+            action.payload.value
+        } else {
+          newState.settings.pages[action.payload.page][
+            action.payload.name
+          ].value = action.payload.value
+        }
         break
 
       case PANEL_SET_FOCUSED_FIELD:
@@ -116,6 +149,7 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
         break
     }
 
+    console.log(newState)
     return newState
   }
 }

@@ -29,7 +29,7 @@ export class PanelApiSaga {
   private *load(
     action: IActionPayloaded<{ application_id: string; user_id: string }>,
   ) {
-    const settings = yield select((state: IRootState) => state.panel.pages)
+    const settings = yield select((state: IRootState) => state.panel)
 
     yield put(panelActions.setPending({ flag: true }))
 
@@ -44,11 +44,11 @@ export class PanelApiSaga {
         yield put(
           panelActions.init({
             online: true,
-            descriptionCode: response.data.descriptionCode,
-            _id: response.data._id,
-            name: response.data.name,
-            pages: objectAssignDeep(settings, response.data.settings),
-            currentPage: Object.keys(response.data.settings)[0],
+            descriptionCode: response.data.item.descriptionCode,
+            _id: response.data.item._id,
+            name: response.data.item.name,
+            settings: objectAssignDeep(settings, response.data.item.settings),
+            currentPage: Object.keys(response.data.item.settings)[0],
           } as Partial<IPanelState>),
         )
       }

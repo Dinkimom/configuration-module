@@ -23,7 +23,12 @@ export const panelActions = {
     payload,
   }),
 
-  initComponent: (payload: { page: string; name: string; type: string }) => ({
+  initComponent: (payload: {
+    page: string
+    name: string
+    type: string
+    common?: boolean
+  }) => ({
     type: PANEL_INIT_COMPONENT,
     payload,
   }),
@@ -42,7 +47,12 @@ export const panelActions = {
     payload,
   }),
 
-  setFieldValue: (payload: { value: any; name: string; page: string }) => ({
+  setFieldValue: (payload: {
+    value: any
+    name: string
+    page: string
+    common?: boolean
+  }) => ({
     type: PANEL_SET_FIELD_VALUE,
     payload,
   }),

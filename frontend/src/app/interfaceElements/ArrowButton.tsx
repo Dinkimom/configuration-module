@@ -11,6 +11,7 @@ interface IArrowButtonProps extends IBaseElementProps, ButtonProps {
 export const ArrowButton = ({
   name,
   direction = 'left',
+  common,
   ...other
 }: IArrowButtonProps): ReactElement => {
   if (direction !== 'left' && direction !== 'right') {
@@ -19,7 +20,7 @@ export const ArrowButton = ({
 
   let icon = ''
 
-  switch (useFieldValue(name)) {
+  switch (useFieldValue(name, common)) {
     case '0':
       icon = `arrow ${direction}`
       break
@@ -32,7 +33,7 @@ export const ArrowButton = ({
   }
 
   return (
-    <ConnectedElement name={name} type={'arrowButton'}>
+    <ConnectedElement name={name} common={common} type={'arrowButton'}>
       <Button icon={icon} size='medium' {...other} />
     </ConnectedElement>
   )

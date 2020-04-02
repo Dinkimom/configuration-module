@@ -11,12 +11,14 @@ interface IConfigurationElementProps {
   name: string
   page: string
   type: ConfigurationElement
+  common?: boolean
 }
 
 export const ConfigurationElement = ({
   name,
   page,
   type,
+  common,
 }: IConfigurationElementProps): ReactElement | null => {
   let component = null
 
@@ -26,8 +28,10 @@ export const ConfigurationElement = ({
   }>()
 
   const dispatch = useDispatch()
-  const { value } = useSelector(
-    (state: IRootState) => state.panel.pages![page][name],
+  const { value } = useSelector((state: IRootState) =>
+    common
+      ? state.panel.settings.common[name]
+      : state.panel.settings.pages![page][name],
   )
   const { online } = useSelector((state: IRootState) => state.panel)
 
@@ -36,6 +40,7 @@ export const ConfigurationElement = ({
       value: data.value || data.checked,
       name,
       page,
+      common,
     }
     dispatch(panelActions.setFieldValue(action))
     if (online) {
@@ -43,7 +48,6 @@ export const ConfigurationElement = ({
         panelActions.updateData({ ...action, application_id, user_id, type }),
       )
     }
-    console.log(online)
   }
 
   const handleFocus = (): void => {
@@ -92,7 +96,9 @@ export const ConfigurationElement = ({
 
   return (
     <Form.Field>
-      <label>{name}</label>
+      <label>
+        {name} {common && 'Common'}
+      </label>
       {component}
     </Form.Field>
   )

@@ -1,4 +1,5 @@
 export interface IBaseElementProps {
-	name: string
-	type: string
+  name: string
+  type: string
+  value: any
 }

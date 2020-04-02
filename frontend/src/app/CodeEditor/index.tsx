@@ -19,7 +19,6 @@ import { Panel } from '../Panel'
 import { panelActions } from '../Panel/actions'
 import { codeEditorActions } from './actions'
 import './index.css'
-import { PageWrapper } from '../PageWrapper'
 require('codemirror/mode/jsx/jsx')
 require('codemirror/addon/lint/lint')
 

@@ -13,7 +13,7 @@ export const PageContext = React.createContext({ page: '' })
 export const Page = ({ name, children }: IPageProps): ReactElement | null => {
   const dispatch = useDispatch()
   const isPageInitialized = Boolean(
-    useSelector((state: IRootState) => state.panel.pages[name]),
+    useSelector((state: IRootState) => state.panel.settings.pages[name]),
   )
   const { currentPage, isInitialized } = useSelector(
     (state: IRootState) => state.panel,

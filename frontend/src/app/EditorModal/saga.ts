@@ -54,8 +54,8 @@ export class EditorModalApiSaga {
     if ((response as any).status === 200) {
       yield put(
         codeEditorActions.dataLoaded({
-          name: response.data.name,
-          descriptionCode: response.data.descriptionCode,
+          name: response.data.item.name,
+          descriptionCode: response.data.item.descriptionCode,
         }),
       )
       yield put(editorModalActions.closeModal())
