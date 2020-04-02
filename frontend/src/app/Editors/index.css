@@ -1,3 +1,7 @@
+.list-container {
+  padding-top: 60px;
+}
+
 .list-container__header {
   padding: 10px 0 !important;
 }
