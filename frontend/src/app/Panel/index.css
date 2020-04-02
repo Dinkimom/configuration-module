@@ -1,7 +1,7 @@
 #Panel {
   display: grid;
   grid-template-rows: auto 1fr;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 4fr 3fr;
   grid-row-gap: 20px;
   height: 100%;
   padding: 20px;

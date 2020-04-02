@@ -3,13 +3,8 @@
   grid-template-columns: auto;
 }
 
-.page-wrapper nav {
-  background: rgb(24, 24, 24);
-  height: 100vh;
-}
-
 .page-wrapper header {
-  position: absolute;
+  position: fixed;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -38,4 +33,8 @@
 .page-wrapper header .container .user {
   color: white;
   margin: 0;
+}
+
+.page-wrapper main .container:first-child {
+  padding-top: 60px !important;
 }
