@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Checkbox, Dropdown, Form } from 'semantic-ui-react'
+import { Checkbox, Dropdown, Form, Popup } from 'semantic-ui-react'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
 import { useParams } from 'react-router-dom'
@@ -45,7 +45,12 @@ export const ConfigurationElement = ({
     dispatch(panelActions.setFieldValue(action))
     if (online) {
       dispatch(
-        panelActions.updateData({ ...action, application_id, user_id, type }),
+        panelActions.updateData({
+          ...action,
+          application_id,
+          user_id,
+          common,
+        }),
       )
     }
   }
@@ -97,7 +102,15 @@ export const ConfigurationElement = ({
   return (
     <Form.Field>
       <label>
-        {name} {common && 'Common'}
+        {name}{' '}
+        {common && (
+          <Popup
+            content='This interface element is shared across multiple pages.'
+            trigger={
+              <span style={{ opacity: '.3', marginLeft: '5px' }}>Common</span>
+            }
+          />
+        )}
       </label>
       {component}
     </Form.Field>

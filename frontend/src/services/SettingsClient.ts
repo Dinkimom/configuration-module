@@ -35,12 +35,23 @@ export class SettingsClient extends AbstractClient {
       const response = await this.axios.put(
         `${this.URL}/item/${data.application_id}/${data.user_id}`,
         {
-          [data.page]: {
-            [data.name]: {
-              value: data.value,
-              type: data.type,
-            },
-          },
+          settings: data.common
+            ? {
+                common: {
+                  [data.name]: {
+                    value: data.value,
+                  },
+                },
+              }
+            : {
+                pages: {
+                  [data.page]: {
+                    [data.name]: {
+                      value: data.value,
+                    },
+                  },
+                },
+              },
         },
       )
 

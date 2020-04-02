@@ -62,12 +62,13 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
 
     switch (action.type) {
       case PANEL_INIT:
-        newState = { ...initialState, ...action.payload }
+        newState = objectAssignDeep(initialState, action.payload)
         newState.isInitialized = true
         newState.settings.pages = {}
         if (action.payload.pages !== undefined) {
           newState.settings.pages = { ...action.payload.pages }
         }
+        console.log(newState)
         break
 
       case PANEL_INIT_PAGE:
@@ -149,7 +150,6 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
         break
     }
 
-    console.log(newState)
     return newState
   }
 }

@@ -6,12 +6,13 @@ import { ConnectedElement } from './ConnectedElement'
 
 export const ProgressBar = ({
   name,
+  common,
   ...other
 }: IBaseElementProps): ReactElement => {
-  const isVisible = useFieldValue(name)
+  const isVisible = useFieldValue(name, common)
 
   return (
-    <ConnectedElement name={name} type='optional'>
+    <ConnectedElement name={name} common={common} type='optional'>
       {isVisible && (
         <Progress
           {...other}
