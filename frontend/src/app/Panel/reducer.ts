@@ -16,6 +16,7 @@ import {
 } from './actions'
 import { IPanelState } from './state'
 import objectAssignDeep from 'object-assign-deep'
+import { getElementObject } from '../../shared/functions/getElementObject'
 
 const initialState: IPanelState = {
   isInitialized: false,
@@ -31,17 +32,6 @@ const initialState: IPanelState = {
   descriptionCode: '',
   error: '',
   isPending: false,
-}
-
-const getDefaultSetting = (type: string): any => {
-  switch (type) {
-    case 'arrowButton':
-      return '0'
-    case 'optional':
-      return false
-  }
-
-  return null
 }
 
 export class PanelReducer implements IReducerPayloaded<IPanelState> {
@@ -86,14 +76,14 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
             newState.settings.pages[action.payload.page][
               action.payload.name
             ] = {
-              value: getDefaultSetting(action.payload.type),
+              value: getElementObject(action.payload.type).defaultValue,
               type: action.payload.type,
             }
           }
         } else {
           if (!newState.settings.common[action.payload.name]) {
             newState.settings.common[action.payload.name] = {
-              value: getDefaultSetting(action.payload.type),
+              value: getElementObject(action.payload.type).defaultValue,
             }
           }
 

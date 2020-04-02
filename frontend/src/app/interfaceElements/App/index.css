@@ -22,7 +22,5 @@
 
 .app__page__body {
   height: calc(100% - 100px) !important;
-  overflow-y: auto;
-  overflow-x: hidden;
   padding: 5px !important;
 }

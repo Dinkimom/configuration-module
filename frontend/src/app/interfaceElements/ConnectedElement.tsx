@@ -2,13 +2,14 @@ import React, { ReactElement, ReactNode, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popup } from 'semantic-ui-react'
 import { usePageContext } from '../../shared/hooks/usePageContext'
+import { IConfigurationElement } from '../../shared/types/IConfigurationElement'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
 
 interface IConnectedElementProps {
   name: string
   children: ReactNode
-  type: string
+  type: IConfigurationElement
   common?: boolean
 }
 
@@ -38,7 +39,16 @@ export const ConnectedElement = ({
 
   if (focusedField && focusedField === name) {
     // Todo: add Popup (maybe)
-    return <span style={{ outline: '3px solid #96c8da' }}>{children}</span>
+    return (
+      <span
+        style={{
+          outline: '3px solid #2185d0',
+          outlineOffset: '2px',
+        }}
+      >
+        {children}
+      </span>
+    )
   }
 
   return <Popup content={name} trigger={children} />

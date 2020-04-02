@@ -1,4 +1,4 @@
-import { ConfigurationElement } from '../../app/configurationElements/ConfigurationElement'
+import { IConfigurationElement } from '../types/IConfigurationElement'
 
 export interface ISettings {
   common: {
@@ -10,7 +10,7 @@ export interface ISettings {
     [key: string]: {
       [key: string]: {
         value?: any
-        type: ConfigurationElement
+        type: IConfigurationElement
         common?: boolean
       }
     }

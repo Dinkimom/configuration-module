@@ -14,13 +14,7 @@ export const ProgressBar = ({
   return (
     <ConnectedElement name={name} common={common} type='optional'>
       {isVisible && (
-        <Progress
-          {...other}
-          percent={40}
-          color='green'
-          size='small'
-          indicating={true}
-        />
+        <Progress {...other} percent={40} color='green' size='small' />
       )}
     </ConnectedElement>
   )

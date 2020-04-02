@@ -13,6 +13,7 @@ import { Footer } from '../interfaceElements/Footer'
 import { Header } from '../interfaceElements/Header'
 import { Page } from '../interfaceElements/Page'
 import { ProgressBar } from '../interfaceElements/ProgressBar'
+import { RetryButton } from '../interfaceElements/RetryButton'
 import { panelActions } from '../Panel/actions'
 
 const UnmemorizedCodeRender = ({ code }) => {
@@ -37,6 +38,7 @@ const UnmemorizedCodeRender = ({ code }) => {
         Header,
         Footer,
         Content,
+        RetryButton,
       }}
       allowUnknownElements={false}
       jsx={code}

@@ -1,16 +1,16 @@
 import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { Checkbox, Dropdown, Form, Popup } from 'semantic-ui-react'
+import { getElementObject } from '../../shared/functions/getElementObject'
+import { IConfigurationElement } from '../../shared/types/IConfigurationElement'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
-import { useParams } from 'react-router-dom'
-
-export type ConfigurationElement = 'arrowButton' | 'optional'
 
 interface IConfigurationElementProps {
   name: string
   page: string
-  type: ConfigurationElement
+  type: IConfigurationElement
   common?: boolean
 }
 
@@ -69,11 +69,21 @@ export const ConfigurationElement = ({
         <Dropdown
           onChange={handleChange}
           selection={true}
-          options={[
-            { text: 'Simple arrow', value: '0', icon: 'arrow left' },
-            { text: 'Circle arrow', value: '1', icon: 'arrow circle left' },
-            { text: 'Angle arrow', value: '2', icon: 'angle left' },
-          ]}
+          options={getElementObject('arrowButton').options}
+          name={name}
+          value={value}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      )
+      break
+
+    case 'retryButton':
+      component = (
+        <Dropdown
+          onChange={handleChange}
+          selection={true}
+          options={getElementObject('retryButton').options}
           name={name}
           value={value}
           onFocus={handleFocus}

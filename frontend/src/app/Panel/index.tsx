@@ -22,6 +22,7 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
     renderError,
     isPending,
     error,
+    name,
   } = useSelector((state: IRootState) => state.panel)
 
   const { application_id, user_id } = useParams<{
@@ -73,7 +74,7 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
                 </>
               )}
               <Breadcrumb.Section active>
-                Configuration panel
+                {name ? `Configure ${name}` : 'Configuration panel'}
               </Breadcrumb.Section>
             </Breadcrumb>
           </div>

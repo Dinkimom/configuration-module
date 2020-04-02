@@ -18,23 +18,9 @@ export const ArrowButton = ({
     throw new Error('Invalid direction value')
   }
 
-  let icon = ''
-
-  switch (useFieldValue(name, common)) {
-    case '0':
-      icon = `arrow ${direction}`
-      break
-    case '1':
-      icon = `arrow circle ${direction}`
-      break
-    case '2':
-      icon = `angle ${direction}`
-      break
-  }
-
   return (
     <ConnectedElement name={name} common={common} type={'arrowButton'}>
-      <Button icon={icon} size='medium' {...other} />
+      <Button icon={useFieldValue(name, common, false, direction)} {...other} />
     </ConnectedElement>
   )
 }
