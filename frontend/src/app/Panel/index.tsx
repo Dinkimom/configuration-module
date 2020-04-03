@@ -40,14 +40,16 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
 
   if (renderError) {
     return (
-      <Segment padded={true} basic={true}>
-        <Message
-          icon='warning circle'
-          size='big'
-          negative={true}
-          content={renderError}
-        />
-      </Segment>
+      <Container>
+        <Segment padded={true} basic={true}>
+          <Message
+            icon='warning circle'
+            size='big'
+            negative={true}
+            content={renderError}
+          />
+        </Segment>
+      </Container>
     )
   }
 
@@ -56,7 +58,11 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
   }
 
   if (error !== '') {
-    return <ErrorMessage error={error} />
+    return (
+      <Container id='Panel'>
+        <ErrorMessage error={error} />
+      </Container>
+    )
   }
 
   return (

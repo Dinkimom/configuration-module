@@ -35,6 +35,6 @@
   margin: 0;
 }
 
-.page-wrapper main .container:first-child {
+.page-wrapper main #Panel {
   padding-top: 60px !important;
 }
