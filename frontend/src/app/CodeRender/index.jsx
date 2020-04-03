@@ -14,18 +14,19 @@ import { Header } from '../interfaceElements/Header'
 import { Page } from '../interfaceElements/Page'
 import { ProgressBar } from '../interfaceElements/ProgressBar'
 import { RetryButton } from '../interfaceElements/RetryButton'
+import { SelectableImage } from '../interfaceElements/SelectableImage'
 import { panelActions } from '../Panel/actions'
 
 const UnmemorizedCodeRender = ({ code }) => {
   const dispatch = useDispatch()
-  const setError = error => {
+  const setError = (error) => {
     dispatch(panelActions.clear())
     dispatch(panelActions.setRenderError({ error }))
   }
 
   return (
     <JsxParser
-      renderError={error => {
+      renderError={(error) => {
         setError(error.error)
         return null
       }}
@@ -39,6 +40,7 @@ const UnmemorizedCodeRender = ({ code }) => {
         Footer,
         Content,
         RetryButton,
+        SelectableImage,
       }}
       allowUnknownElements={false}
       jsx={code}
