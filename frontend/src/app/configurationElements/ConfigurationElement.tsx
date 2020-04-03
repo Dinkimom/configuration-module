@@ -2,15 +2,14 @@ import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Checkbox, Dropdown, Form, Popup } from 'semantic-ui-react'
-import { getElementObject } from '../../shared/functions/getElementObject'
-import { IConfigurationElement } from '../../shared/types/IConfigurationElement'
+import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
 
 interface IConfigurationElementProps {
   name: string
   page: string
-  type: IConfigurationElement
+  type: ConfigurationElements
   common?: boolean
 }
 
@@ -32,6 +31,9 @@ export const ConfigurationElement = ({
     common
       ? state.panel.settings.common[name]
       : state.panel.settings.pages![page][name],
+  )
+  const { options } = useSelector(
+    (state: IRootState) => state.panel.settings.pages![page][name],
   )
   const { online } = useSelector((state: IRootState) => state.panel)
 
@@ -64,12 +66,12 @@ export const ConfigurationElement = ({
   }
 
   switch (type) {
-    case 'arrowButton':
+    case ConfigurationElements.select:
       component = (
         <Dropdown
           onChange={handleChange}
           selection={true}
-          options={getElementObject('arrowButton').options}
+          options={options}
           name={name}
           value={value}
           onFocus={handleFocus}
@@ -78,21 +80,7 @@ export const ConfigurationElement = ({
       )
       break
 
-    case 'retryButton':
-      component = (
-        <Dropdown
-          onChange={handleChange}
-          selection={true}
-          options={getElementObject('retryButton').options}
-          name={name}
-          value={value}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-        />
-      )
-      break
-
-    case 'optional':
+    case ConfigurationElements.optional:
       component = (
         <Checkbox
           onChange={handleChange}

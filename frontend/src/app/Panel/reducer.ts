@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+import objectAssignDeep from 'object-assign-deep'
+import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
+import { IOption } from '../../shared/types/IOption'
 import { IActionPayloaded } from '../../store/IAction'
 import { IReducerPayloaded } from '../../store/IReducer'
 import {
@@ -15,8 +18,6 @@ import {
   PANEL_SET_RENDER_ERROR,
 } from './actions'
 import { IPanelState } from './state'
-import objectAssignDeep from 'object-assign-deep'
-import { getElementObject } from '../../shared/functions/getElementObject'
 
 const initialState: IPanelState = {
   isInitialized: false,
@@ -32,6 +33,18 @@ const initialState: IPanelState = {
   descriptionCode: '',
   error: '',
   isPending: false,
+}
+
+const getDefaultSettings = (
+  type: ConfigurationElements,
+  options: IOption[],
+) => {
+  switch (type) {
+    case ConfigurationElements.optional:
+      return false
+    case ConfigurationElements.select:
+      return options[0].value
+  }
 }
 
 export class PanelReducer implements IReducerPayloaded<IPanelState> {
@@ -76,14 +89,21 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
             newState.settings.pages[action.payload.page][
               action.payload.name
             ] = {
-              value: getElementObject(action.payload.type).defaultValue,
+              value: getDefaultSettings(
+                action.payload.type,
+                action.payload.options,
+              ),
               type: action.payload.type,
+              options: action.payload.options,
             }
           }
         } else {
           if (!newState.settings.common[action.payload.name]) {
             newState.settings.common[action.payload.name] = {
-              value: getElementObject(action.payload.type).defaultValue,
+              value: getDefaultSettings(
+                action.payload.type,
+                action.payload.options,
+              ),
             }
           }
 
@@ -94,6 +114,7 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
               action.payload.name
             ] = {
               type: action.payload.type,
+              options: action.payload.options,
               common: true,
             }
           }

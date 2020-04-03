@@ -1,16 +1,18 @@
 import React, { ReactElement, ReactNode, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popup } from 'semantic-ui-react'
+import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 import { usePageContext } from '../../shared/hooks/usePageContext'
-import { IConfigurationElement } from '../../shared/types/IConfigurationElement'
+import { IOption } from '../../shared/types/IOption'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
 
 interface IConnectedElementProps {
   name: string
   children: ReactNode
-  type: IConfigurationElement
+  type: ConfigurationElements
   common?: boolean
+  options?: IOption[]
 }
 
 export const ConnectedElement = ({
@@ -18,6 +20,7 @@ export const ConnectedElement = ({
   type,
   children,
   common,
+  options,
 }: IConnectedElementProps): ReactElement => {
   const page = usePageContext()
   const { focusedField, isInitialized } = useSelector(
@@ -28,8 +31,8 @@ export const ConnectedElement = ({
   )
   const dispatch = useDispatch()
   const initComponent = useCallback(() => {
-    dispatch(panelActions.initComponent({ page, name, type, common }))
-  }, [dispatch, name, page, type, common])
+    dispatch(panelActions.initComponent({ page, name, type, common, options }))
+  }, [dispatch, name, page, type, common, options])
 
   useEffect(() => {
     if (!isElementInitialized || !isInitialized) {

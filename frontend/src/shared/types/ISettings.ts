@@ -1,4 +1,5 @@
-import { IConfigurationElement } from '../types/IConfigurationElement'
+import { ConfigurationElements } from '../enums/ConfigurationElements'
+import { IOption } from './IOption'
 
 export interface ISettings {
   common: {
@@ -10,7 +11,8 @@ export interface ISettings {
     [key: string]: {
       [key: string]: {
         value?: any
-        type: IConfigurationElement
+        type: ConfigurationElements
+        options?: IOption[]
         common?: boolean
       }
     }

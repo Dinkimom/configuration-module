@@ -1,1 +1,1 @@
-export type IConfigurationElement = 'arrowButton' | 'optional' | 'retryButton'
+export type IConfigurationElement = 'select' | 'optional'
