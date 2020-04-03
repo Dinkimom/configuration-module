@@ -42,16 +42,7 @@ export const ConnectedElement = ({
 
   if (focusedField && focusedField === name) {
     // Todo: add Popup (maybe)
-    return (
-      <span
-        style={{
-          outline: '3px solid #2185d0',
-          outlineOffset: '2px',
-        }}
-      >
-        {children}
-      </span>
-    )
+    return <span className='currentElement'>{children}</span>
   }
 
   return <Popup content={name} trigger={children} />
