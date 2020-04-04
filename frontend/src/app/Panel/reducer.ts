@@ -66,10 +66,14 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
     switch (action.type) {
       case PANEL_INIT:
         newState = objectAssignDeep(initialState, action.payload)
+        console.log(newState)
         newState.isInitialized = true
-        newState.settings.pages = {}
-        if (action.payload.pages !== undefined) {
-          newState.settings.pages = { ...action.payload.pages }
+        newState.settings = {
+          pages: {},
+          common: {},
+        }
+        if (action.payload.settings !== undefined) {
+          newState.settings = { ...action.payload.settings }
         }
         break
 

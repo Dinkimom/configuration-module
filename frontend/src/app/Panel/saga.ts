@@ -22,8 +22,8 @@ export class PanelApiSaga {
   }
 
   public *watch() {
-    yield takeEvery(PANEL_LOAD_DATA, a => safeSagaExecute(a, this.load))
-    yield takeEvery(PANEL_UPDATE_DATA, a => safeSagaExecute(a, this.update))
+    yield takeEvery(PANEL_LOAD_DATA, (a) => safeSagaExecute(a, this.load))
+    yield takeEvery(PANEL_UPDATE_DATA, (a) => safeSagaExecute(a, this.update))
   }
 
   private *load(
@@ -47,8 +47,11 @@ export class PanelApiSaga {
             descriptionCode: response.data.item.descriptionCode,
             _id: response.data.item._id,
             name: response.data.item.name,
-            settings: objectAssignDeep(settings, response.data.item.settings),
-            currentPage: Object.keys(response.data.item.settings)[0],
+            settings: objectAssignDeep(
+              settings.settings,
+              response.data.item.settings,
+            ),
+            currentPage: Object.keys(response.data.item.settings.pages)[0],
           } as Partial<IPanelState>),
         )
       }
