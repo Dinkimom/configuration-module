@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, ImageProps, Label } from 'semantic-ui-react'
+import { Image, ImageProps } from 'semantic-ui-react'
 import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { IBaseElementProps } from '../../shared/types/IBaseElementProps'

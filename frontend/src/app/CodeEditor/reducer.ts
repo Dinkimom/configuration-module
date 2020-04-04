@@ -10,10 +10,11 @@ import {
   CODE_EDITOR_FAILURE,
 } from './actions'
 import { ICodeEditorState } from './state'
+import { formatCode } from '../../shared/functions/formatCode'
 
 const initialState: ICodeEditorState = {
   name: '',
-  code: codeExample,
+  code: formatCode(codeExample),
   height: '60vh',
   isPending: false,
   error: '',

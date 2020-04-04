@@ -73,7 +73,7 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
             <Breadcrumb size='massive'>
               {user_id && (
                 <>
-                  <Breadcrumb.Section link>
+                  <Breadcrumb.Section>
                     <Link to={`/panels/${user_id}`}>Panels</Link>
                   </Breadcrumb.Section>
                   <Breadcrumb.Divider icon='right chevron' />

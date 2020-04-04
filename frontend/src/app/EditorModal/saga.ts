@@ -3,13 +3,13 @@ import { safeSagaExecute } from '../../middleware/saga'
 import { ApplicationsClient } from '../../services/ApplicationsClient'
 import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 import { IActionPayloaded } from '../../store/IAction'
+import { notificationSystem } from '../app'
+import { codeEditorActions } from '../CodeEditor/actions'
 import {
   editorModalActions,
   EDITOR_MODAL_ADD,
   EDITOR_MODAL_UPDATE,
 } from './actions'
-import { codeEditorActions } from '../CodeEditor/actions'
-import { notificationSystem } from '../app'
 
 const client = new ApplicationsClient()
 
@@ -25,8 +25,8 @@ export class EditorModalApiSaga {
   }
 
   public *watch() {
-    yield takeEvery(EDITOR_MODAL_ADD, a => safeSagaExecute(a, this.add))
-    yield takeEvery(EDITOR_MODAL_UPDATE, a => safeSagaExecute(a, this.update))
+    yield takeEvery(EDITOR_MODAL_ADD, (a) => safeSagaExecute(a, this.add))
+    yield takeEvery(EDITOR_MODAL_UPDATE, (a) => safeSagaExecute(a, this.update))
   }
 
   private *add(action: IActionPayloaded<IApplicationDTO>) {

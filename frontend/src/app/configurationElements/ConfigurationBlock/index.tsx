@@ -23,7 +23,7 @@ export const ConfigurationBlock = (): ReactElement | null => {
   }
 
   if (isInitialized) {
-    const panes = Object.keys(settings.pages).map(pageKey => ({
+    const panes = Object.keys(settings.pages).map((pageKey) => ({
       menuItem: pageKey,
       render: (): ReactNode => (
         <Tab.Pane

@@ -33,7 +33,10 @@ export const ArrowButton = ({
       type={ConfigurationElements.select}
       options={options}
     >
-      <Button icon={`${useFieldValue(name, common)} ${direction}`} {...other} />
+      <Button
+        icon={`${useFieldValue(name, common) || options[0].value} ${direction}`}
+        {...other}
+      />
     </ConnectedElement>
   )
 }

@@ -71,7 +71,6 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
         if (action.payload.pages !== undefined) {
           newState.settings.pages = { ...action.payload.pages }
         }
-        console.log(newState)
         break
 
       case PANEL_INIT_PAGE:

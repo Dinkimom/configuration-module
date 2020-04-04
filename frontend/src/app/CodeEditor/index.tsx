@@ -62,12 +62,14 @@ export const CodeEditor = (): ReactElement => {
   const handleExpandWindow = (): Action =>
     dispatch(codeEditorActions.changeHeight({ height: '100vh' }))
 
-  const handleCodeChange = (editor: any, data: any, value: string): Action =>
+  const handleCodeChange = (editor: any, data: any, value: string): any => {
     dispatch(
       codeEditorActions.changeCode({
         code: value,
       }),
     )
+  }
+
   const handleCodeFormat = () => {
     dispatch(
       codeEditorActions.changeCode({
@@ -121,7 +123,7 @@ export const CodeEditor = (): ReactElement => {
         <CodeMirror
           value={code}
           options={options}
-          onChange={handleCodeChange}
+          // onChange={handleCodeChange}
           onBeforeChange={handleCodeChange}
         />
 
@@ -148,7 +150,8 @@ export const CodeEditor = (): ReactElement => {
           <Button
             icon='play'
             onClick={() => {
-              dispatch(panelActions.init({ descriptionCode: code }))
+              dispatch(codeEditorActions.changeCode({ code: formatCode(code) }))
+              dispatch(panelActions.init({ descriptionCode: formatCode(code) }))
             }}
             disabled={!code || code === descriptionCode}
           />
