@@ -25,6 +25,19 @@
   padding: 5px !important;
 }
 
+.app .selectable-image-container {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.app .selectable-image-container:before {
+  background: none !important;
+}
+
+.app .selectable-image-container:after {
+  border-color: #2185d0 rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) !important;
+}
+
 .app .currentElement > * {
   outline: 3px solid #2185d0 !important;
   outline-offset: 3px;

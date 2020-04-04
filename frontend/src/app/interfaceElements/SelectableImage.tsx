@@ -1,5 +1,5 @@
-import React from 'react'
-import { Image, ImageProps } from 'semantic-ui-react'
+import React, { useState, useEffect } from 'react'
+import { Image, ImageProps, Segment } from 'semantic-ui-react'
 import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { IBaseElementProps } from '../../shared/types/IBaseElementProps'
@@ -15,13 +15,40 @@ export const SelectableImage = ({
   options,
   common,
   ...other
-}: ISelectableImageProps) => (
-  <ConnectedElement
-    name={name}
-    common={common}
-    type={ConfigurationElements.select}
-    options={options}
-  >
-    <Image src={useFieldValue(name, common)} {...other} />
-  </ConnectedElement>
-)
+}: ISelectableImageProps) => {
+  const [loading, setLoading] = useState<boolean>(false)
+  const [src, setSrc] = useState<string>('')
+  const newSrc = useFieldValue(name, common)
+  useEffect(() => {
+    if (newSrc !== src) {
+      setLoading(true)
+      setSrc(newSrc)
+    }
+  }, [newSrc, src])
+
+  return (
+    <ConnectedElement
+      name={name}
+      common={common}
+      type={ConfigurationElements.select}
+      options={options}
+    >
+      <Segment
+        className='selectable-image-container'
+        loading={loading}
+        basic={true}
+        compact={true}
+      >
+        {src && (
+          <Image
+            src={src}
+            {...other}
+            onLoad={() => setLoading(false)}
+            onError={() => setLoading(false)}
+            style={{ opacity: loading ? '0' : '1' }}
+          />
+        )}
+      </Segment>
+    </ConnectedElement>
+  )
+}
