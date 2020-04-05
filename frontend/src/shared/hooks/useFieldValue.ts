@@ -1,24 +1,29 @@
 import { useSelector } from 'react-redux'
 import { IRootState } from '../../store/state'
 import { usePageContext } from './usePageContext'
+import { IParams } from '../types/IParams'
 
-export const useFieldValue = (name: string, common?: boolean): any => {
+export const useFieldValue = (
+  name: string,
+  initialParams: IParams,
+  common?: boolean,
+): any => {
   const page = usePageContext()
 
   return useSelector((state: IRootState) => {
     const isInitialized = Boolean(state.panel.settings.pages[page][name])
-    let value: any
+    let params: any
 
     if (isInitialized) {
       if (common) {
-        value = state.panel.settings.common[name].value
+        params = state.panel.settings.common[name].params
       } else {
-        value = state.panel.settings.pages[page][name].value
+        params = state.panel.settings.pages[page][name].params
       }
 
-      return value
+      return params
     }
 
-    return null
+    return initialParams
   })
 }

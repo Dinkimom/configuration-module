@@ -66,7 +66,6 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
     switch (action.type) {
       case PANEL_INIT:
         newState = objectAssignDeep(initialState, action.payload)
-        console.log(newState)
         newState.isInitialized = true
         newState.settings = {
           pages: {},
@@ -85,42 +84,46 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
         break
 
       case PANEL_INIT_COMPONENT:
-        if (!action.payload.common) {
-          if (
-            !newState.settings.pages[action.payload.page][action.payload.name]
-          ) {
-            newState.settings.pages[action.payload.page][
-              action.payload.name
-            ] = {
-              value: getDefaultSettings(
-                action.payload.type,
-                action.payload.options,
-              ),
-              type: action.payload.type,
-              options: action.payload.options,
-            }
-          }
-        } else {
-          if (!newState.settings.common[action.payload.name]) {
-            newState.settings.common[action.payload.name] = {
-              value: getDefaultSettings(
-                action.payload.type,
-                action.payload.options,
-              ),
-            }
+        if (
+          !newState.settings.common[action.payload.name] &&
+          action.payload.common
+        ) {
+          newState.settings.common[action.payload.name] = {
+            params: {},
           }
 
-          if (
-            !newState.settings.pages[action.payload.page][action.payload.name]
-          ) {
+          Object.keys(action.payload.params).forEach((paramKey) => {
+            newState.settings.common[action.payload.name].params[paramKey] = {
+              value: getDefaultSettings(
+                action.payload.params[paramKey].type,
+                action.payload.params[paramKey].options,
+              ),
+            }
+          })
+        }
+
+        if (
+          !newState.settings.pages[action.payload.page][action.payload.name]
+        ) {
+          newState.settings.pages[action.payload.page][action.payload.name] = {
+            params: {},
+            common: action.payload.common,
+          }
+
+          Object.keys(action.payload.params).forEach((paramKey) => {
             newState.settings.pages[action.payload.page][
               action.payload.name
-            ] = {
-              type: action.payload.type,
-              options: action.payload.options,
-              common: true,
+            ].params[paramKey] = {
+              value: action.payload.common
+                ? undefined
+                : getDefaultSettings(
+                    action.payload.params[paramKey].type,
+                    action.payload.params[paramKey].options,
+                  ),
+              type: action.payload.params[paramKey].type,
+              options: action.payload.params[paramKey].options,
             }
-          }
+          })
         }
         break
 
@@ -136,12 +139,13 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
 
       case PANEL_SET_FIELD_VALUE:
         if (action.payload.common) {
-          newState.settings.common[action.payload.name].value =
-            action.payload.value
+          newState.settings.common[action.payload.name].params[
+            action.payload.param
+          ].value = action.payload.value
         } else {
           newState.settings.pages[action.payload.page][
             action.payload.name
-          ].value = action.payload.value
+          ].params[action.payload.param].value = action.payload.value
         }
         break
 

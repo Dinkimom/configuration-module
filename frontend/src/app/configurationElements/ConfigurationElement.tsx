@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { Checkbox, Dropdown, Form, Popup } from 'semantic-ui-react'
+import { Checkbox, Dropdown, Form } from 'semantic-ui-react'
 import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
@@ -10,12 +10,14 @@ interface IConfigurationElementProps {
   name: string
   page: string
   type: ConfigurationElements
+  param: string
   common?: boolean
 }
 
 export const ConfigurationElement = ({
   name,
   page,
+  param,
   type,
   common,
 }: IConfigurationElementProps): ReactElement | null => {
@@ -29,11 +31,12 @@ export const ConfigurationElement = ({
   const dispatch = useDispatch()
   const { value } = useSelector((state: IRootState) =>
     common
-      ? state.panel.settings.common[name]
-      : state.panel.settings.pages![page][name],
+      ? state.panel.settings.common[name].params[param]
+      : state.panel.settings.pages![page][name].params[param],
   )
   const { options } = useSelector(
-    (state: IRootState) => state.panel.settings.pages![page][name],
+    (state: IRootState) =>
+      state.panel.settings.pages![page][name].params[param],
   )
   const { online } = useSelector((state: IRootState) => state.panel)
 
@@ -42,6 +45,7 @@ export const ConfigurationElement = ({
       value: data.value || data.checked,
       name,
       page,
+      param,
       common,
     }
     dispatch(panelActions.setFieldValue(action))
@@ -66,13 +70,27 @@ export const ConfigurationElement = ({
   }
 
   switch (type) {
+    case ConfigurationElements.color:
+      component = (
+        <Dropdown
+          onChange={handleChange}
+          selection={true}
+          options={options}
+          name={param}
+          value={value}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      )
+      break
+
     case ConfigurationElements.select:
       component = (
         <Dropdown
           onChange={handleChange}
           selection={true}
           options={options}
-          name={name}
+          name={param}
           value={value}
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -86,7 +104,7 @@ export const ConfigurationElement = ({
           onChange={handleChange}
           checked={value}
           toggle={true}
-          name={name}
+          name={param}
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
@@ -99,17 +117,7 @@ export const ConfigurationElement = ({
 
   return (
     <Form.Field>
-      <label>
-        {name}{' '}
-        {common && (
-          <Popup
-            content='This interface element is shared across multiple pages.'
-            trigger={
-              <span style={{ opacity: '.3', marginLeft: '5px' }}>Common</span>
-            }
-          />
-        )}
-      </label>
+      <label>{param}</label>
       {component}
     </Form.Field>
   )

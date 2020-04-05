@@ -4,17 +4,24 @@ import { IOption } from './IOption'
 export interface ISettings {
   common: {
     [key: string]: {
-      value: any
+      params: {
+        [key: string]: {
+          value: any
+        }
+      }
     }
   }
   pages: {
     [key: string]: {
       [key: string]: {
-        value?: any
-        type: ConfigurationElements
-        options?: IOption[]
-        common?: boolean
-      }
+        params: {
+          [key: string]: {
+            value?: any
+            type: ConfigurationElements
+            options?: IOption[]
+          }
+        }
+      } & { common?: boolean }
     }
   }
 }

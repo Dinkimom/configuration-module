@@ -1,7 +1,6 @@
-import { IOption } from '../../shared/types/IOption'
+import { IParams } from '../../shared/types/IParams'
 import { ISettingDTO } from '../../shared/types/ISettingDTO'
 import { IPanelState } from './state'
-import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 
 export const PANEL_INIT = 'PANEL_INIT'
 
@@ -28,8 +27,7 @@ export const panelActions = {
   initComponent: (payload: {
     page: string
     name: string
-    type: ConfigurationElements
-    options?: IOption[]
+    params: IParams
     common?: boolean
   }) => ({
     type: PANEL_INIT_COMPONENT,
@@ -54,6 +52,7 @@ export const panelActions = {
     value: any
     name: string
     page: string
+    param: string
     common?: boolean
   }) => ({
     type: PANEL_SET_FIELD_VALUE,

@@ -5,6 +5,7 @@ import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { IBaseElementProps } from '../../shared/types/IBaseElementProps'
 import { IOption } from '../../shared/types/IOption'
 import { ConnectedElement } from './ConnectedElement'
+import { IParams } from '../../shared/types/IParams'
 
 interface IArrowButtonProps extends IBaseElementProps, ButtonProps {
   direction: 'left' | 'right'
@@ -14,6 +15,7 @@ export const ArrowButton = ({
   name,
   direction = 'left',
   common,
+  optional,
   ...other
 }: IArrowButtonProps): ReactElement => {
   if (direction !== 'left' && direction !== 'right') {
@@ -26,15 +28,26 @@ export const ArrowButton = ({
     { text: 'Angle arrow', value: 'angle', icon: 'angle left' },
   ]
 
+  const initialParams: IParams = {
+    Icon: {
+      type: ConfigurationElements.select,
+      options,
+    },
+  }
+
+  const params = useFieldValue(name, initialParams, common)
+
   return (
     <ConnectedElement
       name={name}
+      optional={optional}
+      params={initialParams}
       common={common}
-      type={ConfigurationElements.select}
-      options={options}
     >
       <Button
-        icon={`${useFieldValue(name, common) || options[0].value} ${direction}`}
+        icon={`${String(
+          params['Icon'].value || options[0].value,
+        )} ${direction}`}
         {...other}
       />
     </ConnectedElement>

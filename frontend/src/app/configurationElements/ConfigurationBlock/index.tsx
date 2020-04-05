@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { ReactElement, ReactNode } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Tab } from 'semantic-ui-react'
+import { Form, Item, Popup, Segment, Tab } from 'semantic-ui-react'
 import { IRootState } from '../../../store/state'
 import { panelActions } from '../../Panel/actions'
 import { ConfigurationElement } from '../ConfigurationElement'
@@ -28,20 +28,45 @@ export const ConfigurationBlock = (): ReactElement | null => {
       render: (): ReactNode => (
         <Tab.Pane
           active={pageKey === currentPage}
-          attached={false}
           key={pageKey}
+          as={Segment.Group}
         >
-          {Object.keys(settings.pages[pageKey]).map(
-            (elementKey, elementIndex) => (
-              <ConfigurationElement
-                name={elementKey}
-                page={pageKey}
-                type={settings.pages[pageKey][elementKey].type}
-                key={elementIndex}
-                common={settings.pages[pageKey][elementKey].common}
-              />
-            ),
-          )}
+          {Object.keys(settings.pages[pageKey]).map((elementKey) => (
+            <Segment key={elementKey}>
+              <h4>
+                {elementKey}{' '}
+                {settings.pages[pageKey][elementKey].common && (
+                  <Popup
+                    content='This interface element is shared across multiple pages.'
+                    trigger={
+                      <span style={{ opacity: '.3', marginLeft: '5px' }}>
+                        Common
+                      </span>
+                    }
+                  />
+                )}
+              </h4>
+
+              <Item.Group>
+                {Object.keys(settings.pages[pageKey][elementKey].params).map(
+                  (paramKey, paramIndex) => (
+                    <Item key={paramIndex}>
+                      <ConfigurationElement
+                        name={elementKey}
+                        param={paramKey}
+                        page={pageKey}
+                        type={
+                          settings.pages[pageKey][elementKey].params[paramKey]
+                            .type
+                        }
+                        common={settings.pages[pageKey][elementKey].common}
+                      />
+                    </Item>
+                  ),
+                )}
+              </Item.Group>
+            </Segment>
+          ))}
         </Tab.Pane>
       ),
     }))

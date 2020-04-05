@@ -14,11 +14,26 @@ export const SelectableImage = ({
   name,
   options,
   common,
+  optional,
   ...other
 }: ISelectableImageProps) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [src, setSrc] = useState<string>('')
-  const newSrc = useFieldValue(name, common)
+
+  const initialParams = {
+    Image: {
+      type: ConfigurationElements.select,
+      options: options.map((item) => ({
+        ...item,
+        image: { src: item.value },
+      })),
+    },
+  }
+
+  const params = useFieldValue(name, initialParams, common)
+
+  const newSrc = params['Image'].value
+
   useEffect(() => {
     if (newSrc !== src) {
       setLoading(true)
@@ -29,9 +44,9 @@ export const SelectableImage = ({
   return (
     <ConnectedElement
       name={name}
+      optional={optional}
+      params={initialParams}
       common={common}
-      type={ConfigurationElements.select}
-      options={options}
     >
       <Segment
         className='selectable-image-container'

@@ -9,6 +9,7 @@ import { ConnectedElement } from './ConnectedElement'
 export const RetryButton = ({
   name,
   common,
+  optional,
   ...other
 }: IBaseElementProps): ReactElement => {
   const options: IOption[] = [
@@ -21,19 +22,28 @@ export const RetryButton = ({
     { text: 'Circled retry', value: 'sync', icon: 'sync' },
     {
       text: 'Alternate circled retry',
-      value: '3',
+      value: 'sync alternate',
       icon: 'sync alternate',
     },
   ]
 
+  const initialParams = {
+    Icon: {
+      type: ConfigurationElements.select,
+      options,
+    },
+  }
+
+  const params = useFieldValue(name, initialParams, common)
+
   return (
     <ConnectedElement
       name={name}
+      optional={optional}
+      params={initialParams}
       common={common}
-      type={ConfigurationElements.select}
-      options={options}
     >
-      <Button icon={useFieldValue(name, common)} size='medium' {...other} />
+      <Button icon={params['Icon'].value} size='medium' {...other} />
     </ConnectedElement>
   )
 }

@@ -10,15 +10,16 @@ export const ProgressBar = ({
   common,
   ...other
 }: IBaseElementProps): ReactElement => {
-  const isVisible = useFieldValue(name, common)
+  const initialParams = {
+    'Is visible': {
+      type: ConfigurationElements.optional,
+    },
+  }
+  const params = useFieldValue(name, initialParams, common)
 
   return (
-    <ConnectedElement
-      name={name}
-      common={common}
-      type={ConfigurationElements.optional}
-    >
-      {isVisible && (
+    <ConnectedElement name={name} params={initialParams} common={common}>
+      {params['Is visible'].value && (
         <Progress {...other} percent={40} color='green' size='small' />
       )}
     </ConnectedElement>
