@@ -1,12 +1,13 @@
 import React, { ReactElement } from 'react'
-import { Button, ButtonProps } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
+import { colors } from '../../shared/constants/colors'
+import { sizes } from '../../shared/constants/sizes'
 import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { IBaseElementProps } from '../../shared/types/IBaseElementProps'
 import { IOption } from '../../shared/types/IOption'
-import { ConnectedElement } from './ConnectedElement'
 import { IParams } from '../../shared/types/IParams'
-import { colors } from '../../shared/constants/colors'
+import { ConnectedElement } from './ConnectedElement'
 
 interface IArrowButtonProps extends IBaseElementProps {
   direction: 'left' | 'right'
@@ -17,6 +18,7 @@ export const ArrowButton = ({
   direction = 'left',
   common,
   color,
+  size,
   optional,
   ...other
 }: IArrowButtonProps): ReactElement => {
@@ -46,12 +48,18 @@ export const ArrowButton = ({
       params={initialParams}
       common={common}
       color={color}
+      size={size}
     >
       <Button
         color={
           color === 'editable'
             ? (params['Color'] || {}).value || colors[0].value
             : color
+        }
+        size={
+          size === 'editable'
+            ? (params['Size'] || {}).value || sizes[0].value
+            : size
         }
         icon={`${String(
           params['Icon'].value || options[0].value,

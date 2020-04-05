@@ -19,6 +19,7 @@ import {
 } from './actions'
 import { IPanelState } from './state'
 import { colors } from '../../shared/constants/colors'
+import { sizes } from '../../shared/constants/sizes'
 
 const initialState: IPanelState = {
   isInitialized: false,
@@ -47,6 +48,8 @@ const getDefaultSettings = (
       return options[0].value
     case ConfigurationElements.color:
       return colors[0].value
+    case ConfigurationElements.size:
+      return sizes[3].value
   }
 }
 

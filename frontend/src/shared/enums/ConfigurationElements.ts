@@ -3,4 +3,5 @@ export enum ConfigurationElements {
   optional,
   color,
   size,
+  circular,
 }

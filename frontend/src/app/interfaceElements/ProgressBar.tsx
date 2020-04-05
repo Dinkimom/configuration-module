@@ -1,15 +1,16 @@
 import React, { ReactElement } from 'react'
 import { Progress } from 'semantic-ui-react'
-import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
+import { colors } from '../../shared/constants/colors'
 import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { IBaseElementProps } from '../../shared/types/IBaseElementProps'
 import { ConnectedElement } from './ConnectedElement'
-import { colors } from '../../shared/constants/colors'
+import { sizes } from '../../shared/constants/sizes'
 
 export const ProgressBar = ({
   name,
   common,
   color,
+  size,
   ...other
 }: IBaseElementProps): ReactElement => {
   const params = useFieldValue(name, {}, common)
@@ -21,6 +22,7 @@ export const ProgressBar = ({
       optional={true}
       color={color}
       common={common}
+      size={size}
     >
       <Progress
         {...other}
@@ -30,7 +32,11 @@ export const ProgressBar = ({
             ? (params['Color'] || {}).value || colors[0].value
             : color
         }
-        size='small'
+        size={
+          size === 'editable'
+            ? (params['Size'] || {}).value || sizes[0].value
+            : size
+        }
       />
     </ConnectedElement>
   )

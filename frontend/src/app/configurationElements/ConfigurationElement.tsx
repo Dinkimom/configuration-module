@@ -2,10 +2,11 @@ import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Checkbox, Dropdown, Form } from 'semantic-ui-react'
+import { colors } from '../../shared/constants/colors'
+import { sizes } from '../../shared/constants/sizes'
 import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
-import { colors } from '../../shared/constants/colors'
 
 interface IConfigurationElementProps {
   name: string
@@ -71,6 +72,20 @@ export const ConfigurationElement = ({
   }
 
   switch (type) {
+    case ConfigurationElements.size:
+      component = (
+        <Dropdown
+          onChange={handleChange}
+          selection={true}
+          options={sizes}
+          name={param}
+          value={value}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      )
+      break
+
     case ConfigurationElements.color:
       component = (
         <Dropdown
