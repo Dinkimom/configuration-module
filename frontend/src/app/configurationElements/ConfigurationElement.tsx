@@ -5,6 +5,7 @@ import { Checkbox, Dropdown, Form } from 'semantic-ui-react'
 import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
+import { colors } from '../../shared/constants/colors'
 
 interface IConfigurationElementProps {
   name: string
@@ -75,7 +76,7 @@ export const ConfigurationElement = ({
         <Dropdown
           onChange={handleChange}
           selection={true}
-          options={options}
+          options={colors}
           name={param}
           value={value}
           onFocus={handleFocus}

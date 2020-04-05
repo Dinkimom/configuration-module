@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { ReactElement, ReactNode } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Item, Popup, Segment, Tab } from 'semantic-ui-react'
+import { Form, Item, Popup, Segment, Tab, Label } from 'semantic-ui-react'
 import { IRootState } from '../../../store/state'
 import { panelActions } from '../../Panel/actions'
 import { ConfigurationElement } from '../ConfigurationElement'
@@ -39,9 +39,9 @@ export const ConfigurationBlock = (): ReactElement | null => {
                   <Popup
                     content='This interface element is shared across multiple pages.'
                     trigger={
-                      <span style={{ opacity: '.3', marginLeft: '5px' }}>
+                      <Label style={{ marginLeft: '5px', cursor: 'pointer' }}>
                         Common
-                      </span>
+                      </Label>
                     }
                   />
                 )}

@@ -1,12 +1,12 @@
 import React, { ReactElement, ReactNode, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popup } from 'semantic-ui-react'
+import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
+import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { usePageContext } from '../../shared/hooks/usePageContext'
 import { IParams } from '../../shared/types/IParams'
 import { IRootState } from '../../store/state'
 import { panelActions } from '../Panel/actions'
-import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
-import { useFieldValue } from '../../shared/hooks/useFieldValue'
 
 interface IConnectedElementProps {
   name: string
@@ -14,6 +14,7 @@ interface IConnectedElementProps {
   params: IParams
   common?: boolean
   optional?: boolean
+  color?: string | 'editable'
 }
 
 export const ConnectedElement = ({
@@ -22,6 +23,7 @@ export const ConnectedElement = ({
   children,
   common,
   optional,
+  color,
 }: IConnectedElementProps): ReactElement => {
   const page = usePageContext()
   const { focusedField, isInitialized } = useSelector(
@@ -38,6 +40,14 @@ export const ConnectedElement = ({
     }
   }
 
+  if (color === 'editable') {
+    params['Color'] = {
+      type: ConfigurationElements.color,
+    }
+  }
+
+  const elementParams = useFieldValue(name, params, common)
+
   const initComponent = useCallback(() => {
     dispatch(panelActions.initComponent({ page, name, params, common }))
   }, [dispatch, name, page, params, common])
@@ -48,15 +58,12 @@ export const ConnectedElement = ({
     }
   }, [initComponent, isInitialized, isElementInitialized])
 
-  const elementParams = useFieldValue(name, params, common)
-
-  const component = (
-    <span
-      className={focusedField && focusedField === name ? 'currentElement' : ''}
-    >
-      {children}
-    </span>
-  )
+  const component =
+    focusedField && focusedField === name ? (
+      <span className='currentElement'>{children}</span>
+    ) : (
+      children
+    )
 
   if (optional) {
     return (

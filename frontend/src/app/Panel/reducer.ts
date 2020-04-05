@@ -18,6 +18,7 @@ import {
   PANEL_SET_RENDER_ERROR,
 } from './actions'
 import { IPanelState } from './state'
+import { colors } from '../../shared/constants/colors'
 
 const initialState: IPanelState = {
   isInitialized: false,
@@ -44,6 +45,8 @@ const getDefaultSettings = (
       return false
     case ConfigurationElements.select:
       return options[0].value
+    case ConfigurationElements.color:
+      return colors[0].value
   }
 }
 

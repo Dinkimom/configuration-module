@@ -4,4 +4,5 @@ export interface IBaseElementProps {
   value: any
   optional?: boolean
   common?: boolean
+  color?: string | 'editable'
 }

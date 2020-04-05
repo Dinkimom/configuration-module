@@ -5,13 +5,15 @@ import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { IBaseElementProps } from '../../shared/types/IBaseElementProps'
 import { IOption } from '../../shared/types/IOption'
 import { ConnectedElement } from './ConnectedElement'
+import { colors } from '../../shared/constants/colors'
 
 export const RetryButton = ({
   name,
   common,
   optional,
+  color,
   ...other
-}: IBaseElementProps): ReactElement => {
+}: IBaseElementProps | any): ReactElement => {
   const options: IOption[] = [
     { text: 'Simple retry', value: 'undo', icon: 'undo' },
     {
@@ -42,8 +44,18 @@ export const RetryButton = ({
       optional={optional}
       params={initialParams}
       common={common}
+      color={color}
     >
-      <Button icon={params['Icon'].value} size='medium' {...other} />
+      <Button
+        icon={params['Icon'].value}
+        color={
+          color === 'editable'
+            ? (params['Color'] || {}).value || colors[0].value
+            : color
+        }
+        size='medium'
+        {...other}
+      />
     </ConnectedElement>
   )
 }

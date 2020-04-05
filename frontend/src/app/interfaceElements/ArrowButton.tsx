@@ -6,8 +6,9 @@ import { IBaseElementProps } from '../../shared/types/IBaseElementProps'
 import { IOption } from '../../shared/types/IOption'
 import { ConnectedElement } from './ConnectedElement'
 import { IParams } from '../../shared/types/IParams'
+import { colors } from '../../shared/constants/colors'
 
-interface IArrowButtonProps extends IBaseElementProps, ButtonProps {
+interface IArrowButtonProps extends IBaseElementProps {
   direction: 'left' | 'right'
 }
 
@@ -15,6 +16,7 @@ export const ArrowButton = ({
   name,
   direction = 'left',
   common,
+  color,
   optional,
   ...other
 }: IArrowButtonProps): ReactElement => {
@@ -43,8 +45,14 @@ export const ArrowButton = ({
       optional={optional}
       params={initialParams}
       common={common}
+      color={color}
     >
       <Button
+        color={
+          color === 'editable'
+            ? (params['Color'] || {}).value || colors[0].value
+            : color
+        }
         icon={`${String(
           params['Icon'].value || options[0].value,
         )} ${direction}`}
