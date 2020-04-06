@@ -90,21 +90,20 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
         break
 
       case PANEL_INIT_COMPONENT:
-        if (
-          !newState.settings.common[action.payload.name] &&
-          action.payload.common
-        ) {
+        if (!newState.settings.common[action.payload.name]) {
           newState.settings.common[action.payload.name] = {
             params: {},
           }
         }
 
         Object.keys(action.payload.params).forEach((paramKey) => {
-          newState.settings.common[action.payload.name].params[paramKey] = {
-            value: getDefaultSettings(
-              action.payload.params[paramKey].type,
-              action.payload.params[paramKey].options,
-            ),
+          if (!newState.settings.common[action.payload.name].params[paramKey]) {
+            newState.settings.common[action.payload.name].params[paramKey] = {
+              value: getDefaultSettings(
+                action.payload.params[paramKey].type,
+                action.payload.params[paramKey].options,
+              ),
+            }
           }
         })
 

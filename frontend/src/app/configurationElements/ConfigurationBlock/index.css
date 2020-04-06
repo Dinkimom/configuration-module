@@ -1,1 +1,4 @@
-
+.configuration-block__tab {
+  max-height: 500px;
+  overflow-y: auto;
+}

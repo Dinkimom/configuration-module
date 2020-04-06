@@ -27,6 +27,7 @@ export const ConfigurationBlock = (): ReactElement | null => {
       menuItem: pageKey,
       render: (): ReactNode => (
         <Tab.Pane
+          className='configuration-block__tab'
           active={pageKey === currentPage}
           key={pageKey}
           as={Segment.Group}

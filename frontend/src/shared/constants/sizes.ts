@@ -1,8 +1,7 @@
 export const sizes = [
-  { text: 'Tiny', value: 'mini' },
-  { text: 'Small', value: 'tiny' },
-  { text: 'Medium', value: 'small' },
-  { text: 'Large', value: 'medium' },
-  { text: 'Big', value: 'large' },
-  { text: 'Huge', value: 'huge' },
+  { text: 'Tiny', value: 'tiny' },
+  { text: 'Small', value: 'small' },
+  { text: 'Medium', value: 'medium' },
+  { text: 'Large', value: 'large' },
+  { text: 'Big', value: 'big' },
 ]
