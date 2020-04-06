@@ -24,3 +24,7 @@
 #Panel .jsx-parser {
   justify-self: center;
 }
+
+#Panel .error-message {
+  margin-top: 0 !important;
+}

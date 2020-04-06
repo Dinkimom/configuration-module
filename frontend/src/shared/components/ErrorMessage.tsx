@@ -6,7 +6,7 @@ interface IErrorMessage {
 }
 
 export const ErrorMessage = ({ error }: IErrorMessage) => (
-  <Segment padded={true} basic={true}>
+  <Segment className='error-message' padded={true} basic={true}>
     <Message size='big' negative={true}>
       <Message.Header>{error}</Message.Header>
     </Message>
