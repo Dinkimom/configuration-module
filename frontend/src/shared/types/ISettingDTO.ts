@@ -3,6 +3,7 @@ export interface ISettingDTO {
   user_id: string
   page: string
   name: string
+  param: string
   value: any
   common?: boolean
 }

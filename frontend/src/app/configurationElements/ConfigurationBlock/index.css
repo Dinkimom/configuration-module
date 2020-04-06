@@ -2,3 +2,14 @@
   max-height: 500px;
   overflow-y: auto;
 }
+
+.configuration-block__tab::-webkit-scrollbar {
+  width: 10px !important;
+}
+
+.configuration-block__tab::-webkit-scrollbar-track {
+}
+
+.configuration-block__tab::-webkit-scrollbar-thumb {
+  background-color: lightgrey;
+}

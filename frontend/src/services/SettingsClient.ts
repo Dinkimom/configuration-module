@@ -39,7 +39,11 @@ export class SettingsClient extends AbstractClient {
             ? {
                 common: {
                   [data.name]: {
-                    value: data.value,
+                    params: {
+                      [data.param]: {
+                        value: data.value,
+                      },
+                    },
                   },
                 },
               }
@@ -47,7 +51,11 @@ export class SettingsClient extends AbstractClient {
                 pages: {
                   [data.page]: {
                     [data.name]: {
-                      value: data.value,
+                      params: {
+                        [data.param]: {
+                          value: data.value,
+                        },
+                      },
                     },
                   },
                 },
