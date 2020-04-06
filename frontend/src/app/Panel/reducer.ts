@@ -97,16 +97,16 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
           newState.settings.common[action.payload.name] = {
             params: {},
           }
-
-          Object.keys(action.payload.params).forEach((paramKey) => {
-            newState.settings.common[action.payload.name].params[paramKey] = {
-              value: getDefaultSettings(
-                action.payload.params[paramKey].type,
-                action.payload.params[paramKey].options,
-              ),
-            }
-          })
         }
+
+        Object.keys(action.payload.params).forEach((paramKey) => {
+          newState.settings.common[action.payload.name].params[paramKey] = {
+            value: getDefaultSettings(
+              action.payload.params[paramKey].type,
+              action.payload.params[paramKey].options,
+            ),
+          }
+        })
 
         if (
           !newState.settings.pages[action.payload.page][action.payload.name]

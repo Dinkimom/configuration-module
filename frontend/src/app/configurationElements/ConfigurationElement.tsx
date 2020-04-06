@@ -36,6 +36,7 @@ export const ConfigurationElement = ({
       ? state.panel.settings.common[name].params[param]
       : state.panel.settings.pages![page][name].params[param],
   )
+
   const { options } = useSelector(
     (state: IRootState) =>
       state.panel.settings.pages![page][name].params[param],

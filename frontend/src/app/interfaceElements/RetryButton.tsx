@@ -1,17 +1,19 @@
 import React, { ReactElement } from 'react'
 import { Button } from 'semantic-ui-react'
+import { colors } from '../../shared/constants/colors'
+import { sizes } from '../../shared/constants/sizes'
 import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 import { useFieldValue } from '../../shared/hooks/useFieldValue'
 import { IBaseElementProps } from '../../shared/types/IBaseElementProps'
 import { IOption } from '../../shared/types/IOption'
 import { ConnectedElement } from './ConnectedElement'
-import { colors } from '../../shared/constants/colors'
 
 export const RetryButton = ({
   name,
   common,
   optional,
   color,
+  size,
   ...other
 }: IBaseElementProps | any): ReactElement => {
   const options: IOption[] = [
@@ -45,6 +47,7 @@ export const RetryButton = ({
       params={initialParams}
       common={common}
       color={color}
+      size={size}
     >
       <Button
         icon={params['Icon'].value}
@@ -53,7 +56,11 @@ export const RetryButton = ({
             ? (params['Color'] || {}).value || colors[0].value
             : color
         }
-        size='medium'
+        size={
+          size === 'editable'
+            ? (params['Size'] || {}).value || sizes[0].value
+            : size
+        }
         {...other}
       />
     </ConnectedElement>

@@ -18,14 +18,13 @@ export const ProgressBar = ({
   return (
     <ConnectedElement
       name={name}
-      params={{}}
       optional={true}
-      color={color}
+      params={{}}
       common={common}
+      color={color}
       size={size}
     >
       <Progress
-        {...other}
         percent={40}
         color={
           color === 'editable'
@@ -37,6 +36,7 @@ export const ProgressBar = ({
             ? (params['Size'] || {}).value || sizes[0].value
             : size
         }
+        {...other}
       />
     </ConnectedElement>
   )
