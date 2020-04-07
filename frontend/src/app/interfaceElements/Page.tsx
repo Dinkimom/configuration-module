@@ -12,6 +12,16 @@ export const PageContext = React.createContext({ page: '' })
 
 export const Page = ({ name, children }: IPageProps): ReactElement | null => {
   const dispatch = useDispatch()
+
+  if (typeof name !== 'string') {
+    dispatch(
+      panelActions.setRenderError({
+        error:
+          'Page component error: Name is required field and must be a string.',
+      }),
+    )
+  }
+
   const isPageInitialized = Boolean(
     useSelector((state: IRootState) => state.panel.settings.pages[name]),
   )

@@ -27,6 +27,16 @@ export const ConnectedElement = ({
   color,
   size,
 }: IConnectedElementProps): ReactElement => {
+  const dispatch = useDispatch()
+
+  if (typeof name !== 'string') {
+    dispatch(
+      panelActions.setRenderError({
+        error: 'Component error: Name is required field and must be a string.',
+      }),
+    )
+  }
+
   const page = usePageContext()
   const { focusedField, isInitialized } = useSelector(
     (state: IRootState) => state.panel,
@@ -34,7 +44,6 @@ export const ConnectedElement = ({
   const isElementInitialized = Boolean(
     useSelector((state: IRootState) => state.panel.settings.pages[page][name]),
   )
-  const dispatch = useDispatch()
 
   if (optional) {
     params['Is visible'] = {
