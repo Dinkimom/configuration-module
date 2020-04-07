@@ -4,6 +4,9 @@ import { IPanelState } from './state'
 
 export const PANEL_INIT = 'PANEL_INIT'
 
+export const PANEL_VALIDATE = 'PANEL_VALIDATE'
+export const PANEL_VALIDATED = 'PANEL_VALIDATED'
+
 export const PANEL_INIT_COMPONENT = 'PANEL_INIT_COMPONENT'
 export const PANEL_INIT_PAGE = 'PANEL_INIT_PAGE'
 export const PANEL_CLEAR = 'PANEL_CLEAR'
@@ -21,6 +24,16 @@ export const PANEL_UPDATE_DATA = 'PANEL_UPDATE_DATA'
 export const panelActions = {
   init: (payload?: Partial<IPanelState>) => ({
     type: PANEL_INIT,
+    payload,
+  }),
+
+  validate: (payload?: Partial<IPanelState>) => ({
+    type: PANEL_VALIDATE,
+    payload,
+  }),
+
+  validated: (payload?: Partial<IPanelState>) => ({
+    type: PANEL_VALIDATED,
     payload,
   }),
 

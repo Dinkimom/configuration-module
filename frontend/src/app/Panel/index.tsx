@@ -4,7 +4,6 @@ import { Link, useParams } from 'react-router-dom'
 import { Breadcrumb, Container, Message, Segment } from 'semantic-ui-react'
 import { ErrorMessage } from '../../shared/components/ErrorMessage'
 import { Loader } from '../../shared/components/Loader'
-import { isEmpty } from '../../shared/functions/isEmpty'
 import { IRootState } from '../../store/state'
 import { CodeRender } from '../CodeRender'
 import { ConfigurationBlock } from '../configurationElements/ConfigurationBlock'
@@ -18,7 +17,7 @@ interface IPanelProps {
 export const Panel = ({ online }: IPanelProps): ReactElement => {
   const {
     descriptionCode,
-    settings,
+    isInitialized,
     renderError,
     isPending,
     error,
@@ -67,7 +66,7 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
 
   return (
     <Container id='Panel'>
-      {!isEmpty(settings.pages) && (
+      {isInitialized && (
         <>
           <div className='panel-header'>
             <Breadcrumb size='massive'>
@@ -86,10 +85,9 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
           </div>
 
           <ConfigurationBlock />
+          <CodeRender code={descriptionCode} />
         </>
       )}
-
-      <CodeRender code={descriptionCode} />
     </Container>
   )
 }

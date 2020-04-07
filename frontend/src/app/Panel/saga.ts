@@ -3,10 +3,15 @@ import { put, select, takeEvery } from 'redux-saga/effects'
 import { safeSagaExecute } from '../../middleware/saga'
 import { SettingsClient } from '../../services/SettingsClient'
 import { ISettingDTO } from '../../shared/types/ISettingDTO'
-import { IActionPayloaded } from '../../store/IAction'
+import { IActionPayloaded, IAction } from '../../store/IAction'
 import { IRootState } from '../../store/state'
 import { notificationSystem } from '../app'
-import { panelActions, PANEL_LOAD_DATA, PANEL_UPDATE_DATA } from './actions'
+import {
+  panelActions,
+  PANEL_LOAD_DATA,
+  PANEL_UPDATE_DATA,
+  PANEL_INIT,
+} from './actions'
 import { IPanelState } from './state'
 
 const client = new SettingsClient()
@@ -14,6 +19,8 @@ const client = new SettingsClient()
 export class PanelApiSaga {
   public constructor() {
     this.load = this.load.bind(this)
+    this.update = this.update.bind(this)
+    this.validate = this.validate.bind(this)
   }
 
   public static Initialize() {
@@ -24,6 +31,7 @@ export class PanelApiSaga {
   public *watch() {
     yield takeEvery(PANEL_LOAD_DATA, (a) => safeSagaExecute(a, this.load))
     yield takeEvery(PANEL_UPDATE_DATA, (a) => safeSagaExecute(a, this.update))
+    yield takeEvery(PANEL_INIT, (a) => safeSagaExecute(a, this.validate))
   }
 
   private *load(
@@ -72,6 +80,30 @@ export class PanelApiSaga {
         level: 'info',
         position: 'bc',
       })
+    }
+  }
+
+  private *validate(action: IActionPayloaded<Partial<IPanelState>>) {
+    const { descriptionCode } = action.payload
+
+    if (!RegExp('<App>((.|\\s)*)</App>').test(String(descriptionCode))) {
+      yield put(
+        panelActions.setRenderError({
+          error: 'Render error: There is no App component.',
+        }),
+      )
+    } else if (
+      !RegExp(
+        '<App>(\\s*)((<Page name=(\'|").+(\'|")>(.|\\s)*</Page>)+)(\\s*)</App>',
+      )
+    ) {
+      yield put(
+        panelActions.setRenderError({
+          error: 'Render error: At least one page must be presented.',
+        }),
+      )
+    } else {
+      yield put(panelActions.validated(action.payload))
     }
   }
 }

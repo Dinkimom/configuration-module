@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import objectAssignDeep from 'object-assign-deep'
+import { colors } from '../../shared/constants/colors'
+import { sizes } from '../../shared/constants/sizes'
 import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
 import { IOption } from '../../shared/types/IOption'
 import { IActionPayloaded } from '../../store/IAction'
@@ -7,7 +9,6 @@ import { IReducerPayloaded } from '../../store/IReducer'
 import {
   PANEL_CLEAR,
   PANEL_FAILURE,
-  PANEL_INIT,
   PANEL_INIT_COMPONENT,
   PANEL_INIT_PAGE,
   PANEL_SET_CURRENT_PAGE,
@@ -16,10 +17,9 @@ import {
   PANEL_SET_MODE,
   PANEL_SET_PENDING,
   PANEL_SET_RENDER_ERROR,
+  PANEL_VALIDATED,
 } from './actions'
 import { IPanelState } from './state'
-import { colors } from '../../shared/constants/colors'
-import { sizes } from '../../shared/constants/sizes'
 
 const initialState: IPanelState = {
   isInitialized: false,
@@ -68,18 +68,15 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
     action: IActionPayloaded<any>,
   ): IPanelState {
     let newState = { ...state }
+    console.log(action)
 
     switch (action.type) {
-      case PANEL_INIT:
-        newState = objectAssignDeep(initialState, action.payload)
+      case PANEL_VALIDATED:
+        newState = objectAssignDeep(
+          objectAssignDeep({}, initialState),
+          action.payload,
+        )
         newState.isInitialized = true
-        newState.settings = {
-          pages: {},
-          common: {},
-        }
-        if (action.payload.settings !== undefined) {
-          newState.settings = { ...action.payload.settings }
-        }
         break
 
       case PANEL_INIT_PAGE:
@@ -137,9 +134,7 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
         break
 
       case PANEL_CLEAR:
-        newState = { ...initialState }
-        newState.settings.pages = {}
-        newState.settings.common = {}
+        newState = objectAssignDeep({}, initialState)
         break
 
       case PANEL_SET_FIELD_VALUE:
