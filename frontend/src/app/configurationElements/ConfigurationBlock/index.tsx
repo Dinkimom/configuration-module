@@ -41,16 +41,6 @@ export const ConfigurationBlock = (): ReactElement | null => {
           key={pageKey}
           as={Segment.Group}
         >
-          {isEmpty(settings.pages[pageKey]) && (
-            <Segment>
-              <Message info={true}>
-                <Message.Header>
-                  This page doesn't contain configurable elements
-                </Message.Header>
-              </Message>
-            </Segment>
-          )}
-
           {Object.keys(settings.pages[pageKey]).map((elementKey) => (
             <Segment key={elementKey}>
               <h4>
@@ -85,6 +75,16 @@ export const ConfigurationBlock = (): ReactElement | null => {
                   ),
                 )}
               </Item.Group>
+
+              {isEmpty(settings.pages[pageKey]) && (
+                <Segment>
+                  <Message info={true}>
+                    <Message.Header>
+                      This page doesn't contain configurable elements
+                    </Message.Header>
+                  </Message>
+                </Segment>
+              )}
             </Segment>
           ))}
         </Tab.Pane>
