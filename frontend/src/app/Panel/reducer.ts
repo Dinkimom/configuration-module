@@ -68,7 +68,6 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
     action: IActionPayloaded<any>,
   ): IPanelState {
     let newState = { ...state }
-    console.log(action)
 
     switch (action.type) {
       case PANEL_VALIDATED:

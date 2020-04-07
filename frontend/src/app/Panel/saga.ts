@@ -93,7 +93,7 @@ export class PanelApiSaga {
         }),
       )
     } else if (
-      !RegExp('<App>(\\s*)((<Page>(.|\\s)*</Page>)+)(\\s*)</App>').test(
+      !RegExp('<App>(\\s*)((<Page(.*)>(.|\\s)*</Page>)+)(\\s*)</App>').test(
         String(descriptionCode),
       )
     ) {

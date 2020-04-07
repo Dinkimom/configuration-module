@@ -22,6 +22,14 @@ export const Page = ({ name, children }: IPageProps): ReactElement | null => {
     )
   }
 
+  if (typeof children === 'undefined') {
+    dispatch(
+      panelActions.setRenderError({
+        error: `Page component error: Page "${name}" is empty.`,
+      }),
+    )
+  }
+
   const isPageInitialized = Boolean(
     useSelector((state: IRootState) => state.panel.settings.pages[name]),
   )

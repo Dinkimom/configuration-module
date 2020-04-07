@@ -1,7 +1,16 @@
 /* eslint-disable react/display-name */
 import React, { ReactElement, ReactNode } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Item, Popup, Segment, Tab, Label } from 'semantic-ui-react'
+import {
+  Form,
+  Item,
+  Label,
+  Message,
+  Popup,
+  Segment,
+  Tab,
+} from 'semantic-ui-react'
+import { isEmpty } from '../../../shared/functions/isEmpty'
 import { IRootState } from '../../../store/state'
 import { panelActions } from '../../Panel/actions'
 import { ConfigurationElement } from '../ConfigurationElement'
@@ -32,6 +41,16 @@ export const ConfigurationBlock = (): ReactElement | null => {
           key={pageKey}
           as={Segment.Group}
         >
+          {isEmpty(settings.pages[pageKey]) && (
+            <Segment>
+              <Message info={true}>
+                <Message.Header>
+                  This page doesn't contain configurable elements
+                </Message.Header>
+              </Message>
+            </Segment>
+          )}
+
           {Object.keys(settings.pages[pageKey]).map((elementKey) => (
             <Segment key={elementKey}>
               <h4>
