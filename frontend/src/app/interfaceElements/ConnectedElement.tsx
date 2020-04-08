@@ -85,11 +85,21 @@ export const ConnectedElement = ({
   if (optional) {
     return (
       (elementParams['Is visible'].value && (
-        <Popup content={name} trigger={component} />
+        <Popup
+          className='popup-connected-element'
+          content={name}
+          trigger={component}
+        />
       )) ||
       null
     )
   } else {
-    return <Popup content={name} trigger={component} />
+    return (
+      <Popup
+        className='popup-connected-element'
+        content={name}
+        trigger={component}
+      />
+    )
   }
 }

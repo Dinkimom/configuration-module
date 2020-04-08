@@ -7,15 +7,18 @@
   justify-self: center;
 }
 
+.popup-connected-element::before {
+  display: none !important;
+}
+
 .app__page {
   background: white;
   width: 100%;
   height: 100%;
-  position: relative;
   overflow-y: auto;
   overflow-x: hidden;
-  position: relative;
   display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 .app__page__header,
@@ -23,15 +26,6 @@
   padding: 5px !important;
   min-height: 50px;
   height: auto;
-}
-
-.app__page__header:after,
-.app__page__footer:after {
-  visibility: hidden;
-  display: block;
-  content: '';
-  clear: both;
-  height: 0;
 }
 
 .app__page__body {

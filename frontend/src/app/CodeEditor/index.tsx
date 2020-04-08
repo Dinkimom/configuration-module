@@ -150,6 +150,7 @@ export const CodeEditor = (): ReactElement => {
           <Button
             icon='play'
             onClick={() => {
+              dispatch(panelActions.clear())
               dispatch(codeEditorActions.changeCode({ code: formatCode(code) }))
               dispatch(panelActions.init({ descriptionCode: formatCode(code) }))
             }}
