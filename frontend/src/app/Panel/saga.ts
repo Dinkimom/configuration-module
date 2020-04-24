@@ -1,16 +1,16 @@
 import objectAssignDeep from 'object-assign-deep'
-import { put, select, takeEvery } from 'redux-saga/effects'
+import { delay, put, select, takeEvery } from 'redux-saga/effects'
 import { safeSagaExecute } from '../../middleware/saga'
 import { SettingsClient } from '../../services/SettingsClient'
 import { ISettingDTO } from '../../shared/types/ISettingDTO'
-import { IActionPayloaded, IAction } from '../../store/IAction'
+import { IActionPayloaded } from '../../store/IAction'
 import { IRootState } from '../../store/state'
 import { notificationSystem } from '../app'
 import {
   panelActions,
+  PANEL_INIT,
   PANEL_LOAD_DATA,
   PANEL_UPDATE_DATA,
-  PANEL_INIT,
 } from './actions'
 import { IPanelState } from './state'
 
@@ -104,6 +104,11 @@ export class PanelApiSaga {
       )
     } else {
       yield put(panelActions.validated(action.payload))
+
+      yield put(panelActions.setPending({ flag: true }))
+
+      yield delay(500)
+      yield put(panelActions.setPending({ flag: false }))
     }
   }
 }

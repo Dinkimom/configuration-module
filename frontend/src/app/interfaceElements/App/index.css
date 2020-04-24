@@ -21,6 +21,10 @@
   grid-template-rows: auto 1fr auto;
 }
 
+.app__page.none {
+  display: none !important;
+}
+
 .app__page__header,
 .app__page__footer {
   padding: 5px !important;
@@ -32,6 +36,7 @@
   height: 1fr !important;
   padding: 5px !important;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .app .selectable-image-container {

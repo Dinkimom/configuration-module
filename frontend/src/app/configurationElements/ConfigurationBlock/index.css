@@ -1,6 +1,7 @@
 .configuration-block__tab {
   max-height: 500px;
   overflow-y: auto;
+  margin: 0 !important;
 }
 
 .configuration-block__tab::-webkit-scrollbar {

@@ -50,7 +50,11 @@ export const Page = ({ name, children }: IPageProps): ReactElement | null => {
   if (isPageInitialized) {
     return (
       <PageContext.Provider value={{ page: name }}>
-        {currentPage === name && <div className='app__page'>{children}</div>}
+        {
+          <div className={`app__page ${currentPage !== name && 'none'}`}>
+            {children}
+          </div>
+        }
       </PageContext.Provider>
     )
   }

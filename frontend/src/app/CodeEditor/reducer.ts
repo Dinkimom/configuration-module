@@ -11,6 +11,7 @@ import {
 } from './actions'
 import { ICodeEditorState } from './state'
 import { formatCode } from '../../shared/functions/formatCode'
+import { Controlled as CodeMirror } from 'react-codemirror2'
 
 const initialState: ICodeEditorState = {
   name: '',
