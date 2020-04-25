@@ -1,4 +1,10 @@
-import React, { ReactElement, ReactNode, useCallback, useEffect } from 'react'
+import React, {
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popup } from 'semantic-ui-react'
 import { ConfigurationElements } from '../../shared/enums/ConfigurationElements'
@@ -75,31 +81,28 @@ export const ConnectedElement = ({
     }
   }, [initComponent, isInitialized, isElementInitialized])
 
-  const component =
-    focusedField && focusedField === name ? (
-      <span className='currentElement'>{children}</span>
-    ) : (
-      children
-    )
+  const [isOpen, setOpened] = useState(false)
+
+  const component = (
+    <Popup
+      className='popup-connected-element'
+      content={name}
+      trigger={
+        focusedField && focusedField === name ? (
+          <span className='currentElement'>{children}</span>
+        ) : (
+          children
+        )
+      }
+      onOpen={() => setOpened(true)}
+      onClose={() => setOpened(false)}
+      open={focusedField !== name && isOpen}
+    />
+  )
 
   if (optional) {
-    return (
-      (elementParams['Is visible'].value && (
-        <Popup
-          className='popup-connected-element'
-          content={name}
-          trigger={component}
-        />
-      )) ||
-      null
-    )
+    return (elementParams['Is visible'].value && component) || null
   } else {
-    return (
-      <Popup
-        className='popup-connected-element'
-        content={name}
-        trigger={component}
-      />
-    )
+    return component
   }
 }

@@ -20,9 +20,7 @@ export const Page = ({ name, children }: IPageProps): ReactElement | null => {
           'Page component error: Name is required field and must be a string.',
       }),
     )
-  }
-
-  if (typeof children === 'undefined') {
+  } else if (typeof children === 'undefined') {
     dispatch(
       panelActions.setRenderError({
         error: `Page component error: Page "${name}" is empty.`,
