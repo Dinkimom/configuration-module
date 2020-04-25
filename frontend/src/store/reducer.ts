@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { CodeEditorReducer } from '../app/CodeEditor/reducer'
 import { EditorModalReducer } from '../app/EditorModal/reducer'
 import { EditorsReducer } from '../app/Editors/reducer'
+import { HowToReducer } from '../app/HowTo/reducer'
 import { PaginationReducer } from '../app/Pagination/reducer'
 import { PanelReducer } from '../app/Panel/reducer'
 import { IRootState } from './state'
@@ -12,4 +13,5 @@ export const rootReducer = combineReducers<IRootState>({
   editorModal: EditorModalReducer.Create(),
   codeEditor: CodeEditorReducer.Create(),
   editors: EditorsReducer.Create(),
+  howTo: HowToReducer.Create(),
 })

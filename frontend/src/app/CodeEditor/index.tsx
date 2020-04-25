@@ -19,6 +19,7 @@ import { Panel } from '../Panel'
 import { panelActions } from '../Panel/actions'
 import { codeEditorActions } from './actions'
 import './index.css'
+import { howToActions } from '../HowTo/actions'
 
 require('codemirror/mode/jsx/jsx')
 require('codemirror/addon/lint/lint')
@@ -67,7 +68,6 @@ export const CodeEditor = React.memo(
       dispatch(codeEditorActions.changeHeight({ height: '100vh' }))
 
     const handleCodeChange = (editor: any, data: any, value: string): any => {
-      console.log(data)
       dispatch(
         codeEditorActions.changeCode({
           code: value,
@@ -81,6 +81,10 @@ export const CodeEditor = React.memo(
           code: formatCode(code),
         }),
       )
+    }
+
+    const handleOpenHowTo = () => {
+      dispatch(howToActions.open())
     }
 
     if (isPending) {
@@ -132,7 +136,7 @@ export const CodeEditor = React.memo(
           />
 
           <Button.Group className='code-editor__window-buttons'>
-            <Button icon='question' />
+            <Button icon='question' onClick={handleOpenHowTo} />
             <Button
               icon='window maximize outline'
               onClick={handleExpandWindow}

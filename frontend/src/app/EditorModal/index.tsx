@@ -46,7 +46,7 @@ export const EditorModal = (): ReactElement => {
   }
 
   return (
-    <Modal size='tiny' open={isOpened} onClose={handleClose}>
+    <Modal size='tiny' open={isOpened} closeIcon onClose={handleClose}>
       <Modal.Header>
         {mode === EditorModes.create
           ? 'Create a new one CP'
