@@ -54,7 +54,7 @@
 
 .app .currentElement > * {
   outline: 3px solid #2185d0 !important;
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 .app .progress {

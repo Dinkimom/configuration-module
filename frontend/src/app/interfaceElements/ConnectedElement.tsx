@@ -102,7 +102,7 @@ export const ConnectedElement = ({
 
   if (optional) {
     return (elementParams['Is visible'].value && component) || null
-  } else {
-    return component
   }
+
+  return component
 }
