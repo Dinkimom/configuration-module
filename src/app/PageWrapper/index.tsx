@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, ReactElement } from 'react'
 import { Button, Icon, Popup, Container } from 'semantic-ui-react'
 import './index.css'
 
@@ -6,7 +6,7 @@ interface IPageWrapperProps {
   children: ReactNode
 }
 
-export const PageWrapper = ({ children }: IPageWrapperProps) => (
+export const PageWrapper = ({ children }: IPageWrapperProps): ReactElement => (
   <div className='page-wrapper'>
     <header>
       <Container>
@@ -19,7 +19,7 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => (
           trigger={<Icon className='user' name='user circle' size='big' />}
           content={
             <Button.Group vertical={true} basic={true}>
-              <a href='http://localhost/personalArea/1'>
+              <a href='https://test-ait.herokuapp.com/personalArea/1'>
                 <Button icon='chevron left' content='Back to System' />
               </a>
             </Button.Group>
