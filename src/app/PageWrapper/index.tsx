@@ -19,8 +19,9 @@ export const PageWrapper = ({ children }: IPageWrapperProps) => (
           trigger={<Icon className='user' name='user circle' size='big' />}
           content={
             <Button.Group vertical={true} basic={true}>
-              <Button icon='chevron left' content='Back to System' />
-              <Button icon='log out' content='Logout' />
+              <a href='http://localhost/personalArea/1'>
+                <Button icon='chevron left' content='Back to System' />
+              </a>
             </Button.Group>
           }
           position='bottom right'
