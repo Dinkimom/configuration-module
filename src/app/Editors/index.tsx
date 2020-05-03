@@ -1,16 +1,16 @@
-import React, { ReactNode, useCallback, useEffect, ReactElement } from 'react'
+import React, { ReactElement, ReactNode, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Button, Container, List, Segment, Message } from 'semantic-ui-react'
+import { Button, Container, List, Message, Segment } from 'semantic-ui-react'
 import { ErrorMessage } from '../../shared/components/ErrorMessage'
 import { Loader } from '../../shared/components/Loader'
+import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 import { IRootState } from '../../store/state'
 import { codeEditorActions } from '../CodeEditor/actions'
 import { Pagination } from '../Pagination'
 import { panelActions } from '../Panel/actions'
 import { editorsActions } from './actions'
 import './index.css'
-import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 
 export const Editors = (): ReactElement => {
   const { list, isPending, error } = useSelector(
@@ -50,11 +50,8 @@ export const Editors = (): ReactElement => {
             selection={true}
           >
             {list.map((item: IApplicationDTO) => (
-              <List.Item key={item._id}>
+              <List.Item as='Link' to={`/editor/${item._id}`} key={item._id}>
                 <List.Content floated='right'>
-                  <Link to={`/editor/${item._id}`}>
-                    <Button icon='edit outline' />
-                  </Link>
                   <Button
                     icon='delete'
                     onClick={() => handleDelete(item._id as string)}

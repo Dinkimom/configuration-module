@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable @typescript-eslint/unbound-method */
 import objectAssignDeep from 'object-assign-deep'
 import { colors } from '../../shared/constants/colors'
@@ -40,7 +41,7 @@ const initialState: IPanelState = {
 const getDefaultSettings = (
   type: ConfigurationElements,
   options: IOption[],
-) => {
+): any => {
   switch (type) {
     case ConfigurationElements.optional:
       return false
@@ -81,6 +82,7 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
       case PANEL_INIT_PAGE:
         if (!newState.settings.pages[action.payload.name]) {
           newState.settings.pages[action.payload.name] = {}
+          // eslint-disable-next-line prefer-destructuring
           newState.currentPage = Object.keys(newState.settings.pages)[0]
         }
         break
@@ -92,7 +94,7 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
           }
         }
 
-        Object.keys(action.payload.params).forEach(paramKey => {
+        Object.keys(action.payload.params).forEach((paramKey) => {
           if (!newState.settings.common[action.payload.name].params[paramKey]) {
             newState.settings.common[action.payload.name].params[paramKey] = {
               value: getDefaultSettings(
@@ -111,7 +113,7 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
             common: action.payload.common,
           }
 
-          Object.keys(action.payload.params).forEach(paramKey => {
+          Object.keys(action.payload.params).forEach((paramKey) => {
             newState.settings.pages[action.payload.page][
               action.payload.name
             ].params[paramKey] = {

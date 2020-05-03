@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import React, { ReactNode, useCallback, useEffect, ReactElement } from 'react'
+import React, { ReactElement, ReactNode, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { Button, Container, List, Segment } from 'semantic-ui-react'
+import { Container, List, Segment } from 'semantic-ui-react'
 import { ErrorMessage } from '../../shared/components/ErrorMessage'
 import { Loader } from '../../shared/components/Loader'
+import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 import { IRootState } from '../../store/state'
 import { editorsActions } from '../Editors/actions'
 import { Pagination } from '../Pagination'
-import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 
 export const Panels = (): ReactElement => {
   const { list, isPending, error } = useSelector(
@@ -42,12 +42,11 @@ export const Panels = (): ReactElement => {
             selection={true}
           >
             {list.map((item: IApplicationDTO) => (
-              <List.Item key={item._id}>
-                <List.Content floated='right'>
-                  <Link to={`/panel/${item._id}/${user_id}`}>
-                    <Button icon='settings' />
-                  </Link>
-                </List.Content>
+              <List.Item
+                as='Link'
+                to={`/panel/${item._id}/${user_id}`}
+                key={item._id}
+              >
                 <List.Content>
                   <List.Header>
                     <Link to={`/panel/${item._id}/${user_id}`}>
