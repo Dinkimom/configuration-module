@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 import { serverEntryPoint } from '../shared/constants/serverEntryPoint'
 import { RequestsEnum } from '../shared/enums/RequestsEnum'
@@ -8,6 +9,12 @@ export abstract class AbstractClient {
   public entity: Entity
   public URL: string
   public axios = axios.create({ timeout: 20000 })
+
+  public abstract add: (...args: any) => any
+  public abstract update: (...args: any) => any
+  public abstract delete: (...args: any) => any
+  public abstract getItem: (...args: any) => any
+  public abstract getItems: (...args: any) => any
 
   public constructor(entity: Entity) {
     this.entity = entity
@@ -69,7 +76,9 @@ export abstract class AbstractClient {
       console.log(error.response.status)
       console.log(error.response.headers)
       return error.response
-    } else if (error.request) {
+    }
+
+    if (error.request) {
       /*
        * The request was made but no response was received, `error.request`
        * is an instance of XMLHttpRequest in the browser and an instance
@@ -86,17 +95,10 @@ export abstract class AbstractClient {
           error: error.message,
         },
       } as AxiosResponse
-    } else {
-      // Something happened in setting up the request and triggered an Error
-      console.log('Error', error.message)
     }
+    // Something happened in setting up the request and triggered an Error
+    console.log('Error', error.message)
 
     return error
   }
-
-  public abstract add: (...args: any) => any
-  public abstract update: (...args: any) => any
-  public abstract delete: (...args: any) => any
-  public abstract getItem: (...args: any) => any
-  public abstract getItems: (...args: any) => any
 }

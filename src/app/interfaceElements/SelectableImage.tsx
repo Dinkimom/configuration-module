@@ -25,7 +25,7 @@ export const SelectableImage = ({
   const initialParams = {
     Image: {
       type: ConfigurationElements.select,
-      options: options.map((item) => ({
+      options: options.map(item => ({
         ...item,
         image: { src: item.value },
       })),

@@ -25,18 +25,18 @@ export class EditorModalApiSaga {
   }
 
   public *watch() {
-    yield takeEvery(EDITOR_MODAL_ADD, (a) => safeSagaExecute(a, this.add))
-    yield takeEvery(EDITOR_MODAL_UPDATE, (a) => safeSagaExecute(a, this.update))
+    yield takeEvery(EDITOR_MODAL_ADD, a => safeSagaExecute(a, this.add))
+    yield takeEvery(EDITOR_MODAL_UPDATE, a => safeSagaExecute(a, this.update))
   }
 
   private *add(action: IActionPayloaded<IApplicationDTO>) {
     yield put(editorModalActions.setPending({ flag: true }))
 
-    const response = yield client.add(action.payload as IApplicationDTO)
+    const response = yield client.add(action.payload)
 
     yield put(editorModalActions.setPending({ flag: false }))
 
-    if ((response as any).status === 200) {
+    if ((response).status === 200) {
       yield put(editorModalActions.closeModal())
       window.location.href = `/editor/${response.data._id}`
     } else {
@@ -47,11 +47,11 @@ export class EditorModalApiSaga {
   private *update(action: IActionPayloaded<IApplicationDTO>) {
     yield put(editorModalActions.setPending({ flag: true }))
 
-    const response = yield client.update(action.payload as IApplicationDTO)
+    const response = yield client.update(action.payload)
 
     yield put(editorModalActions.setPending({ flag: false }))
 
-    if ((response as any).status === 200) {
+    if ((response).status === 200) {
       yield put(
         codeEditorActions.dataLoaded({
           name: response.data.item.name,

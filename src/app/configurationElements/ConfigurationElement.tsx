@@ -32,14 +32,14 @@ export const ConfigurationElement = ({
 
   const dispatch = useDispatch()
   const { value } = useSelector((state: IRootState) =>
-    common
+    (common
       ? state.panel.settings.common[name].params[param]
-      : state.panel.settings.pages![page][name].params[param],
+      : state.panel.settings.pages[page][name].params[param]),
   )
 
   const { options } = useSelector(
     (state: IRootState) =>
-      state.panel.settings.pages![page][name].params[param],
+      state.panel.settings.pages[page][name].params[param],
   )
   const { online } = useSelector((state: IRootState) => state.panel)
 

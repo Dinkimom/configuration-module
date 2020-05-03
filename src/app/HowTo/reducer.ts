@@ -21,7 +21,7 @@ export class HowToReducer implements IReducerPayloaded<IHowToState> {
     state: IHowToState = initialState,
     action: IActionPayloaded<any>,
   ): IHowToState {
-    let newState = { ...state }
+    const newState = { ...state }
 
     switch (action.type) {
       case HOW_TO_OPEN:

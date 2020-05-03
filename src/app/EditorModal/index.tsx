@@ -22,9 +22,10 @@ export const EditorModal = (): ReactElement => {
 
   const handleClose = (): Action => dispatch(editorModalActions.closeModal())
 
-  const handleChange = (evt: any, data: any) =>
+  const handleChange = (evt: any, data: any): Action =>
     dispatch(editorModalActions.changeName({ name: data.value }))
-  const handleSubmit = () => {
+
+  const handleSubmit = (): void => {
     if (mode === EditorModes.create) {
       dispatch(
         editorModalActions.add({

@@ -28,7 +28,7 @@ export class EditorsReducer implements IReducerPayloaded<IEditorsState> {
     state: IEditorsState = initialState,
     action: IActionPayloaded<any>,
   ): IEditorsState {
-    let newState = { ...state }
+    const newState = { ...state }
 
     switch (action.type) {
       case EDITORS_DATA_LOADED:

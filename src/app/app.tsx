@@ -9,8 +9,7 @@ import { PageWrapper } from './PageWrapper'
 
 export const notificationSystem = React.createRef<any>()
 
-export const App = (): ReactElement => {
-  return (
+export const App = (): ReactElement => (
     <BrowserRouter>
       <NotificationSystem ref={notificationSystem} />
       <Route path='/editor/:_id?'>
@@ -33,4 +32,3 @@ export const App = (): ReactElement => {
       </Route>
     </BrowserRouter>
   )
-}

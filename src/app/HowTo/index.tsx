@@ -177,7 +177,7 @@ export const HowTo = () => {
 
         <h3>Sample of base description structure:</h3>
         <CodeSample
-          code={`<App><Page name='Sample page'>/* Some interface elements here... */</Page></App>`}
+          code={'<App><Page name=\'Sample page\'>/* Some interface elements here... */</Page></App>'}
         />
 
         <h3>Configurable interface elements props:</h3>

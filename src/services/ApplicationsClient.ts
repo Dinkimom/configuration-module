@@ -12,9 +12,7 @@ export class ApplicationsClient extends AbstractClient {
     body: IApplicationDTO,
   ): Promise<AxiosResponse | AxiosError> => {
     try {
-      const response = await axios(this.helper(RequestsEnum.add, { body }))
-
-      return response
+      return await axios(this.helper(RequestsEnum.add, { body }))
     } catch (error) {
       return this.errorHandler(error)
     }
@@ -26,23 +24,15 @@ export class ApplicationsClient extends AbstractClient {
     const { _id, ...body } = data
 
     try {
-      const response = await this.axios(
-        this.helper(RequestsEnum.update, { _id, body }),
-      )
-
-      return response
+      return await this.axios(this.helper(RequestsEnum.update, { _id, body }))
     } catch (error) {
       return this.errorHandler(error)
     }
   }
 
-  public delete = async (_id: string) => {
+  public delete = async (_id: string): Promise<AxiosResponse | AxiosError> => {
     try {
-      const response = await this.axios(
-        this.helper(RequestsEnum.delete, { _id }),
-      )
-
-      return response
+      return await this.axios(this.helper(RequestsEnum.delete, { _id }))
     } catch (error) {
       return this.errorHandler(error)
     }
@@ -50,23 +40,17 @@ export class ApplicationsClient extends AbstractClient {
 
   public getItem = async (_id: string): Promise<AxiosResponse | AxiosError> => {
     try {
-      const response: any = await this.axios(
-        this.helper(RequestsEnum.getItem, { _id }),
-      )
-
-      return response
+      return await this.axios(this.helper(RequestsEnum.getItem, { _id }))
     } catch (error) {
       return this.errorHandler(error)
     }
   }
 
-  public getItems = async (params?: { currentPage: number }) => {
+  public getItems = async (params?: {
+    currentPage: number
+  }): Promise<AxiosResponse | AxiosError> => {
     try {
-      const response = await this.axios(
-        this.helper(RequestsEnum.getItems, {}, params),
-      )
-
-      return response
+      return await this.axios(this.helper(RequestsEnum.getItems, {}, params))
     } catch (error) {
       return this.errorHandler(error)
     }

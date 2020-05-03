@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useEffect } from 'react'
+import React, { ReactNode, useCallback, useEffect, ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Container, List, Segment, Message } from 'semantic-ui-react'
@@ -10,8 +10,9 @@ import { Pagination } from '../Pagination'
 import { panelActions } from '../Panel/actions'
 import { editorsActions } from './actions'
 import './index.css'
+import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 
-export const Editors = () => {
+export const Editors = (): ReactElement => {
   const { list, isPending, error } = useSelector(
     (state: IRootState) => state.editors,
   )
@@ -24,7 +25,8 @@ export const Editors = () => {
     [dispatch],
   )
 
-  const handleDelete = (_id: string) => {
+  const handleDelete = (_id: string): void => {
+    // eslint-disable-next-line no-alert
     const confirmed = window.confirm('Please, confirm deletion')
 
     if (confirmed) {
@@ -47,7 +49,7 @@ export const Editors = () => {
             animated={true}
             selection={true}
           >
-            {list.map(item => (
+            {list.map((item: IApplicationDTO) => (
               <List.Item key={item._id}>
                 <List.Content floated='right'>
                   <Link to={`/editor/${item._id}`}>

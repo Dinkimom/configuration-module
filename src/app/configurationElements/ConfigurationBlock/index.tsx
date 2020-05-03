@@ -22,7 +22,7 @@ export const ConfigurationBlock = (): ReactElement | null => {
     )
   }
 
-  const panes = Object.keys(settings.pages).map((pageKey) => ({
+  const panes = Object.keys(settings.pages).map(pageKey => ({
     menuItem: pageKey,
     pane: (
       <Tab.Pane
@@ -32,7 +32,7 @@ export const ConfigurationBlock = (): ReactElement | null => {
         as={Segment.Group}
       >
         <Segment>
-          {Object.keys(settings.pages[pageKey]).map((elementKey) => (
+          {Object.keys(settings.pages[pageKey]).map(elementKey => (
             <React.Fragment key={elementKey}>
               <h4>
                 {elementKey}{' '}

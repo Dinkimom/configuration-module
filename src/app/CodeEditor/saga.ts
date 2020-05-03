@@ -19,7 +19,7 @@ export class CodeEditorApiSaga {
   }
 
   public *watch() {
-    yield takeEvery(CODE_EDITOR_LOAD_DATA, (a) => safeSagaExecute(a, this.load))
+    yield takeEvery(CODE_EDITOR_LOAD_DATA, a => safeSagaExecute(a, this.load))
   }
 
   private *load(action: IActionPayloaded<{ _id: string }>) {
@@ -27,7 +27,7 @@ export class CodeEditorApiSaga {
 
     const response = yield client.getItem(action.payload._id)
 
-    if ((response as any).status === 200) {
+    if ((response).status === 200) {
       if (response.data === null) {
         yield put(
           codeEditorActions.failure({

@@ -19,14 +19,14 @@ import { panelActions } from '../Panel/actions'
 
 const UnmemorizedCodeRender = ({ code }) => {
   const dispatch = useDispatch()
-  const setError = (error) => {
+  const setError = error => {
     dispatch(panelActions.clear())
     dispatch(panelActions.setRenderError({ error }))
   }
 
   return (
     <JsxParser
-      renderError={(error) => {
+      renderError={error => {
         setError(error.error)
         return null
       }}

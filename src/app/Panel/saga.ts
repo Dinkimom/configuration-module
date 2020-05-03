@@ -29,9 +29,9 @@ export class PanelApiSaga {
   }
 
   public *watch() {
-    yield takeEvery(PANEL_LOAD_DATA, (a) => safeSagaExecute(a, this.load))
-    yield takeEvery(PANEL_UPDATE_DATA, (a) => safeSagaExecute(a, this.update))
-    yield takeEvery(PANEL_INIT, (a) => safeSagaExecute(a, this.validate))
+    yield takeEvery(PANEL_LOAD_DATA, a => safeSagaExecute(a, this.load))
+    yield takeEvery(PANEL_UPDATE_DATA, a => safeSagaExecute(a, this.update))
+    yield takeEvery(PANEL_INIT, a => safeSagaExecute(a, this.validate))
   }
 
   private *load(
@@ -73,7 +73,7 @@ export class PanelApiSaga {
   private *update(action: IActionPayloaded<ISettingDTO>) {
     const response = yield client.update(action.payload)
 
-    if ((response as any).status === 200) {
+    if ((response).status === 200) {
       notificationSystem.current.clearNotifications()
       notificationSystem.current.addNotification({
         message: 'All changes saved',

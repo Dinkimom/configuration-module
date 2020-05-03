@@ -13,6 +13,11 @@
 
 .code-editor-container__code-editor .react-codemirror2 {
   height: 100%;
+  overflow-x: auto;
+}
+
+.CodeMirror-scrollbar-filler {
+  background: rgb(41, 41, 41);
 }
 
 .code-editor-container__code-editor a {

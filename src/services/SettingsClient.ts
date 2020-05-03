@@ -16,11 +16,9 @@ export class SettingsClient extends AbstractClient {
     user_id: string
   }): Promise<AxiosResponse<IPanelSettingsDTO> | AxiosError> => {
     try {
-      const response = await this.axios.get(
+      return await this.axios.get(
         `${this.URL}/item/${application_id}/${user_id}`,
       )
-
-      return response
     } catch (error) {
       return this.errorHandler(error)
     }
@@ -32,7 +30,7 @@ export class SettingsClient extends AbstractClient {
 
   public update = async (data: ISettingDTO) => {
     try {
-      const response = await this.axios.put(
+      return await this.axios.put(
         `${this.URL}/item/${data.application_id}/${data.user_id}`,
         {
           settings: data.common
@@ -62,8 +60,6 @@ export class SettingsClient extends AbstractClient {
               },
         },
       )
-
-      return response
     } catch (error) {
       return this.errorHandler(error)
     }

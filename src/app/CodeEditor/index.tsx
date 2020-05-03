@@ -36,161 +36,152 @@ const options = {
   lint: true,
 }
 
-export const CodeEditor = React.memo(
-  (): ReactElement => {
-    const { _id, mode } = useEditorModes()
+export const CodeEditor = (): ReactElement => {
+  const { _id, mode } = useEditorModes()
 
-    const { code, height, isPending, name, error } = useSelector(
-      (state: IRootState) => state.codeEditor,
+  const { code, height, isPending, name, error } = useSelector(
+    (state: IRootState) => state.codeEditor,
+  )
+  const renderError = Boolean(
+    useSelector((state: IRootState) => state.panel.renderError),
+  )
+  const { descriptionCode, isPending: isGenerating } = useSelector(
+    (state: IRootState) => state.panel,
+  )
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (mode === EditorModes.edit) {
+      dispatch(codeEditorActions.loadData({ _id: _id as string }))
+    }
+  }, [_id, mode, dispatch])
+
+  const handleOpenModal = (): Action =>
+    dispatch(editorModalActions.openModal(name))
+
+  const handleMinimizeWindow = (): Action =>
+    dispatch(codeEditorActions.changeHeight({ height: minHeight }))
+
+  const handleExpandWindow = (): Action =>
+    dispatch(codeEditorActions.changeHeight({ height: '100vh' }))
+
+  const handleCodeChange = (editor: any, data: any, value: string): any => {
+    dispatch(
+      codeEditorActions.changeCode({
+        code: value,
+      }),
     )
-    const renderError = Boolean(
-      useSelector((state: IRootState) => state.panel.renderError),
+  }
+
+  const handleCodeFormat = (): void => {
+    dispatch(
+      codeEditorActions.changeCode({
+        code: formatCode(code),
+      }),
     )
-    const { descriptionCode, isPending: isGenerating } = useSelector(
-      (state: IRootState) => state.panel,
-    )
+  }
 
-    const dispatch = useDispatch()
+  const handleOpenHowTo = (): void => {
+    dispatch(howToActions.open())
+  }
 
-    useEffect(() => {
-      if (mode === EditorModes.edit) {
-        dispatch(codeEditorActions.loadData({ _id: _id as string }))
-      }
-    }, [_id, mode, dispatch])
+  if (isPending) {
+    return <Loader text='Loading Editor...' />
+  }
 
-    const handleOpenModal = (): Action =>
-      dispatch(editorModalActions.openModal(name))
-
-    const handleMinimizeWindow = (): Action =>
-      dispatch(codeEditorActions.changeHeight({ height: minHeight }))
-
-    const handleExpandWindow = (): Action =>
-      dispatch(codeEditorActions.changeHeight({ height: '100vh' }))
-
-    const handleCodeChange = (editor: any, data: any, value: string): any => {
-      dispatch(
-        codeEditorActions.changeCode({
-          code: value,
-        }),
-      )
-    }
-
-    const handleCodeFormat = () => {
-      dispatch(
-        codeEditorActions.changeCode({
-          code: formatCode(code),
-        }),
-      )
-    }
-
-    const handleOpenHowTo = () => {
-      dispatch(howToActions.open())
-    }
-
-    if (isPending) {
-      return <Loader text='Loading Editor...' />
-    }
-
-    if (error !== '') {
-      return (
-        <Segment padded={true} basic={true}>
-          <Message size='big' negative={true}>
-            <Message.Header>{error}</Message.Header>
-          </Message>
-        </Segment>
-      )
-    }
-
+  if (error !== '') {
     return (
-      <div className='code-editor-container'>
-        <Segment basic={true} className='code-editor-container__code-render'>
-          {(!isGenerating && <Panel />) || <Loader text='Generating CP...' />}
-        </Segment>
-        <Resizable
-          className='code-editor-container__code-editor'
-          size={{ width: '100%', height }}
-          onResizeStop={(e, direction, ref, d) =>
-            dispatch(
-              codeEditorActions.changeHeight({
-                height: Number(height) + d.height,
-              }),
-            )
-          }
-          minHeight={minHeight}
-          minWidth='100%'
-          maxHeight={'100vh'}
-        >
-          <span className='code-editor__tittle'>
-            <p className='logo'>
-              <Icon name='setting' />
-              Panel
-            </p>
-            <p>IDE</p>
-            <b>{name}</b>
-          </span>
+      <Segment padded={true} basic={true}>
+        <Message size='big' negative={true}>
+          <Message.Header>{error}</Message.Header>
+        </Message>
+      </Segment>
+    )
+  }
 
-          <CodeMirror
-            value={code}
-            options={options}
-            onBeforeChange={handleCodeChange}
+  return (
+    <div className='code-editor-container'>
+      <Segment basic={true} className='code-editor-container__code-render'>
+        {(!isGenerating && <Panel />) || <Loader text='Generating CP...' />}
+      </Segment>
+      <Resizable
+        className='code-editor-container__code-editor'
+        size={{ width: '100%', height }}
+        onResizeStop={(e, direction, ref, d) =>
+          dispatch(
+            codeEditorActions.changeHeight({
+              height: Number(height) + d.height,
+            }),
+          )
+        }
+        minHeight={minHeight}
+        minWidth='100%'
+        maxHeight={'100vh'}
+      >
+        <span className='code-editor__tittle'>
+          <p className='logo'>
+            <Icon name='setting' />
+            Panel
+          </p>
+          <p>IDE</p>
+          <b>{name}</b>
+        </span>
+
+        <CodeMirror
+          value={code}
+          options={options}
+          onBeforeChange={handleCodeChange}
+        />
+
+        <Button.Group className='code-editor__window-buttons'>
+          <Button icon='question' onClick={handleOpenHowTo} />
+          <Button icon='window maximize outline' onClick={handleExpandWindow} />
+          <Button
+            icon='window minimize outline'
+            onClick={handleMinimizeWindow}
           />
+        </Button.Group>
 
-          <Button.Group className='code-editor__window-buttons'>
-            <Button icon='question' onClick={handleOpenHowTo} />
+        <Button.Group className='code-editor__control-buttons'>
+          <Link to='/editors'>
             <Button
-              icon='window maximize outline'
-              onClick={handleExpandWindow}
-            />
-            <Button
-              icon='window minimize outline'
-              onClick={handleMinimizeWindow}
-            />
-          </Button.Group>
-
-          <Button.Group className='code-editor__control-buttons'>
-            <Link to='/editors'>
-              <Button
-                icon='chevron left'
-                content='Back to editors'
-                onClick={() => {
-                  dispatch(panelActions.clear())
-                  dispatch(codeEditorActions.clear())
-                }}
-              />
-            </Link>
-            <Button
-              icon='play'
-              loading={isGenerating}
+              icon='chevron left'
+              content='Back to editors'
               onClick={() => {
                 dispatch(panelActions.clear())
-                dispatch(
-                  codeEditorActions.changeCode({ code: formatCode(code) }),
-                )
-                dispatch(
-                  panelActions.init({ descriptionCode: formatCode(code) }),
-                )
+                dispatch(codeEditorActions.clear())
               }}
-              disabled={!code || code === descriptionCode || isGenerating}
             />
-            <Button
-              icon={mode === EditorModes.create ? 'add' : 'save'}
-              disabled={
-                !descriptionCode ||
-                renderError ||
-                code !== descriptionCode ||
-                isGenerating
-              }
-              onClick={handleOpenModal}
-            />
-            <Button
-              icon='code'
-              content='Format code'
-              onClick={handleCodeFormat}
-              disabled={isGenerating}
-            />
-          </Button.Group>
-        </Resizable>
-      </div>
-    )
-  },
-)
+          </Link>
+          <Button
+            icon='play'
+            loading={isGenerating}
+            onClick={() => {
+              dispatch(panelActions.clear())
+              dispatch(codeEditorActions.changeCode({ code: formatCode(code) }))
+              dispatch(panelActions.init({ descriptionCode: formatCode(code) }))
+            }}
+            disabled={!code || code === descriptionCode || isGenerating}
+          />
+          <Button
+            icon={mode === EditorModes.create ? 'add' : 'save'}
+            disabled={
+              !descriptionCode ||
+              renderError ||
+              code !== descriptionCode ||
+              isGenerating
+            }
+            onClick={handleOpenModal}
+          />
+          <Button
+            icon='code'
+            content='Format code'
+            onClick={handleCodeFormat}
+            disabled={isGenerating}
+          />
+        </Button.Group>
+      </Resizable>
+    </div>
+  )
+}
