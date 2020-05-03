@@ -1,2 +1,2 @@
 export const serverEntryPoint =
-  'https://test-ait.herokuapp.com/configuration_module/'
+  'https://test-ait.herokuapp.com/api/configuration_module/'
