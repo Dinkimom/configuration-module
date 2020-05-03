@@ -1,4 +1,5 @@
-import React, { ReactNode, useCallback, useEffect } from 'react'
+/* eslint-disable @typescript-eslint/camelcase */
+import React, { ReactNode, useCallback, useEffect, ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { Button, Container, List, Segment } from 'semantic-ui-react'
@@ -7,8 +8,9 @@ import { Loader } from '../../shared/components/Loader'
 import { IRootState } from '../../store/state'
 import { editorsActions } from '../Editors/actions'
 import { Pagination } from '../Pagination'
+import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 
-export const Panels = () => {
+export const Panels = (): ReactElement => {
   const { list, isPending, error } = useSelector(
     (state: IRootState) => state.editors,
   )
@@ -39,7 +41,7 @@ export const Panels = () => {
             animated={true}
             selection={true}
           >
-            {list.map(item => (
+            {list.map((item: IApplicationDTO) => (
               <List.Item key={item._id}>
                 <List.Content floated='right'>
                   <Link to={`/panel/${item._id}/${user_id}`}>
@@ -74,7 +76,7 @@ export const Panels = () => {
   return (
     <Container className='list-container'>
       <Segment className='list-container__header' clearing={true} basic={true}>
-        <h1>Panels</h1>
+        <h1>Configuration Panels</h1>
       </Segment>
 
       {renderList()}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import React, { ReactElement, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
@@ -73,7 +74,7 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
               {user_id && (
                 <>
                   <Breadcrumb.Section>
-                    <Link to={`/panels/${user_id}`}>Panels</Link>
+                    <Link to={`/panels/${user_id}`}>Configuration Panels</Link>
                   </Breadcrumb.Section>
                   <Breadcrumb.Divider icon='right chevron' />
                 </>
