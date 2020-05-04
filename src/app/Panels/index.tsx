@@ -9,6 +9,7 @@ import { IApplicationDTO } from '../../shared/types/IApplicationDTO'
 import { IRootState } from '../../store/state'
 import { editorsActions } from '../Editors/actions'
 import { Pagination } from '../Pagination'
+import { panelActions } from '../Panel/actions'
 
 export const Panels = (): ReactElement => {
   const { list, isPending, error } = useSelector(
@@ -26,8 +27,8 @@ export const Panels = (): ReactElement => {
   )
 
   useEffect(() => {
-    // Todo: add user check
     handleLoad()
+    dispatch(panelActions.clear())
   }, [dispatch, handleLoad])
 
   const renderList = (): ReactNode => {
@@ -42,18 +43,10 @@ export const Panels = (): ReactElement => {
             selection={true}
           >
             {list.map((item: IApplicationDTO) => (
-              <List.Item
-                as='Link'
-                to={`/panel/${item._id}/${user_id}`}
-                key={item._id}
-              >
-                <List.Content>
-                  <List.Header>
-                    <Link to={`/panel/${item._id}/${user_id}`}>
-                      {item.name}
-                    </Link>
-                  </List.Header>
-                </List.Content>
+              <List.Item key={item._id}>
+                <Link to={`/panel/${item._id}/${user_id}`}>
+                  <List.Header>{item.name}</List.Header>
+                </Link>
               </List.Item>
             ))}
           </List>

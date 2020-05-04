@@ -2,6 +2,13 @@
   padding-top: 60px;
 }
 
+.list-container .item {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  height: 54px;
+}
+
 .list-container__header {
   padding: 10px 0 !important;
 }
@@ -9,8 +16,12 @@
   margin: 0;
 }
 
-.list-container__header a {
-  color: inherit;
+.list-container a {
+  width: 100%;
+}
+
+.list-container a * {
+  color: rgb(68, 128, 219) !important;
 }
 
 .list-container .list button {

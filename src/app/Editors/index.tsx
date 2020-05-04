@@ -41,7 +41,7 @@ export const Editors = (): ReactElement => {
   const renderList = (): ReactNode => {
     if (list.length) {
       return (
-        <Segment>
+        <Segment className='list-container'>
           <List
             divided={true}
             verticalAlign='middle'
@@ -50,17 +50,15 @@ export const Editors = (): ReactElement => {
             selection={true}
           >
             {list.map((item: IApplicationDTO) => (
-              <List.Item as='Link' to={`/editor/${item._id}`} key={item._id}>
-                <List.Content floated='right'>
+              <List.Item key={item._id}>
+                <Link to={`/editor/${item._id}`}>
+                  <List.Header>{item.name}</List.Header>
+                </Link>
+                <List.Content>
                   <Button
                     icon='delete'
                     onClick={() => handleDelete(item._id as string)}
                   />
-                </List.Content>
-                <List.Content>
-                  <List.Header>
-                    <Link to={`/editor/${item._id}`}>{item.name}</Link>
-                  </List.Header>
                 </List.Content>
               </List.Item>
             ))}

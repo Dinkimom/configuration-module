@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable @typescript-eslint/unbound-method */
 import objectAssignDeep from 'object-assign-deep'
@@ -22,7 +23,7 @@ import {
 } from './actions'
 import { IPanelState } from './state'
 
-const initialState: IPanelState = {
+const createInitialState = (): any => ({
   isInitialized: false,
   name: '',
   online: false,
@@ -36,7 +37,7 @@ const initialState: IPanelState = {
   descriptionCode: '',
   error: '',
   isPending: false,
-}
+})
 
 const getDefaultSettings = (
   type: ConfigurationElements,
@@ -65,17 +66,14 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
   }
 
   public reduce(
-    state: IPanelState = initialState,
+    state: IPanelState = createInitialState(),
     action: IActionPayloaded<any>,
   ): IPanelState {
     let newState = { ...state }
 
     switch (action.type) {
       case PANEL_VALIDATED:
-        newState = objectAssignDeep(
-          objectAssignDeep({}, initialState),
-          action.payload,
-        )
+        newState = objectAssignDeep({}, createInitialState(), action.payload)
         newState.isInitialized = true
         break
 
@@ -135,7 +133,7 @@ export class PanelReducer implements IReducerPayloaded<IPanelState> {
         break
 
       case PANEL_CLEAR:
-        newState = objectAssignDeep({}, initialState)
+        newState = createInitialState()
         break
 
       case PANEL_SET_FIELD_VALUE:
