@@ -1,3 +1,6 @@
+/* eslint-disable arrow-parens */
+/* eslint-disable @typescript-eslint/unbound-method */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import objectAssignDeep from 'object-assign-deep'
 import { delay, put, select, takeEvery } from 'redux-saga/effects'
 import { safeSagaExecute } from '../../middleware/saga'
@@ -5,7 +8,6 @@ import { SettingsClient } from '../../services/SettingsClient'
 import { ISettingDTO } from '../../shared/types/ISettingDTO'
 import { IActionPayloaded } from '../../store/IAction'
 import { IRootState } from '../../store/state'
-import { notificationSystem } from '../app'
 import {
   panelActions,
   PANEL_INIT,
@@ -23,25 +25,25 @@ export class PanelApiSaga {
     this.validate = this.validate.bind(this)
   }
 
-  public static Initialize() {
+  public static Initialize(): Generator {
     const saga = new PanelApiSaga()
     return saga.watch()
   }
 
-  public *watch() {
-    yield takeEvery(PANEL_LOAD_DATA, a => safeSagaExecute(a, this.load))
-    yield takeEvery(PANEL_UPDATE_DATA, a => safeSagaExecute(a, this.update))
-    yield takeEvery(PANEL_INIT, a => safeSagaExecute(a, this.validate))
+  public *watch(): Generator {
+    yield takeEvery(PANEL_LOAD_DATA, (a) => safeSagaExecute(a, this.load))
+    yield takeEvery(PANEL_UPDATE_DATA, (a) => safeSagaExecute(a, this.update))
+    yield takeEvery(PANEL_INIT, (a) => safeSagaExecute(a, this.validate))
   }
 
   private *load(
     action: IActionPayloaded<{ application_id: string; user_id: string }>,
-  ) {
-    const settings = yield select((state: IRootState) => state.panel)
+  ): Generator {
+    const settings: any = yield select((state: IRootState) => state.panel)
 
     yield put(panelActions.setPending({ flag: true }))
 
-    const response = yield client.getItem(action.payload)
+    const response: any = yield client.getItem(action.payload)
 
     if (response.status === 200) {
       if (response.data === null) {
@@ -70,20 +72,11 @@ export class PanelApiSaga {
     yield put(panelActions.setPending({ flag: false }))
   }
 
-  private *update(action: IActionPayloaded<ISettingDTO>) {
-    const response = yield client.update(action.payload)
-
-    if ((response).status === 200) {
-      notificationSystem.current.clearNotifications()
-      notificationSystem.current.addNotification({
-        message: 'All changes saved',
-        level: 'info',
-        position: 'bc',
-      })
-    }
+  private *update(action: IActionPayloaded<ISettingDTO>): Generator {
+    yield client.update(action.payload)
   }
 
-  private *validate(action: IActionPayloaded<Partial<IPanelState>>) {
+  private *validate(action: IActionPayloaded<Partial<IPanelState>>): Generator {
     const { descriptionCode } = action.payload
 
     if (!RegExp('<App>((.|\\s)*)</App>').test(String(descriptionCode))) {

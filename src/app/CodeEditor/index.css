@@ -12,6 +12,7 @@
 }
 
 .code-editor-container__code-editor .react-codemirror2 {
+  box-sizing: border-box;
   height: 100%;
   overflow-x: auto;
 }

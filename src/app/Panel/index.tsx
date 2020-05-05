@@ -2,7 +2,14 @@
 import React, { ReactElement, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import { Breadcrumb, Container, Message, Segment } from 'semantic-ui-react'
+import {
+  Breadcrumb,
+  Container,
+  Message,
+  Segment,
+  Popup,
+  Icon,
+} from 'semantic-ui-react'
 import { ErrorMessage } from '../../shared/components/ErrorMessage'
 import { Loader } from '../../shared/components/Loader'
 import { IRootState } from '../../store/state'
@@ -80,7 +87,17 @@ export const Panel = ({ online }: IPanelProps): ReactElement => {
                 </>
               )}
               <Breadcrumb.Section active>
-                {name ? `Configure ${name}` : 'Configuration panel'}
+                {name ? (
+                  <>
+                    Configure {name}{' '}
+                    <Popup
+                      content='All changes will be saved automatically'
+                      trigger={<Icon color='blue' size='small' name='save' />}
+                    />
+                  </>
+                ) : (
+                  'Configuration panel'
+                )}
               </Breadcrumb.Section>
             </Breadcrumb>
           </div>

@@ -28,12 +28,10 @@ const minHeight = 45
 const options = {
   mode: 'jsx',
   theme: 'material-darker',
-  gutters: ['CodeMirror-lint-markers'],
   styleActiveLine: true,
   lineNumbers: true,
   smartIndent: true,
   line: true,
-  lint: true,
 }
 
 export const CodeEditor = (): ReactElement => {
