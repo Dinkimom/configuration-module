@@ -20,7 +20,10 @@ export const PageWrapper = ({ children }: IPageWrapperProps): ReactElement => (
           content={
             <Button.Group vertical={true} basic={true}>
               <a href='https://test-ait.herokuapp.com/personalArea/1'>
-                <Button icon='chevron left' content='Back to System' />
+                <Button icon='id card' content='Profile' />
+              </a>
+              <a href='https://test-ait.herokuapp.com/signout'>
+                <Button icon='logout' content='Logout' />
               </a>
             </Button.Group>
           }

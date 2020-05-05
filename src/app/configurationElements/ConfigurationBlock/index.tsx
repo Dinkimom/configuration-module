@@ -1,7 +1,15 @@
 /* eslint-disable react/display-name */
 import React, { ReactElement } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Item, Label, Popup, Segment, Tab } from 'semantic-ui-react'
+import {
+  Form,
+  Item,
+  Label,
+  Popup,
+  Segment,
+  Tab,
+  Divider,
+} from 'semantic-ui-react'
 import { IRootState } from '../../../store/state'
 import { panelActions } from '../../Panel/actions'
 import { ConfigurationElement } from '../ConfigurationElement'
@@ -22,7 +30,7 @@ export const ConfigurationBlock = (): ReactElement | null => {
     )
   }
 
-  const panes = Object.keys(settings.pages).map(pageKey => ({
+  const panes = Object.keys(settings.pages).map((pageKey) => ({
     menuItem: pageKey,
     pane: (
       <Tab.Pane
@@ -32,42 +40,48 @@ export const ConfigurationBlock = (): ReactElement | null => {
         as={Segment.Group}
       >
         <Segment>
-          {Object.keys(settings.pages[pageKey]).map(elementKey => (
-            <React.Fragment key={elementKey}>
-              <h4>
-                {elementKey}{' '}
-                {settings.pages[pageKey][elementKey].common && (
-                  <Popup
-                    content='This interface element is shared across multiple pages'
-                    trigger={
-                      <Label style={{ marginLeft: '5px', cursor: 'pointer' }}>
-                        Common
-                      </Label>
-                    }
-                  />
-                )}
-              </h4>
+          {Object.keys(settings.pages[pageKey]).map(
+            (elementKey, elementIndex) => (
+              <React.Fragment key={elementKey}>
+                <h4>
+                  {elementKey}{' '}
+                  {settings.pages[pageKey][elementKey].common && (
+                    <Popup
+                      content='This interface element is shared across multiple pages'
+                      trigger={
+                        <Label style={{ marginLeft: '5px', cursor: 'pointer' }}>
+                          Common
+                        </Label>
+                      }
+                    />
+                  )}
+                </h4>
 
-              <Item.Group>
-                {Object.keys(settings.pages[pageKey][elementKey].params).map(
-                  (paramKey, paramIndex) => (
-                    <Item key={paramIndex}>
-                      <ConfigurationElement
-                        name={elementKey}
-                        param={paramKey}
-                        page={pageKey}
-                        type={
-                          settings.pages[pageKey][elementKey].params[paramKey]
-                            .type
-                        }
-                        common={settings.pages[pageKey][elementKey].common}
-                      />
-                    </Item>
-                  ),
+                <Item.Group>
+                  {Object.keys(settings.pages[pageKey][elementKey].params).map(
+                    (paramKey, paramIndex) => (
+                      <Item key={paramIndex}>
+                        <ConfigurationElement
+                          name={elementKey}
+                          param={paramKey}
+                          page={pageKey}
+                          type={
+                            settings.pages[pageKey][elementKey].params[paramKey]
+                              .type
+                          }
+                          common={settings.pages[pageKey][elementKey].common}
+                        />
+                      </Item>
+                    ),
+                  )}
+                </Item.Group>
+                {elementIndex !==
+                  Object.keys(settings.pages[pageKey]).length - 1 && (
+                  <Divider fitted={true} />
                 )}
-              </Item.Group>
-            </React.Fragment>
-          ))}
+              </React.Fragment>
+            ),
+          )}
         </Segment>
       </Tab.Pane>
     ),
