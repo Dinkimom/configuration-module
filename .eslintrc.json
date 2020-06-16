@@ -1,28 +1,25 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:promise/recommended",
-    "plugin:sonarjs/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "tsconfig.json",
-    "tsconfigRootDir": "."
-  },
-  "plugins": [
-    "react",
-    "react-hooks",
-    "promise",
-    "optimize-regex",
-    "sonarjs",
-    "@typescript-eslint"
-  ]
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:promise/recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"project": "tsconfig.json",
+		"tsconfigRootDir": "."
+	},
+	"plugins": [
+		"react",
+		"react-hooks",
+		"promise",
+		"optimize-regex",
+		"@typescript-eslint"
+	]
 }
